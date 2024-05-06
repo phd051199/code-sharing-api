@@ -13,7 +13,7 @@ const bootstrap = async () => {
 
   const logger = app.get(Logger);
   const configService = app.get(ConfigService);
-  const { host, port, version } = configService.get<IAppConfiguration>(APP);
+  const { port, version } = configService.get<IAppConfiguration>(APP);
 
   app.enableCors({
     credentials: true,
@@ -33,8 +33,8 @@ const bootstrap = async () => {
   const document = SwaggerModule.createDocument(app, swaggerBuilder);
   SwaggerModule.setup('docs', app, document, customOptions);
 
-  await app.listen(port, host, () =>
-    logger.log(`Application is running on http://${host}:${port}`, BOOTSTRAP),
+  await app.listen(port, () =>
+    logger.log(`Application is running on http://localhost:${port}`, BOOTSTRAP),
   );
 };
 

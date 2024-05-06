@@ -1,10 +1,7 @@
 import { plainToInstance } from 'class-transformer';
-import { IsNotEmpty, validateSync } from 'class-validator';
+import { IsNotEmpty, IsOptional, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
-  @IsNotEmpty()
-  readonly APP_HOST: string;
-
   @IsNotEmpty()
   readonly APP_PORT: string;
 
@@ -20,8 +17,8 @@ class EnvironmentVariables {
   @IsNotEmpty()
   readonly MYSQL_USERNAME: string;
 
-  @IsNotEmpty()
-  readonly MYSQL_PASSWORD: string;
+  @IsOptional()
+  readonly MYSQL_PASSWORD?: string;
 
   @IsNotEmpty()
   readonly MYSQL_DB_NAME: string;
@@ -32,8 +29,8 @@ class EnvironmentVariables {
   @IsNotEmpty()
   readonly REDIS_PORT: string;
 
-  @IsNotEmpty()
-  readonly REDIS_PASSWORD: string;
+  @IsOptional()
+  readonly REDIS_PASSWORD?: string;
 }
 
 export function validate(config: Record<string, unknown>) {
