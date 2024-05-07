@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import type { IQueryHandler } from '@nestjs/cqrs';
-import { QueryHandler } from '@nestjs/cqrs';
+import { type IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 import { InfoSchemaRepository } from '../../repositories/info-schema.repository';
-import { getTablesQuery } from '../impl/get-list-table.query';
+import { GetTablesQuery } from '../impl/get-tables.query';
 
 @Injectable()
-@QueryHandler(getTablesQuery)
-export class getTablesHandler implements IQueryHandler<getTablesQuery> {
+@QueryHandler(GetTablesQuery)
+export class GetTablesHandler implements IQueryHandler<GetTablesQuery> {
   constructor(private readonly infoSchema: InfoSchemaRepository) {}
 
   execute() {

@@ -1,24 +1,25 @@
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { ApolloDriver, type ApolloDriverConfig } from '@nestjs/apollo';
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
-import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule, type TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { MinioModule } from 'nestjs-minio-client';
 
-import { AuthModule } from './auth/auth.module';
-import type { IRedisConfiguation } from './config';
 import {
   appConfiguration,
+  type IRedisConfiguation,
   minioConfiguration,
+  type MinioOptions,
   redisConfiguration,
   typeormConfiguration,
 } from './config';
-import { ORM, REDIS } from './constants';
+import { MINIO_CONF, ORM_CONF, REDIS_CONF } from './constants';
 import { DataGeneratorModule } from './data-generator/data-generator.module';
-import { DataInjectorModule } from './data-injector/data-injector.module';
-import { validate } from './env.validation';
+import { EnvVars } from './env.validation';
 import { HealthModule } from './health/health.module';
-import { MinioClientModule } from './minio-client/minio-client.module';
 
 @Module({
   imports: [
@@ -31,24 +32,32 @@ import { MinioClientModule } from './minio-client/minio-client.module';
         minioConfiguration,
       ],
       isGlobal: true,
-      validate,
+      validate: EnvVars.validate,
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      autoSchemaFile: true,
+      playground: false,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
-        configService.get<TypeOrmModuleOptions>(ORM),
+        configService.get<TypeOrmModuleOptions>(ORM_CONF),
     }),
     BullModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
-        configService.get<IRedisConfiguation>(REDIS),
+        configService.get<IRedisConfiguation>(REDIS_CONF),
+    }),
+    MinioModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get<MinioOptions>(MINIO_CONF),
     }),
 
     HealthModule,
     DataGeneratorModule,
-    DataInjectorModule,
-    MinioClientModule,
-    AuthModule,
   ],
 })
 export class AppModule {}

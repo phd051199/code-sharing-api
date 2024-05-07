@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import _ from 'lodash';
-import { ORM } from 'src/constants';
 import { DataSource } from 'typeorm';
+
+import { ORM_CONF } from '@/constants';
 
 @Injectable()
 export class InfoSchemaRepository {
@@ -11,8 +12,8 @@ export class InfoSchemaRepository {
     private readonly logger: Logger,
   ) {}
 
-  async getTables() {
-    const dbConnection = new DataSource(this.configService.get(ORM));
+  async getTables(): Promise<string[]> {
+    const dbConnection = new DataSource(this.configService.get(ORM_CONF));
     const dataSource = await dbConnection.initialize();
 
     try {

@@ -1,15 +1,13 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TerminusModule } from '@nestjs/terminus';
 
 import { CommandHandlers } from './commands/handlers';
-import { EventHandlers } from './events/handlers';
-import { HealthController } from './health.controller';
-import { QueryHandlers } from './queries/handlers';
+import { HealthResolver } from './health.resolver';
 
 @Module({
-  imports: [TerminusModule, HttpModule],
-  controllers: [HealthController],
-  providers: [...QueryHandlers, ...CommandHandlers, ...EventHandlers],
+  imports: [TerminusModule, HttpModule, ConfigModule],
+  providers: [...CommandHandlers, HealthResolver],
 })
 export class HealthModule {}

@@ -1,14 +1,14 @@
 import { registerAs } from '@nestjs/config';
-import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { type TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import { ORM } from '../constants';
+import { ORM_CONF } from '../constants';
 
 export const typeormConfiguration = registerAs<TypeOrmModuleOptions>(
-  ORM,
+  ORM_CONF,
   () => ({
     type: 'mysql',
     host: process.env.MYSQL_HOST,
-    port: Number(process.env.MYSQL_PORT),
+    port: Number(process.env.MYSQL_PORT || 3306),
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB_NAME,

@@ -1,3 +1,3 @@
-import { getTablesHandler } from './get-list-table.handler';
+import { GetTablesHandler } from './get-tables.handler';
 
-export const QueryHandlers = [getTablesHandler];
+export const QueryHandlers = [GetTablesHandler];

@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { DataGeneratorResolver } from './data-generator.resolver';
 import { QueryBus } from '@nestjs/cqrs';
-import { HealthController } from '../health.controller';
 
-describe('HealthController', () => {
-  let controller: HealthController;
+describe('DataGeneratorResolver', () => {
+  let resolver: DataGeneratorResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [HealthController],
       providers: [
+        DataGeneratorResolver,
         {
           provide: QueryBus,
           useValue: {
@@ -20,10 +20,10 @@ describe('HealthController', () => {
       ],
     }).compile();
 
-    controller = module.get<HealthController>(HealthController);
+    resolver = module.get<DataGeneratorResolver>(DataGeneratorResolver);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(resolver).toBeDefined();
   });
 });

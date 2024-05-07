@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DataGeneratorController } from '../data-generator.controller';
-import { QueryBus } from '@nestjs/cqrs';
+import { HealthResolver } from './health.resolver';
+import { CommandBus } from '@nestjs/cqrs';
 
-describe('DataGeneratorController', () => {
-  let controller: DataGeneratorController;
+describe('HealthResolver', () => {
+  let resolver: HealthResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [DataGeneratorController],
       providers: [
+        HealthResolver,
         {
-          provide: QueryBus,
+          provide: CommandBus,
           useValue: {
             execute: jest.fn().mockResolvedValue({
               status: 'up',
@@ -20,10 +20,10 @@ describe('DataGeneratorController', () => {
       ],
     }).compile();
 
-    controller = module.get<DataGeneratorController>(DataGeneratorController);
+    resolver = module.get<HealthResolver>(HealthResolver);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(resolver).toBeDefined();
   });
 });

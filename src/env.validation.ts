@@ -1,48 +1,45 @@
 import { plainToInstance } from 'class-transformer';
-import { IsNotEmpty, IsOptional, validateSync } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  validateSync,
+  type ValidatorOptions,
+} from 'class-validator';
 
-class EnvironmentVariables {
-  @IsNotEmpty()
-  readonly APP_PORT: string;
+export class EnvVars {
+  @IsNotEmpty() APP_PORT: string;
+  @IsOptional() APP_VERSION?: string;
 
-  @IsNotEmpty()
-  readonly APP_VERSION: string;
+  @IsNotEmpty() MYSQL_HOST: string;
+  @IsNotEmpty() MYSQL_PORT: string;
+  @IsNotEmpty() MYSQL_USERNAME: string;
+  @IsOptional() MYSQL_PASSWORD?: string;
+  @IsNotEmpty() MYSQL_DB_NAME: string;
 
-  @IsNotEmpty()
-  readonly MYSQL_HOST: string;
+  @IsNotEmpty() REDIS_HOST: string;
+  @IsNotEmpty() REDIS_PORT: string;
+  @IsOptional() REDIS_PASSWORD?: string;
 
-  @IsNotEmpty()
-  readonly MYSQL_PORT: string;
+  @IsNotEmpty() MINIO_ENDPOINT: string;
+  @IsNotEmpty() MINIO_PORT: string;
+  @IsNotEmpty() MINIO_ACCESSKEY: string;
+  @IsNotEmpty() MINIO_SECRETKEY: string;
+  @IsNotEmpty() MINIO_BUCKET: string;
 
-  @IsNotEmpty()
-  readonly MYSQL_USERNAME: string;
+  static validate(plain: Record<string, string>): EnvVars {
+    const options: ValidatorOptions = {
+      skipMissingProperties: false,
+    };
 
-  @IsOptional()
-  readonly MYSQL_PASSWORD?: string;
+    const object = plainToInstance(EnvVars, plain, {
+      enableImplicitConversion: true,
+    });
+    const errors = validateSync(object, options);
 
-  @IsNotEmpty()
-  readonly MYSQL_DB_NAME: string;
+    if (errors.length > 0) {
+      throw new Error(errors.toString());
+    }
 
-  @IsNotEmpty()
-  readonly REDIS_HOST: string;
-
-  @IsNotEmpty()
-  readonly REDIS_PORT: string;
-
-  @IsOptional()
-  readonly REDIS_PASSWORD?: string;
-}
-
-export function validate(config: Record<string, unknown>) {
-  const validatedConfig = plainToInstance(EnvironmentVariables, config, {
-    enableImplicitConversion: true,
-  });
-  const errors = validateSync(validatedConfig, {
-    skipMissingProperties: false,
-  });
-
-  if (errors.length > 0) {
-    throw new Error(errors.toString());
+    return object;
   }
-  return validatedConfig;
 }

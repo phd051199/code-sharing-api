@@ -1,41 +1,27 @@
-import { Logger, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import type { SwaggerCustomOptions } from '@nestjs/swagger';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  FastifyAdapter,
+  type NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 import { AppModule } from './app.module';
-import type { IAppConfiguration } from './config';
-import { APP, BOOTSTRAP } from './constants';
+import { type IAppConfiguration } from './config';
+import { APP_CONF } from './constants';
 
-const bootstrap = async () => {
-  const app = await NestFactory.create(AppModule);
-
-  const logger = app.get(Logger);
-  const configService = app.get(ConfigService);
-  const { port, version } = configService.get<IAppConfiguration>(APP);
-
-  app.enableCors({
-    credentials: true,
-  });
-
-  app.enableVersioning({
-    defaultVersion: version,
-    type: VersioningType.URI,
-  });
-
-  const swaggerBuilder = new DocumentBuilder().addBearerAuth().build();
-  const customOptions: SwaggerCustomOptions = {
-    swaggerOptions: {
-      persistAuthorization: true,
+async function bootstrap() {
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+    {
+      cors: true,
     },
-  };
-  const document = SwaggerModule.createDocument(app, swaggerBuilder);
-  SwaggerModule.setup('docs', app, document, customOptions);
-
-  await app.listen(port, () =>
-    logger.log(`Application is running on http://localhost:${port}`, BOOTSTRAP),
   );
-};
+
+  const configService = app.get(ConfigService);
+  const { host, port } = configService.get<IAppConfiguration>(APP_CONF);
+
+  await app.listen(port, host);
+}
 
 bootstrap();

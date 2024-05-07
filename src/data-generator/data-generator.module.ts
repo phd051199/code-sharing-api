@@ -1,13 +1,17 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { DataGeneratorController } from './data-generator.controller';
+import { DataGeneratorResolver } from './data-generator.resolver';
 import { QueryHandlers } from './queries/handlers';
 import { InfoSchemaRepository } from './repositories/info-schema.repository';
 
 @Module({
   imports: [ConfigModule],
-  controllers: [DataGeneratorController],
-  providers: [...QueryHandlers, Logger, InfoSchemaRepository],
+  providers: [
+    ...QueryHandlers,
+    Logger,
+    InfoSchemaRepository,
+    DataGeneratorResolver,
+  ],
 })
 export class DataGeneratorModule {}
