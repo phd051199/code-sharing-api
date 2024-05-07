@@ -11,13 +11,13 @@ export class EnvVars {
   @IsOptional() APP_VERSION?: string;
 
   @IsNotEmpty() MYSQL_HOST: string;
-  @IsNotEmpty() MYSQL_PORT: string;
+  @IsOptional() MYSQL_PORT?: string;
   @IsNotEmpty() MYSQL_USERNAME: string;
   @IsOptional() MYSQL_PASSWORD?: string;
   @IsNotEmpty() MYSQL_DB_NAME: string;
 
   @IsNotEmpty() REDIS_HOST: string;
-  @IsNotEmpty() REDIS_PORT: string;
+  @IsOptional() REDIS_PORT?: string;
   @IsOptional() REDIS_PASSWORD?: string;
 
   @IsNotEmpty() MINIO_ENDPOINT: string;

@@ -23,7 +23,12 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        fixStyle: 'inline-type-imports',
+      },
+    ],
     '@typescript-eslint/ban-ts-comment': 'off',
     'import/no-duplicates': ['error'],
     'simple-import-sort/imports': 'error',

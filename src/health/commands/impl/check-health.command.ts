@@ -1,3 +1,3 @@
-import type { ICommand } from '@nestjs/cqrs';
+import { type ICommand } from '@nestjs/cqrs';
 
 export class CheckHealthCommand implements ICommand {}
