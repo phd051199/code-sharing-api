@@ -1,11 +1,12 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, type ApolloDriverConfig } from '@nestjs/apollo';
 import { BullModule } from '@nestjs/bullmq';
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
-import { TypeOrmModule, type TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { MinioModule } from 'nestjs-minio-client';
 
 import {
@@ -14,36 +15,34 @@ import {
   minioConfiguration,
   type MinioOptions,
   redisConfiguration,
-  typeormConfiguration,
-} from './config';
-import { MINIO_CONF, ORM_CONF, REDIS_CONF } from './constants';
-import { DataGeneratorModule } from './data-generator/data-generator.module';
-import { EnvVars } from './env.validation';
+} from '@/config';
+import { MINIO_CONF, REDIS_CONF } from '@/constants';
+import { Env } from '@/env.validation';
+
+import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { ScriptExecModule } from './script-exec/script-exec.module';
+import { UserModule } from './user/user.module';
+import { UserScriptModule } from './user-script/user-script.module';
 
 @Module({
   imports: [
     CqrsModule.forRoot(),
     ConfigModule.forRoot({
-      load: [
-        appConfiguration,
-        typeormConfiguration,
-        redisConfiguration,
-        minioConfiguration,
-      ],
+      load: [appConfiguration, redisConfiguration, minioConfiguration],
       isGlobal: true,
-      validate: EnvVars.validate,
+      validate: Env.validate,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: true,
       playground: false,
-    }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) =>
-        configService.get<TypeOrmModuleOptions>(ORM_CONF),
+      subscriptions: {
+        'graphql-ws': true,
+      },
+      autoTransformHttpErrors: true,
     }),
     BullModule.forRootAsync({
       inject: [ConfigService],
@@ -55,9 +54,21 @@ import { HealthModule } from './health/health.module';
       useFactory: (configService: ConfigService) =>
         configService.get<MinioOptions>(MINIO_CONF),
     }),
+    ScheduleModule.forRoot(),
+    CacheModule.registerAsync<IRedisConfiguation>({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        ...configService.get<IRedisConfiguation>(REDIS_CONF),
+        isGlobal: true,
+      }),
+    }),
 
     HealthModule,
-    DataGeneratorModule,
+    AuthModule,
+    UserModule,
+    PrismaModule,
+    UserScriptModule,
+    ScriptExecModule,
   ],
 })
 export class AppModule {}

@@ -6,15 +6,9 @@ import {
   type ValidatorOptions,
 } from 'class-validator';
 
-export class EnvVars {
+export class Env {
   @IsNotEmpty() APP_PORT: string;
   @IsOptional() APP_VERSION?: string;
-
-  @IsNotEmpty() MYSQL_HOST: string;
-  @IsOptional() MYSQL_PORT?: string;
-  @IsNotEmpty() MYSQL_USERNAME: string;
-  @IsOptional() MYSQL_PASSWORD?: string;
-  @IsNotEmpty() MYSQL_DB_NAME: string;
 
   @IsNotEmpty() REDIS_HOST: string;
   @IsOptional() REDIS_PORT?: string;
@@ -26,12 +20,12 @@ export class EnvVars {
   @IsNotEmpty() MINIO_SECRETKEY: string;
   @IsNotEmpty() MINIO_BUCKET: string;
 
-  static validate(plain: Record<string, string>): EnvVars {
+  static validate(plain: Record<string, string>) {
     const options: ValidatorOptions = {
       skipMissingProperties: false,
     };
 
-    const object = plainToInstance(EnvVars, plain, {
+    const object = plainToInstance(Env, plain, {
       enableImplicitConversion: true,
     });
     const errors = validateSync(object, options);

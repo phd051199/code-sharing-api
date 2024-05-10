@@ -7,7 +7,6 @@ import {
   HealthCheckService,
   HttpHealthIndicator,
   MicroserviceHealthIndicator,
-  TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
 
 import { type IRedisConfiguation } from '@/config';
@@ -22,7 +21,6 @@ export class CheckHealthHandler implements ICommandHandler<CheckHealthCommand> {
     private readonly configService: ConfigService,
     private readonly health: HealthCheckService,
     private readonly http: HttpHealthIndicator,
-    private readonly db: TypeOrmHealthIndicator,
     private readonly microservice: MicroserviceHealthIndicator,
   ) {}
 
@@ -33,7 +31,6 @@ export class CheckHealthHandler implements ICommandHandler<CheckHealthCommand> {
 
     return this.health.check([
       () => this.http.pingCheck('network', pingUrl),
-      () => this.db.pingCheck('database'),
       () =>
         this.microservice.pingCheck('redis', {
           transport: Transport.REDIS,
