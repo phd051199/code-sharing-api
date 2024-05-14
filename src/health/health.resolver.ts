@@ -3,7 +3,7 @@ import { Query, Resolver } from '@nestjs/graphql';
 import { HealthCheck } from '@nestjs/terminus';
 
 import { CheckHealthCommand } from './commands/impl';
-import { HealthInfo } from './dtos/health-info.dto';
+import { HealthInfo } from './models/health-info.model';
 
 @Resolver()
 export class HealthResolver {

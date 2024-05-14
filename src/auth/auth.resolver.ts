@@ -5,8 +5,8 @@ import { User } from '@/common/gql/user';
 
 import { LoginCommand } from './commands/impl/login.command';
 import { RegisterCommand } from './commands/impl/register.command';
-import { LoginInput } from './gql/login.input';
-import { RegisterInput } from './gql/register.input';
+import { LoginInput } from './dtos/login.input';
+import { RegisterInput } from './dtos/register.input';
 
 @Resolver('Auth')
 export class AuthResolver {

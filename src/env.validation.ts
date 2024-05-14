@@ -20,6 +20,8 @@ export class Env {
   @IsNotEmpty() MINIO_SECRETKEY: string;
   @IsNotEmpty() MINIO_BUCKET: string;
 
+  @IsNotEmpty() JWT_SECRET: string;
+
   static validate(plain: Record<string, string>) {
     const options: ValidatorOptions = {
       skipMissingProperties: false,

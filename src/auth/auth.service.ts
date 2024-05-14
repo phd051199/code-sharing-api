@@ -1,21 +1,21 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import dayjs from 'dayjs';
 
+import { PrismaErrorCode } from '@/common/enums';
+import { InvalidArgumentsError } from '@/common/errors';
 import { PrismaService } from '@/prisma/prisma.service';
 
-import { type LoginInput } from './gql/login.input';
-import { type RegisterInput } from './gql/register.input';
+import { type LoginInput } from './dtos/login.input';
+import { type RegisterInput } from './dtos/register.input';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async register({ email, password }: RegisterInput) {
+  async register(input: RegisterInput) {
+    const { email, password } = input;
+
     const hashedPassword = await hash(password, 10);
 
     const user = await this.prismaService.user
@@ -25,14 +25,19 @@ export class AuthService {
           password: hashedPassword,
         },
       })
-      .catch(() => {
-        throw new BadRequestException();
+      .catch((err) => {
+        if (err.code === PrismaErrorCode.UniqueConstraint) {
+          throw new InvalidArgumentsError();
+        }
+        throw err;
       });
 
     return user;
   }
 
-  async login({ email, password }: LoginInput) {
+  async login(input: LoginInput) {
+    const { email, password } = input;
+
     const user = await this.prismaService.user.findUniqueOrThrow({
       where: { email },
     });

@@ -1,6 +1,5 @@
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   type NestFastifyApplication,
@@ -19,19 +18,9 @@ async function bootstrap() {
     },
   );
 
-  const reflector = app.get(Reflector);
-
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-    }),
-  );
-
-  const configService = app.get(ConfigService);
-
-  const { host, port } = configService.get<IAppConfiguration>(APP_CONF);
+  const { host, port } = app
+    .get(ConfigService)
+    .get<IAppConfiguration>(APP_CONF);
 
   await app.listen(port, host);
 }

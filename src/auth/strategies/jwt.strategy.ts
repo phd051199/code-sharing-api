@@ -6,8 +6,6 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { GetUserQuery } from '@/user/queries/impl/get-user.query';
 
-import { type JwtClaimsDto } from '../dtos/jwt-claims.dto';
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -20,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate({ id }): Promise<JwtClaimsDto> {
+  validate({ id }) {
     const args = {
       where: { id },
     };

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 
-import { BaseCrudService } from '@/common/base/base.service';
 import type {
   CreateManyUserArgs,
   CreateOneUserArgs,
@@ -15,6 +14,7 @@ import type {
   UserAggregateArgs,
   UserGroupByArgs,
 } from '@/common/gql/user';
+import { BaseCrudService } from '@/common/services/base.service';
 import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
