@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import {
   IsNotEmpty,
@@ -6,9 +7,13 @@ import {
   type ValidatorOptions,
 } from 'class-validator';
 
+import { mapEnvError } from '@/common/utils';
+
 export class Env {
+  @IsOptional() NODE_ENV?: string;
+
+  @IsOptional() APP_HOST?: string;
   @IsNotEmpty() APP_PORT: string;
-  @IsOptional() APP_VERSION?: string;
 
   @IsNotEmpty() REDIS_HOST: string;
   @IsOptional() REDIS_PORT?: string;
@@ -22,7 +27,7 @@ export class Env {
 
   @IsNotEmpty() JWT_SECRET: string;
 
-  static validate(plain: Record<string, string>) {
+  static validate(plain: typeof Env) {
     const options: ValidatorOptions = {
       skipMissingProperties: false,
     };
@@ -30,10 +35,12 @@ export class Env {
     const object = plainToInstance(Env, plain, {
       enableImplicitConversion: true,
     });
+
     const errors = validateSync(object, options);
 
     if (errors.length > 0) {
-      throw new Error(errors.toString());
+      Logger.error('\n' + mapEnvError(errors), 'EnvValidation');
+      process.exit(1);
     }
 
     return object;

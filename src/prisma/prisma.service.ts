@@ -4,17 +4,23 @@ import {
   type OnModuleDestroy,
   type OnModuleInit,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
 import { PrismaClient } from '@prisma/client';
+
+import { APP_CONF } from '@/constants';
 
 @Injectable()
 export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
-  constructor(private readonly logger: Logger) {
+  constructor(
+    readonly configService: ConfigService,
+    private readonly logger: Logger,
+  ) {
     super({
-      log: ['query'],
+      log: configService.get(APP_CONF).isDevEnv && ['query'],
     });
   }
 
@@ -29,7 +35,6 @@ export class PrismaService
   @Cron('*/2 * * * *')
   async keepAlive() {
     this.logger.log('cron job: keep alive', this.constructor.name);
-
     await this.$queryRaw`SELECT 1`;
   }
 }

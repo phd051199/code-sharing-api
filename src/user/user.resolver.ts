@@ -1,9 +1,10 @@
+import { ParseIntPipe } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
-import { FindUniqueUserOrThrowArgs, User } from '@/common/gql/user';
+import { User } from '@/common/gql/user';
 
-import { GetUserQuery } from './queries/impl/get-user.query';
+import { GetUserByIdQuery } from './queries/impl/get-user-by-id.query';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -13,7 +14,7 @@ export class UserResolver {
   ) {}
 
   @Query(() => User)
-  getUser(@Args() args: FindUniqueUserOrThrowArgs) {
-    return this.queryBus.execute(new GetUserQuery(args));
+  getUser(@Args('id', new ParseIntPipe()) id: number) {
+    return this.queryBus.execute(new GetUserByIdQuery(id));
   }
 }

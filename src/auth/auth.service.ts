@@ -1,9 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import dayjs from 'dayjs';
 
 import { PrismaErrorCode } from '@/common/enums';
-import { InvalidArgumentsError } from '@/common/errors';
 import { PrismaService } from '@/prisma/prisma.service';
 
 import { type LoginInput } from './dtos/login.input';
@@ -27,7 +30,7 @@ export class AuthService {
       })
       .catch((err) => {
         if (err.code === PrismaErrorCode.UniqueConstraint) {
-          throw new InvalidArgumentsError();
+          throw new ConflictException('Email already exists');
         }
         throw err;
       });

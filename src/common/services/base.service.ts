@@ -19,6 +19,12 @@ export class BaseCrudService<
 > {
   constructor(public readonly prisma: PrismaService) {}
 
+  findId(id: number): Promise<T | null> {
+    return this.prisma[this.getModelName()].findUnique({
+      where: { id },
+    });
+  }
+
   findFirst(args: FindFirstArg): Promise<T | null> {
     return this.prisma[this.getModelName()].findFirst(args);
   }

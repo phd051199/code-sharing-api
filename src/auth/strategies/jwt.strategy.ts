@@ -4,7 +4,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { GetUserQuery } from '@/user/queries/impl/get-user.query';
+import { GetUserByIdQuery } from '@/user/queries/impl/get-user-by-id.query';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,14 +14,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.get('jwt.secret'),
+      secretOrKey: configService.get('JWT_CONF.secret'),
     });
   }
 
   validate({ id }) {
-    const args = {
-      where: { id },
-    };
-    return this.queryBus.execute(new GetUserQuery(args));
+    return this.queryBus.execute(new GetUserByIdQuery(id));
   }
 }
