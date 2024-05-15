@@ -6,7 +6,7 @@ generator client {
 
 generator nestgraphql {
   provider = "node node_modules/prisma-nestjs-graphql"
-  output   = "../src/@generated"
+  output   = "../src/generated"
   reExport = Directories
 }
 
@@ -36,8 +36,12 @@ model User {
   password String
 
   lastLogin DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+
+  /// @HideField()
+  createdAt DateTime @default(now())
+
+  /// @HideField()
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }

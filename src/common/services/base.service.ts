@@ -33,6 +33,10 @@ export class BaseCrudService<
     return this.prisma[this.getModelName()].findUnique(args);
   }
 
+  findUniqueOrThrow(args: FindUniqueArg): Promise<T | null> {
+    return this.prisma[this.getModelName()].findUniqueOrThrow(args);
+  }
+
   findMany(args: FindManyArg): Promise<T[]> {
     return this.prisma[this.getModelName()].findMany(args);
   }

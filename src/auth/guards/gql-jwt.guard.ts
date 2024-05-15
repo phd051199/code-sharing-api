@@ -2,13 +2,15 @@ import {
   type CanActivate,
   type ExecutionContext,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
-import { type Observable } from 'rxjs';
 
 import { IS_PUBLIC } from '@/constants';
+import { type User } from '@/generated/user';
 
 @Injectable()
 export class GqlJwtGuard extends AuthGuard('jwt') implements CanActivate {
@@ -16,9 +18,7 @@ export class GqlJwtGuard extends AuthGuard('jwt') implements CanActivate {
     super();
   }
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  canActivate(context: ExecutionContext) {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC, [
       context.getHandler(),
       context.getClass(),
@@ -28,13 +28,17 @@ export class GqlJwtGuard extends AuthGuard('jwt') implements CanActivate {
       return true;
     }
 
-    return this.canActivate(context);
+    const ctx = GqlExecutionContext.create(context);
+    const { req } = ctx.getContext();
+
+    return super.canActivate(new ExecutionContextHost([req]));
   }
 
-  getRequest(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    const request = ctx.getContext().req;
+  handleRequest<T extends User>(err: Error, user: T) {
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    }
 
-    return request;
+    return user;
   }
 }

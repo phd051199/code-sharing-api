@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule, type JwtModuleOptions } from '@nestjs/jwt';
 
-import { JWT_CONF } from '@/constants';
+import { JWT_CFG } from '@/constants';
 
 import { TokenService } from './token.service';
 
@@ -10,7 +10,7 @@ import { TokenService } from './token.service';
   imports: [
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) =>
-        configService.get<JwtModuleOptions>(JWT_CONF),
+        configService.get<JwtModuleOptions>(JWT_CFG),
       inject: [ConfigService],
     }),
   ],

@@ -4,16 +4,17 @@ import { Module } from '@nestjs/common';
 import { TokenModule } from '@/token/token.module';
 import { UserService } from '@/user/user.service';
 
-import { UpdateUserProcessor } from './auth.processor';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 import { CommandHandlers } from './commands/handlers';
+import { update_last_login_queue, UpdateLastLoginProcessor } from './queues';
+import { JwtStrategy } from './strategies';
 
 @Module({
   imports: [
     TokenModule,
     BullModule.registerQueue({
-      name: 'update:user',
+      name: update_last_login_queue,
       prefix: 'auth',
     }),
   ],
@@ -22,7 +23,8 @@ import { CommandHandlers } from './commands/handlers';
     AuthResolver,
     AuthService,
     UserService,
-    UpdateUserProcessor,
+    JwtStrategy,
+    UpdateLastLoginProcessor,
   ],
 })
 export class AuthModule {}

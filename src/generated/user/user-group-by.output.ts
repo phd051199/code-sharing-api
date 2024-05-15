@@ -30,10 +30,10 @@ export class UserGroupBy {
     @Field(() => Date, {nullable:true})
     lastLogin?: Date | string;
 
-    @Field(() => Date, {nullable:false})
+    @HideField()
     createdAt!: Date | string;
 
-    @Field(() => Date, {nullable:false})
+    @HideField()
     updatedAt!: Date | string;
 
     @Field(() => UserCountAggregate, {nullable:true})

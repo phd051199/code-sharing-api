@@ -24,10 +24,10 @@ export class UserCountAggregate {
     @Field(() => Int, {nullable:false})
     lastLogin!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     createdAt!: number;
 
-    @Field(() => Int, {nullable:false})
+    @HideField()
     updatedAt!: number;
 
     @Field(() => Int, {nullable:false})

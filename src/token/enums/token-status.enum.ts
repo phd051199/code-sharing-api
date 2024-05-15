@@ -1,1 +1,5 @@
-export type TokenStatus = 'valid' | 'invalid' | 'expired';
+export enum TokenStatus {
+  VALID = 'valid',
+  INVALID = 'invalid',
+  EXPIRED = 'expired',
+}

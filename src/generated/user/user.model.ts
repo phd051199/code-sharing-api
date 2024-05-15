@@ -25,9 +25,9 @@ export class User {
     @Field(() => Date, {nullable:true})
     lastLogin!: Date | null;
 
-    @Field(() => Date, {nullable:false})
+    @HideField()
     createdAt!: Date;
 
-    @Field(() => Date, {nullable:false})
+    @HideField()
     updatedAt!: Date;
 }

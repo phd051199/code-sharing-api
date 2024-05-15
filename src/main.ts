@@ -7,7 +7,7 @@ import {
 
 import { AppModule } from '@/app.module';
 import { type IAppConfiguration } from '@/config';
-import { APP_CONF } from '@/constants';
+import { APP_CFG } from '@/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -18,10 +18,7 @@ async function bootstrap() {
     },
   );
 
-  const { host, port } = app
-    .get(ConfigService)
-    .get<IAppConfiguration>(APP_CONF);
-
+  const { host, port } = app.get(ConfigService).get<IAppConfiguration>(APP_CFG);
   await app.listen(port, host);
 }
 

@@ -25,9 +25,9 @@ export class UserMaxAggregate {
     @Field(() => Date, {nullable:true})
     lastLogin?: Date | string;
 
-    @Field(() => Date, {nullable:true})
+    @HideField()
     createdAt?: Date | string;
 
-    @Field(() => Date, {nullable:true})
+    @HideField()
     updatedAt?: Date | string;
 }

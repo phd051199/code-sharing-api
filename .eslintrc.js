@@ -20,7 +20,7 @@ module.exports = {
     '.eslintrc.js',
     '*/**/*.spec.ts',
     '*/**/migrations/*',
-    '*/**/@generated/*',
+    '*/**/generated/*',
   ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',

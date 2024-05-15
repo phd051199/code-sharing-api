@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 
-import { MINIO_CONF } from '../constants';
+import { MINIO_CFG } from '../constants';
 
 export interface MinioOptions {
   readonly endPoint: string;
@@ -10,7 +10,7 @@ export interface MinioOptions {
   readonly useSSL?: boolean;
 }
 
-export const minioConfiguration = registerAs<MinioOptions>(MINIO_CONF, () => ({
+export const minioConfiguration = registerAs<MinioOptions>(MINIO_CFG, () => ({
   endPoint: process.env.MINIO_ENDPOINT,
   port: Number(process.env.MINIO_PORT),
   accessKey: process.env.MINIO_ACCESSKEY,

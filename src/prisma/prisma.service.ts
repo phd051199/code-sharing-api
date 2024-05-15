@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
 import { PrismaClient } from '@prisma/client';
 
-import { APP_CONF } from '@/constants';
+import { APP_CFG } from '@/constants';
 
 @Injectable()
 export class PrismaService
@@ -20,7 +20,7 @@ export class PrismaService
     private readonly logger: Logger,
   ) {
     super({
-      log: configService.get(APP_CONF).isDevEnv && ['query'],
+      log: configService.get(APP_CFG).isDevEnv && ['query'],
     });
   }
 

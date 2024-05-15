@@ -1,17 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { type User } from '@prisma/client';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 
-import { type UserLogin } from '@/auth/models/user-login.model';
-import { type JUser } from '@/common/types/context.type';
+import { type AuthResponse } from '@/auth/models';
+import { type TokenPayload } from '@/common/types/context.type';
 import { RedisService } from '@/redis/redis.service';
 
-import { type TokenStatus } from './enums';
+import { TokenStatus } from './enums';
 
-export type GetUserFromTokenResponse = {
-  user: JUser;
+export type TokenResponse = {
+  payload: TokenPayload;
   tokenStatus: TokenStatus;
 };
 
@@ -44,25 +44,33 @@ export class TokenService {
     return { refreshToken, accessToken };
   }
 
-  async getUserLoginPayload(user: User): Promise<UserLogin> {
+  async getAuthPayload(user: User): Promise<AuthResponse> {
     const token = await this.generateUserToken(user);
 
     return { ...token, user };
   }
 
-  verifyToken(token: string | null): GetUserFromTokenResponse {
-    if (!token) {
-      return { user: null, tokenStatus: 'invalid' };
-    }
+  verifyAccessToken(token: string): TokenResponse {
     try {
-      const user = this.jwtService.verify(token);
-      return { user, tokenStatus: 'valid' };
-    } catch (err) {
-      let tokenStatus: TokenStatus = 'invalid';
-      if (err instanceof TokenExpiredError) {
-        tokenStatus = 'expired';
+      const payload = this.jwtService.verify(token);
+
+      return { payload, tokenStatus: TokenStatus.VALID };
+    } catch (error) {
+      if (error instanceof TokenExpiredError) {
+        return { payload: null, tokenStatus: TokenStatus.EXPIRED };
       }
-      return { user: null, tokenStatus };
+
+      return { payload: null, tokenStatus: TokenStatus.INVALID };
     }
+  }
+
+  async verifyRefreshToken(refreshToken: string) {
+    const uid = await this.redisService.get('refreshToken', refreshToken);
+
+    if (!uid) {
+      throw new UnauthorizedException();
+    }
+
+    return { uid, tokenStatus: TokenStatus.VALID };
   }
 }
