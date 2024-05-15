@@ -1,17 +1,8 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-import {
-  ApolloDriver,
-  type ApolloDriverConfig,
-  UserInputError,
-} from '@nestjs/apollo';
+import { ApolloDriver, type ApolloDriverConfig } from '@nestjs/apollo';
 import { BullModule } from '@nestjs/bullmq';
 import { CacheModule } from '@nestjs/cache-manager';
-import {
-  ClassSerializerInterceptor,
-  Module,
-  type ValidationError,
-  ValidationPipe,
-} from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -19,7 +10,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MinioModule } from 'nestjs-minio-client';
 
-import { formatGqlError } from '@/common/utils';
 import {
   appConfiguration,
   type IRedisConfiguation,
@@ -29,13 +19,15 @@ import {
   redisConfiguration,
 } from '@/config';
 import { MINIO_CONF, REDIS_CONF } from '@/constants';
-import { Env } from '@/env.validation';
+import { Env } from '@/env';
+import { ValidationPipe } from '@/validation/validation.pipe';
+import { formatGqlError } from '@/validation/validation.util';
 
 import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RedisModule } from './redis/redis.module';
 import { ScriptExecModule } from './script-exec/script-exec.module';
-import { TokenModule } from './token/token.module';
 import { UserModule } from './user/user.module';
 import { UserScriptModule } from './user-script/user-script.module';
 
@@ -91,21 +83,12 @@ import { UserScriptModule } from './user-script/user-script.module';
     PrismaModule,
     UserScriptModule,
     ScriptExecModule,
-    TokenModule,
+    RedisModule,
   ],
   providers: [
     {
       provide: APP_PIPE,
-      useFactory: () =>
-        new ValidationPipe({
-          transform: true,
-          exceptionFactory: (errors: ValidationError[]) =>
-            new UserInputError('VALIDATION_ERROR', {
-              extensions: {
-                originalError: errors,
-              },
-            }),
-        }),
+      useClass: ValidationPipe,
     },
     {
       provide: APP_INTERCEPTOR,

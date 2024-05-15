@@ -2556,6 +2556,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9.0.8":
+  version: 9.0.8
+  resolution: "@types/uuid@npm:9.0.8"
+  checksum: 10c0/b411b93054cb1d4361919579ef3508a1f12bf15b5fdd97337d3d351bece6c921b52b6daeef89b62340fd73fd60da407878432a1af777f40648cbe53a01723489
+  languageName: node
+  linkType: hard
+
 "@types/validator@npm:^13.11.8":
   version: 13.11.9
   resolution: "@types/validator@npm:13.11.9"
@@ -3986,6 +3993,7 @@ __metadata:
     "@types/passport-google-oauth20": "npm:^2.0.16"
     "@types/passport-jwt": "npm:^4.0.1"
     "@types/supertest": "npm:^6.0.2"
+    "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^6.21.0"
     "@typescript-eslint/parser": "npm:^6.21.0"
     axios: "npm:^1.6.8"

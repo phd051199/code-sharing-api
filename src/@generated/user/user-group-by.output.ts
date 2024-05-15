@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { Role } from '../prisma/role.enum';
+import { HideField } from '@nestjs/graphql';
 import { UserCountAggregate } from './user-count-aggregate.output';
 import { UserAvgAggregate } from './user-avg-aggregate.output';
 import { UserSumAggregate } from './user-sum-aggregate.output';
@@ -23,7 +24,7 @@ export class UserGroupBy {
     @Field(() => Role, {nullable:false})
     role!: keyof typeof Role;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     password!: string;
 
     @Field(() => Date, {nullable:true})

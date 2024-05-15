@@ -1,35 +1,53 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { Role, type User } from '@prisma/client';
-import { trimStart } from 'lodash';
+import { type User } from '@prisma/client';
+import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import { type UserLogin } from '@/auth/models/user-login.model';
-import { type JWTUser } from '@/common/types/context.type';
+import { type JUser } from '@/common/types/context.type';
+import { RedisService } from '@/redis/redis.service';
 
 import { type TokenStatus } from './enums';
 
 export type GetUserFromTokenResponse = {
-  user: JWTUser;
+  user: JUser;
   tokenStatus: TokenStatus;
 };
 
 @Injectable()
 export class TokenService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly redisService: RedisService,
+  ) {}
 
-  generateUserToken(user: User): string {
-    const token = this.jwtService.sign({
-      id: user.id,
+  async generateUserToken(user: User) {
+    const secondSinceEpoch = dayjs().unix();
+
+    const refreshToken = uuidv4();
+    const accessToken = this.jwtService.sign({
+      uid: user.id,
       email: user.email,
-      role: Role.user,
+      role: user.role,
+      iat: secondSinceEpoch,
+      exp: secondSinceEpoch + 60 * 60 * 6,
     });
-    return token;
+
+    await this.redisService.set(
+      'refreshToken',
+      refreshToken,
+      user.id,
+      60 * 60 * 24 * 1,
+    );
+
+    return { refreshToken, accessToken };
   }
 
-  getUserLoginPayload(user: User): UserLogin {
-    const token = this.generateUserToken(user);
+  async getUserLoginPayload(user: User): Promise<UserLogin> {
+    const token = await this.generateUserToken(user);
 
-    return { token, user };
+    return { ...token, user };
   }
 
   verifyToken(token: string | null): GetUserFromTokenResponse {
@@ -46,26 +64,5 @@ export class TokenService {
       }
       return { user: null, tokenStatus };
     }
-  }
-
-  getUserConnection(authHeader: string | undefined) {
-    try {
-      if (!authHeader) return null;
-
-      const token = this.getBearerToken(authHeader);
-      return token ?? null;
-    } catch {
-      return null;
-    }
-  }
-
-  getBearerToken(authHeader: string | undefined) {
-    return trimStart(authHeader, 'Bearer ');
-  }
-
-  getTokenFromHeader(authHeader: string | undefined): GetUserFromTokenResponse {
-    const token = this.getUserConnection(authHeader);
-
-    return this.verifyToken(token);
   }
 }

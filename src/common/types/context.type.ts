@@ -2,7 +2,7 @@ import { type Role } from '@prisma/client';
 
 import { type TokenStatus } from '../../token/enums/token-status.enum';
 
-export type JWTUser = {
+export type JUser = {
   iss: string;
   email: string;
   id: string;
@@ -14,6 +14,6 @@ export type JWTUser = {
 
 export type Context = {
   req: Request;
-  user?: JWTUser;
+  user?: JUser;
   tokenStatus: TokenStatus;
 };

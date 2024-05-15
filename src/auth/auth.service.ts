@@ -1,27 +1,35 @@
+import { InjectQueue } from '@nestjs/bullmq';
 import {
   ConflictException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
-import dayjs from 'dayjs';
+import { Queue } from 'bullmq';
 
 import { PrismaErrorCode } from '@/common/enums';
-import { PrismaService } from '@/prisma/prisma.service';
+import { TokenService } from '@/token/token.service';
+import { UserService } from '@/user/user.service';
 
 import { type LoginInput } from './dtos/login.input';
 import { type RegisterInput } from './dtos/register.input';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly tokenService: TokenService,
+
+    @InjectQueue('update:user')
+    private readonly updateUserQueue: Queue,
+  ) {}
 
   async register(input: RegisterInput) {
     const { email, password } = input;
 
     const hashedPassword = await hash(password, 10);
 
-    const user = await this.prismaService.user
+    const user = await this.userService
       .create({
         data: {
           email,
@@ -35,15 +43,24 @@ export class AuthService {
         throw err;
       });
 
-    return user;
+    await this.updateUserQueue.add('update-last-login', {
+      id: user.id,
+    });
+
+    return this.tokenService.getUserLoginPayload(user);
   }
+  ß;
 
   async login(input: LoginInput) {
     const { email, password } = input;
 
-    const user = await this.prismaService.user.findUniqueOrThrow({
+    const user = await this.userService.findUnique({
       where: { email },
     });
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
 
     const isPwdValid = await compare(password, user.password);
 
@@ -51,13 +68,10 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    await this.prismaService.user.update({
-      where: { id: user.id },
-      data: {
-        lastLogin: dayjs().toDate(),
-      },
+    await this.updateUserQueue.add('update-last-login', {
+      id: user.id,
     });
 
-    return user;
+    return this.tokenService.getUserLoginPayload(user);
   }
 }

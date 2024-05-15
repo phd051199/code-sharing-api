@@ -1,0 +1,23 @@
+import { Inject, Injectable } from '@nestjs/common';
+
+import { REDIS_CLIENT } from '@/constants';
+
+import { RedisClient } from './redis.provider';
+
+@Injectable()
+export class RedisService {
+  constructor(@Inject(REDIS_CLIENT) private readonly client: RedisClient) {}
+
+  set(
+    prefix: string,
+    key: string,
+    value: string | Buffer | number,
+    expirationSeconds?: number,
+  ) {
+    return this.client.set(`${prefix}:` + key, value, 'EX', expirationSeconds);
+  }
+
+  get(prefix: string, key: string): Promise<string | Buffer | number> {
+    return this.client.get(`${prefix}:` + key);
+  }
+}

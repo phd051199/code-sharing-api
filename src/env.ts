@@ -7,7 +7,7 @@ import {
   type ValidatorOptions,
 } from 'class-validator';
 
-import { mapEnvError } from '@/common/utils';
+import { mapEnvError } from '@/validation/validation.util';
 
 export class Env {
   @IsOptional() NODE_ENV?: string;

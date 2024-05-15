@@ -1,11 +1,13 @@
+import { User } from '@generated/user';
 import { Field, ObjectType } from '@nestjs/graphql';
-
-import { User } from '@/common/gql/user';
 
 @ObjectType()
 export class UserLogin {
   @Field()
-  token: string;
+  accessToken: string;
+
+  @Field()
+  refreshToken: string;
 
   @Field(() => User)
   user: User;

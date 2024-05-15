@@ -1,19 +1,19 @@
+import {
+  type CreateManyUserArgs,
+  type CreateOneUserArgs,
+  type DeleteManyUserArgs,
+  type DeleteOneUserArgs,
+  type FindFirstUserArgs,
+  type FindManyUserArgs,
+  type FindUniqueUserArgs,
+  type UpdateManyUserArgs,
+  type UpdateOneUserArgs,
+  type User,
+  type UserAggregateArgs,
+  type UserGroupByArgs,
+} from '@generated/user';
 import { Injectable } from '@nestjs/common';
 
-import type {
-  CreateManyUserArgs,
-  CreateOneUserArgs,
-  DeleteManyUserArgs,
-  DeleteOneUserArgs,
-  FindFirstUserArgs,
-  FindManyUserArgs,
-  FindUniqueUserArgs,
-  UpdateManyUserArgs,
-  UpdateOneUserArgs,
-  User,
-  UserAggregateArgs,
-  UserGroupByArgs,
-} from '@/common/gql/user';
 import { BaseCrudService } from '@/common/services/base.service';
 import { PrismaService } from '@/prisma/prisma.service';
 
