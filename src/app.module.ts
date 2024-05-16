@@ -3,30 +3,25 @@ import { ApolloDriver, type ApolloDriverConfig } from '@nestjs/apollo';
 import { BullModule } from '@nestjs/bullmq';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MinioModule } from 'nestjs-minio-client';
+import { join } from 'path';
 
 import { RolesGuard } from '@/auth/guards';
-import {
-  appConfiguration,
-  type IRedisConfiguation,
-  jwtConfiguration,
-  minioConfiguration,
-  type MinioOptions,
-  redisConfiguration,
-} from '@/config';
+import { gqlContext } from '@/common/utils';
+import { type MinioOptions, type RedisConfiguation } from '@/config/types';
 import { MINIO_CFG, REDIS_CFG } from '@/constants';
-import { Env } from '@/env';
 import { TokenService } from '@/token/token.service';
 import { ValidationPipe } from '@/validation/validation.pipe';
 import { formatGqlError } from '@/validation/validation.util';
 
 import { AuthModule } from './auth/auth.module';
-import { gqlContext } from './common/utils/gql-context.util';
+import { CommonModule } from './common/common.module';
+import { ConfigModule } from './config/config.module';
 import { HealthModule } from './health/health.module';
 import { OAuthModule } from './oauth/oauth.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -35,29 +30,19 @@ import { ScriptModule } from './script/script.module';
 import { ScriptExecModule } from './script-exec/script-exec.module';
 import { TokenModule } from './token/token.module';
 import { UserModule } from './user/user.module';
-import { UserService } from './user/user.service';
 import { UserScriptModule } from './user-script/user-script.module';
+import { WebpackModule } from './webpack/webpack.module';
 
 @Module({
   imports: [
     CqrsModule.forRoot(),
-    ConfigModule.forRoot({
-      load: [
-        appConfiguration,
-        redisConfiguration,
-        minioConfiguration,
-        jwtConfiguration,
-      ],
-      isGlobal: true,
-      validate: Env.validate,
-    }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [TokenModule],
       inject: [TokenService],
       useFactory: (tokenService: TokenService) => ({
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
-        autoSchemaFile: true,
+        autoSchemaFile: join(process.cwd(), 'src/gql/schema.gql'),
         playground: false,
         subscriptions: {
           'graphql-ws': true,
@@ -73,7 +58,7 @@ import { UserScriptModule } from './user-script/user-script.module';
     BullModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
-        configService.get<IRedisConfiguation>(REDIS_CFG),
+        configService.get<RedisConfiguation>(REDIS_CFG),
     }),
     MinioModule.registerAsync({
       inject: [ConfigService],
@@ -81,10 +66,10 @@ import { UserScriptModule } from './user-script/user-script.module';
         configService.get<MinioOptions>(MINIO_CFG),
     }),
     ScheduleModule.forRoot(),
-    CacheModule.registerAsync<IRedisConfiguation>({
+    CacheModule.registerAsync<RedisConfiguation>({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        ...configService.get<IRedisConfiguation>(REDIS_CFG),
+        ...configService.get<RedisConfiguation>(REDIS_CFG),
         isGlobal: true,
       }),
     }),
@@ -98,6 +83,9 @@ import { UserScriptModule } from './user-script/user-script.module';
     RedisModule,
     OAuthModule,
     ScriptModule,
+    CommonModule,
+    WebpackModule,
+    ConfigModule,
   ],
   providers: [
     {
@@ -112,7 +100,6 @@ import { UserScriptModule } from './user-script/user-script.module';
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
     },
-    UserService,
   ],
 })
 export class AppModule {}

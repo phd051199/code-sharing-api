@@ -10,7 +10,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 
 import { IS_PUBLIC } from '@/constants';
-import { type User } from '@/generated/user';
+import { type User } from '@/gql/user';
 
 @Injectable()
 export class GqlJwtGuard extends AuthGuard('jwt') implements CanActivate {

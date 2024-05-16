@@ -6,14 +6,15 @@ generator client {
 
 generator nestgraphql {
   provider = "node node_modules/prisma-nestjs-graphql"
-  output   = "../src/generated"
+  output   = "../src/gql"
   reExport = Directories
 }
 
 datasource db {
-  provider  = "mysql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
+  relationMode = "prisma"
 }
 
 enum Role {
@@ -22,59 +23,80 @@ enum Role {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-
-  /// @Validator.MinLength(3)
-  name String? @db.MediumText
-
+  id    Int    @id @default(autoincrement())
   email String @unique
-
-  role Role @default(user)
-
-  /// @HideField()
-  password String? @db.MediumText
-
-  lastLogin DateTime?
+  role  Role   @default(user)
 
   /// @HideField()
-  createdAt DateTime @default(now())
+  password  String?   @db.MediumText
+  lastLogin DateTime? @map("last_login")
 
   /// @HideField()
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  /// @HideField()
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  scripts UserScript[]
+  userScripts    UserScript[]
+  oauthProviders OAuthProvider[]
+  profile        Profile?
 
   @@map("users")
 }
 
+model Profile {
+  id   Int     @id @default(autoincrement())
+  name String? @db.MediumText
+
+  userId Int  @unique @map("user_id")
+  /// @HideField()
+  user   User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("profile")
+}
+
+enum OAuthProviders {
+  google @map("google")
+  github @map("github")
+}
+
+model OAuthProvider {
+  provider OAuthProviders
+  userId   Int            @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  /// @HideField()
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, userId])
+  @@index([userId])
+  @@map("oauth_provider")
+}
+
 model Script {
-  id Int @id @default(autoincrement())
-
-  name String? @db.TinyText
-
+  id          Int     @id @default(autoincrement())
+  name        String? @db.TinyText
   description String? @db.LongText
+  path        String  @db.MediumText
 
-  path String @db.MediumText
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
-
-  users UserScript[]
+  userScripts UserScript[]
 
   @@map("scripts")
 }
 
 model UserScript {
-  id Int @id @default(autoincrement())
+  userId   Int @map("user_id")
+  scriptId Int @map("script_id")
 
-  userId Int
-
-  scriptId Int
-
-  createdAt DateTime @default(now())
-
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   user   User   @relation(fields: [userId], references: [id])
   script Script @relation(fields: [scriptId], references: [id])
@@ -82,5 +104,5 @@ model UserScript {
   @@unique([userId, scriptId])
   @@index([userId])
   @@index([scriptId])
-  @@map("users_scripts")
+  @@map("user_scripts")
 }

@@ -9,7 +9,7 @@ import {
   MicroserviceHealthIndicator,
 } from '@nestjs/terminus';
 
-import { type IRedisConfiguation } from '@/config';
+import { type RedisConfiguation } from '@/config/types';
 import { REDIS_CFG } from '@/constants';
 
 import { CheckHealthCommand } from '../impl/check-health.command';
@@ -27,7 +27,7 @@ export class CheckHealthHandler implements ICommandHandler<CheckHealthCommand> {
   execute(): Promise<HealthCheckResult> {
     const pingUrl = 'http://google.com/generate_204';
     const redisConnection =
-      this.configService.get<IRedisConfiguation>(REDIS_CFG).connection;
+      this.configService.get<RedisConfiguation>(REDIS_CFG).connection;
 
     return this.health.check([
       () => this.http.pingCheck('network', pingUrl),

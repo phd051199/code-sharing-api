@@ -7,6 +7,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
 import { PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
 
 import { APP_CFG } from '@/constants';
 
@@ -24,6 +25,10 @@ export class PrismaService
     });
   }
 
+  get withAccelerate() {
+    return this.$extends(withAccelerate());
+  }
+
   async onModuleInit() {
     await this.$connect();
   }
@@ -32,7 +37,7 @@ export class PrismaService
     await this.$disconnect();
   }
 
-  @Cron('*/2 * * * *')
+  @Cron('*/5 * * * *')
   async keepAlive() {
     this.logger.verbose('cron job: keep alive', this.constructor.name);
     await this.$queryRaw`SELECT 1`;

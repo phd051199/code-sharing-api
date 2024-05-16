@@ -11,6 +11,6 @@ export class GetUserByIdHandler implements IQueryHandler<GetUserByIdQuery> {
   constructor(private readonly userService: UserService) {}
 
   execute(query: GetUserByIdQuery) {
-    return this.userService.findId(query.id);
+    return this.userService.findIdCache(query.id);
   }
 }

@@ -4,8 +4,8 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { Roles } from '@/auth/decorators';
 import { GqlJwtGuard } from '@/auth/guards';
-import { Role } from '@/generated/prisma';
-import { User } from '@/generated/user';
+import { Role } from '@/gql/prisma';
+import { User } from '@/gql/user';
 
 import { GetUserByIdQuery } from './queries';
 

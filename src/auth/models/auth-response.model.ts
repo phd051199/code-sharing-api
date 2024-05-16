@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { User } from '@/generated/user';
+import { User } from '@/gql/user';
 
 @ObjectType()
 export class AuthResponse {
@@ -11,5 +11,5 @@ export class AuthResponse {
   refreshToken: string;
 
   @Field(() => User)
-  user: User;
+  user?: User;
 }

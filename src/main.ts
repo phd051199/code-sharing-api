@@ -1,3 +1,4 @@
+import fastifyCookie from '@fastify/cookie';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -6,8 +7,10 @@ import {
 } from '@nestjs/platform-fastify';
 
 import { AppModule } from '@/app.module';
-import { type IAppConfiguration } from '@/config';
+import { type AppConfiguration } from '@/config/types';
 import { APP_CFG } from '@/constants';
+
+import { fastifyOnRequestHook } from './common/utils';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -17,8 +20,16 @@ async function bootstrap() {
       cors: true,
     },
   );
+  const appInstance = app.getHttpAdapter().getInstance();
+  const configService = app.get(ConfigService);
 
-  const { host, port } = app.get(ConfigService).get<IAppConfiguration>(APP_CFG);
+  app.register(fastifyCookie, {
+    secret: configService.get<string>('cookie.secret'),
+  });
+
+  appInstance.addHook('onRequest', fastifyOnRequestHook);
+
+  const { host, port } = configService.get<AppConfiguration>(APP_CFG);
   await app.listen(port, host);
 }
 

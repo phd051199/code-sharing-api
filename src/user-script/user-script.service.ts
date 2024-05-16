@@ -14,7 +14,7 @@ import {
   type UserScript,
   type UserScriptAggregateArgs,
   type UserScriptGroupByArgs,
-} from '@/generated/user-script';
+} from '@/gql/user-script';
 
 @Injectable()
 export class UserScriptService extends BaseCrudService<

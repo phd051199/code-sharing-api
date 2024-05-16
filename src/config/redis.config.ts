@@ -1,18 +1,9 @@
 import { registerAs } from '@nestjs/config';
 
 import { REDIS_CFG } from '../constants';
+import { type RedisConfiguation } from './types';
 
-export interface IRedisConfiguation {
-  readonly prefix?: string;
-  readonly connection: {
-    host: string;
-    port: number;
-    name?: string;
-    password?: string;
-  };
-}
-
-export const redisConfiguration = registerAs<IRedisConfiguation>(
+export const redisConfiguration = registerAs<RedisConfiguation>(
   REDIS_CFG,
   () => ({
     prefix: 'bullmq_queue',

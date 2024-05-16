@@ -9,6 +9,7 @@ import { Queue } from 'bullmq';
 
 import { PrismaErrorCode } from '@/prisma/enums';
 import { TokenService } from '@/token/token.service';
+import { update_last_login_queue } from '@/user/queues';
 import { UserService } from '@/user/user.service';
 
 import {
@@ -16,7 +17,6 @@ import {
   type RefreshTokenInput,
   type RegisterInput,
 } from './dtos';
-import { update_last_login_queue } from './queues';
 
 @Injectable()
 export class AuthService {
@@ -34,8 +34,13 @@ export class AuthService {
     try {
       const user = await this.userService.create({
         data: {
-          ...input,
+          email: input.email,
           password: hashedPassword,
+          profile: {
+            create: {
+              name: input.name,
+            },
+          },
         },
       });
 

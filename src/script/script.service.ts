@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { BaseCrudService } from '@/common/base/base.service';
-import { type Script } from '@/generated/script';
+import { type Script } from '@/gql/script';
 import {
   type CreateManyUserScriptArgs,
   type CreateOneUserScriptArgs,
@@ -14,7 +14,7 @@ import {
   type UpdateOneUserScriptArgs,
   type UserScriptAggregateArgs,
   type UserScriptGroupByArgs,
-} from '@/generated/user-script';
+} from '@/gql/user-script';
 
 @Injectable()
 export class ScriptService extends BaseCrudService<

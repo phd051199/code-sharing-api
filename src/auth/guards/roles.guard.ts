@@ -5,18 +5,19 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { QueryBus } from '@nestjs/cqrs';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 import { type Context } from '@/common/types/context.type';
 import { ROLES } from '@/constants';
-import { type Role } from '@/generated/prisma';
-import { UserService } from '@/user/user.service';
+import { type Role } from '@/gql/prisma';
+import { GetUserByIdQuery } from '@/user/queries';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    private readonly userService: UserService,
+    private readonly queryBus: QueryBus,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -31,7 +32,9 @@ export class RolesGuard implements CanActivate {
 
     try {
       const ctx = GqlExecutionContext.create(context).getContext<Context>();
-      const user = await this.userService.findId(ctx.user.uid);
+      const user = await this.queryBus.execute(
+        new GetUserByIdQuery(ctx.user.uid),
+      );
 
       return requiredRoles.some((role) => user.role.includes(role));
     } catch (error) {

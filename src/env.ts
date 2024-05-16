@@ -27,6 +27,12 @@ export class Env {
 
   @IsNotEmpty() JWT_SECRET: string;
 
+  @IsNotEmpty() GOOGLE_CLIENT_ID: string;
+  @IsNotEmpty() GOOGLE_CLIENT_SECRET: string;
+  @IsNotEmpty() GOOGLE_AUTH_CALLBACK_URL: string;
+
+  @IsNotEmpty() COOKIE_SECRET: string;
+
   static validate(plain: typeof Env) {
     const options: ValidatorOptions = {
       skipMissingProperties: false,
