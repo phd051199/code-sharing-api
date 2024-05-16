@@ -2,8 +2,8 @@ import { CommandBus } from '@nestjs/cqrs';
 import { Query, Resolver } from '@nestjs/graphql';
 import { HealthCheck } from '@nestjs/terminus';
 
-import { CheckHealthCommand } from './commands/impl';
-import { HealthInfo } from './models/health-info.model';
+import { CheckHealthCommand } from './commands';
+import { HealthInfo } from './models';
 
 @Resolver()
 export class HealthResolver {

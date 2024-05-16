@@ -14,7 +14,7 @@ export function formatGqlError(error: GraphQLError): GraphQLFormattedError {
     extensions: originalError
       ? {
           code: originalError.statusCode,
-          error: extensions.code ?? HttpStatus[originalError.statusCode],
+          error: HttpStatus[originalError.statusCode],
           details: originalError.details,
         }
       : extensions,

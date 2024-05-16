@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { QueryHandlers } from './queries/handlers';
+import { QueryHandlers } from './queries';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 

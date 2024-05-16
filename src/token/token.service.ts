@@ -65,7 +65,7 @@ export class TokenService {
   }
 
   async verifyRefreshToken(refreshToken: string) {
-    const uid = await this.redisService.get('refreshToken', refreshToken);
+    const uid = await this.redisService.getInt('refreshToken', refreshToken);
 
     if (!uid) {
       throw new UnauthorizedException();

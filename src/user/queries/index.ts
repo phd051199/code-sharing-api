@@ -1,1 +1,2 @@
-export * from './impl/get-user-by-id.query';
+export * from './handlers';
+export * from './impl';

@@ -34,7 +34,7 @@ export class PrismaService
 
   @Cron('*/2 * * * *')
   async keepAlive() {
-    this.logger.log('cron job: keep alive', this.constructor.name);
+    this.logger.verbose('cron job: keep alive', this.constructor.name);
     await this.$queryRaw`SELECT 1`;
   }
 }

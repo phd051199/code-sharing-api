@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
 
-@Module({})
+import { UserScriptService } from './user-script.service';
+
+@Module({
+  providers: [UserScriptService],
+})
 export class UserScriptModule {}

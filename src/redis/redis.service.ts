@@ -17,7 +17,12 @@ export class RedisService {
     return this.client.set(`${prefix}:` + key, value, 'EX', expirationSeconds);
   }
 
-  get(prefix: string, key: string): Promise<string> {
+  getString(prefix: string, key: string): Promise<string> {
     return this.client.get(`${prefix}:` + key);
+  }
+
+  async getInt(prefix: string, key: string): Promise<number> {
+    const result = await this.client.get(`${prefix}:` + key);
+    return Number(result);
   }
 }

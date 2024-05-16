@@ -1,1 +1,1 @@
-export * from './prisma.enum';
+export * from './queue-status.enum';

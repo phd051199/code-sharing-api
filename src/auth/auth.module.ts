@@ -6,7 +6,7 @@ import { UserService } from '@/user/user.service';
 
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
-import { CommandHandlers } from './commands/handlers';
+import { CommandHandlers } from './commands';
 import { update_last_login_queue, UpdateLastLoginProcessor } from './queues';
 import { JwtStrategy } from './strategies';
 

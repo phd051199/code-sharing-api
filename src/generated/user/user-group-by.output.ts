@@ -25,7 +25,7 @@ export class UserGroupBy {
     role!: keyof typeof Role;
 
     @HideField()
-    password!: string;
+    password?: string;
 
     @Field(() => Date, {nullable:true})
     lastLogin?: Date | string;

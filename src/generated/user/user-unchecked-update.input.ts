@@ -6,6 +6,7 @@ import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-
 import { EnumRoleFieldUpdateOperationsInput } from '../prisma/enum-role-field-update-operations.input';
 import { NullableDateTimeFieldUpdateOperationsInput } from '../prisma/nullable-date-time-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
+import { UserScriptUncheckedUpdateManyWithoutUserNestedInput } from '../user-script/user-script-unchecked-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUncheckedUpdateInput {
@@ -22,8 +23,8 @@ export class UserUncheckedUpdateInput {
     @Field(() => EnumRoleFieldUpdateOperationsInput, {nullable:true})
     role?: EnumRoleFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    password?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    password?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput;
@@ -33,4 +34,7 @@ export class UserUncheckedUpdateInput {
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
+
+    @Field(() => UserScriptUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    scripts?: UserScriptUncheckedUpdateManyWithoutUserNestedInput;
 }

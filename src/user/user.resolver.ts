@@ -7,7 +7,7 @@ import { GqlJwtGuard } from '@/auth/guards';
 import { Role } from '@/generated/prisma';
 import { User } from '@/generated/user';
 
-import { GetUserByIdQuery } from './queries/impl/get-user-by-id.query';
+import { GetUserByIdQuery } from './queries';
 
 @Resolver(() => User)
 export class UserResolver {

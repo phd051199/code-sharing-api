@@ -7,7 +7,7 @@ import {
 import { compare, hash } from 'bcrypt';
 import { Queue } from 'bullmq';
 
-import { PrismaErrorCode } from '@/common/enums';
+import { PrismaErrorCode } from '@/prisma/enums';
 import { TokenService } from '@/token/token.service';
 import { UserService } from '@/user/user.service';
 
@@ -29,13 +29,12 @@ export class AuthService {
   ) {}
 
   async register(input: RegisterInput) {
-    const { email, password } = input;
-    const hashedPassword = await hash(password, 10);
+    const hashedPassword = await hash(input.password, 10);
 
     try {
       const user = await this.userService.create({
         data: {
-          email,
+          ...input,
           password: hashedPassword,
         },
       });
@@ -77,7 +76,7 @@ export class AuthService {
     const { refreshToken } = input;
     try {
       const { uid } = await this.tokenService.verifyRefreshToken(refreshToken);
-      const user = await this.userService.findId(Number(uid));
+      const user = await this.userService.findId(uid);
 
       await this.updateLastLogin(user.id);
       return this.tokenService.getAuthPayload(user);

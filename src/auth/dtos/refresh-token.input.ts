@@ -1,9 +1,10 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsUUID } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
 @InputType()
 export class RefreshTokenInput {
   @Field()
   @IsUUID()
+  @IsNotEmpty()
   refreshToken: string;
 }

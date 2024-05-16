@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { BaseCrudService } from '@/common/services/base.service';
+import { BaseCrudService } from '@/common/base/base.service';
 import {
   type CreateManyUserArgs,
   type CreateOneUserArgs,
@@ -15,7 +15,6 @@ import {
   type UserAggregateArgs,
   type UserGroupByArgs,
 } from '@/generated/user';
-import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class UserService extends BaseCrudService<
@@ -31,8 +30,4 @@ export class UserService extends BaseCrudService<
   UpdateManyUserArgs,
   DeleteOneUserArgs,
   DeleteManyUserArgs
-> {
-  constructor(prisma: PrismaService) {
-    super(prisma);
-  }
-}
+> {}

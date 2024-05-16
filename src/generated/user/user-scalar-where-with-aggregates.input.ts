@@ -31,8 +31,8 @@ export class UserScalarWhereWithAggregatesInput {
     @Field(() => EnumRoleWithAggregatesFilter, {nullable:true})
     role?: EnumRoleWithAggregatesFilter;
 
-    @Field(() => StringWithAggregatesFilter, {nullable:true})
-    password?: StringWithAggregatesFilter;
+    @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
+    password?: StringNullableWithAggregatesFilter;
 
     @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
     lastLogin?: DateTimeNullableWithAggregatesFilter;

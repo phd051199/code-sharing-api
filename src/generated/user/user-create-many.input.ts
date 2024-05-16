@@ -18,8 +18,8 @@ export class UserCreateManyInput {
     @Field(() => Role, {nullable:true})
     role?: keyof typeof Role;
 
-    @Field(() => String, {nullable:false})
-    password!: string;
+    @Field(() => String, {nullable:true})
+    password?: string;
 
     @Field(() => Date, {nullable:true})
     lastLogin?: Date | string;

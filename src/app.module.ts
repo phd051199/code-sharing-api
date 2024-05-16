@@ -9,7 +9,6 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MinioModule } from 'nestjs-minio-client';
-import { ExtractJwt } from 'passport-jwt';
 
 import { RolesGuard } from '@/auth/guards';
 import {
@@ -27,10 +26,12 @@ import { ValidationPipe } from '@/validation/validation.pipe';
 import { formatGqlError } from '@/validation/validation.util';
 
 import { AuthModule } from './auth/auth.module';
+import { gqlContext } from './common/utils/gql-context.util';
 import { HealthModule } from './health/health.module';
 import { OAuthModule } from './oauth/oauth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { RedisModule } from './redis/redis.module';
+import { ScriptModule } from './script/script.module';
 import { ScriptExecModule } from './script-exec/script-exec.module';
 import { TokenModule } from './token/token.module';
 import { UserModule } from './user/user.module';
@@ -66,15 +67,7 @@ import { UserScriptModule } from './user-script/user-script.module';
           numberScalarMode: 'integer',
         },
         formatError: formatGqlError,
-        context: (req: Request) => {
-          const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
-          const { payload } = tokenService.verifyAccessToken(token);
-
-          return {
-            ...req,
-            user: payload,
-          };
-        },
+        context: (req: Request) => gqlContext(req, tokenService),
       }),
     }),
     BullModule.forRootAsync({
@@ -104,6 +97,7 @@ import { UserScriptModule } from './user-script/user-script.module';
     ScriptExecModule,
     RedisModule,
     OAuthModule,
+    ScriptModule,
   ],
   providers: [
     {
