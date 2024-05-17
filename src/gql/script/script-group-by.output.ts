@@ -23,10 +23,13 @@ export class ScriptGroupBy {
     path!: string;
 
     @Field(() => Date, {nullable:false})
-    createdAt!: Date | string;
+    created_at!: Date | string;
 
     @Field(() => Date, {nullable:false})
-    updatedAt!: Date | string;
+    updated_at!: Date | string;
+
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 
     @Field(() => ScriptCountAggregate, {nullable:true})
     _count?: ScriptCountAggregate;

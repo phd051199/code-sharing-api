@@ -1,47 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import _ from 'lodash';
 
-import { BaseCrudService } from '@/common/base/base.service';
-import {
-  type CreateManyUserArgs,
-  type CreateOneUserArgs,
-  type DeleteManyUserArgs,
-  type DeleteOneUserArgs,
-  type FindFirstUserArgs,
-  type FindManyUserArgs,
-  type FindUniqueUserArgs,
-  type UpdateManyUserArgs,
-  type UpdateOneUserArgs,
-  type User,
-  type UserAggregateArgs,
-  type UserGroupByArgs,
-} from '@/gql/user';
+import { type GithubUser, type GoogleUser } from '@/oauth/types';
 import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
-export class UserService extends BaseCrudService<
-  User,
-  FindFirstUserArgs,
-  FindUniqueUserArgs,
-  FindManyUserArgs,
-  UserGroupByArgs,
-  UserAggregateArgs,
-  CreateOneUserArgs,
-  CreateManyUserArgs,
-  UpdateOneUserArgs,
-  UpdateManyUserArgs,
-  DeleteOneUserArgs,
-  DeleteManyUserArgs
-> {
-  constructor(private readonly prismaService: PrismaService) {
-    super(prismaService);
-  }
+export class UserService {
+  constructor(private readonly prisma: PrismaService) {}
 
-  findByEmail(email: string): Promise<User | null> {
-    return this.prismaService.user.findUnique({ where: { email } });
-  }
-
-  findIdCache(id: number): Promise<User | null> {
-    return this.prisma.withAccelerate.user.findUnique({
+  findIdCache(id: number) {
+    return this.prisma.withAccelerate.user.findFirst({
       where: { id },
       cacheStrategy: {
         swr: 30,
@@ -50,13 +18,51 @@ export class UserService extends BaseCrudService<
     });
   }
 
-  async findOrCreate({ data }: CreateOneUserArgs): Promise<User> {
-    const existingUser = await this.findByEmail(data.email);
+  async findUniqueOrNew(data: GoogleUser | GithubUser) {
+    data.email = data.email?.toLowerCase();
+    const { email, name: display_name, provider } = data;
 
-    if (existingUser) {
-      return existingUser;
+    const existingUser = await this.prisma.user.findUnique({
+      include: {
+        auth_providers: {
+          select: {
+            provider: true,
+          },
+        },
+      },
+      where: {
+        email,
+      },
+    });
+
+    if (!existingUser) {
+      return this.prisma.user.create({
+        data: {
+          email,
+          display_name,
+          role: {
+            connect: { id: 0 },
+          },
+          auth_providers: {
+            create: {
+              provider,
+            },
+          },
+        },
+      });
     }
 
-    return this.prismaService.user.create({ data });
+    if (
+      !_.includes(_.map(existingUser.auth_providers, 'provider'), data.provider)
+    ) {
+      await this.prisma.authProvider.create({
+        data: {
+          user_id: existingUser.id,
+          provider,
+        },
+      });
+    }
+
+    return existingUser;
   }
 }

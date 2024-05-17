@@ -7,7 +7,9 @@ import {
   HealthCheckService,
   HttpHealthIndicator,
   MicroserviceHealthIndicator,
+  PrismaHealthIndicator,
 } from '@nestjs/terminus';
+import { PrismaClient } from '@prisma/client';
 
 import { type RedisConfiguation } from '@/config/types';
 import { REDIS_CFG } from '@/constants';
@@ -22,6 +24,7 @@ export class CheckHealthHandler implements ICommandHandler<CheckHealthCommand> {
     private readonly health: HealthCheckService,
     private readonly http: HttpHealthIndicator,
     private readonly microservice: MicroserviceHealthIndicator,
+    private readonly prisma: PrismaHealthIndicator,
   ) {}
 
   execute(): Promise<HealthCheckResult> {
@@ -36,6 +39,7 @@ export class CheckHealthHandler implements ICommandHandler<CheckHealthCommand> {
           transport: Transport.REDIS,
           options: redisConnection,
         }),
+      () => this.prisma.pingCheck('prisma', new PrismaClient()),
     ]);
   }
 }

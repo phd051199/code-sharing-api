@@ -18,8 +18,11 @@ export class ScriptCreateManyInput {
     path!: string;
 
     @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
+    created_at?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
+    updated_at?: Date | string;
+
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 }

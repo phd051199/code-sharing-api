@@ -1,8 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
-import { UserScript } from '../user-script/user-script.model';
-import { ScriptCount } from './script-count.output';
+import { Int } from '@nestjs/graphql';
+import { User } from '../user/user.model';
 
 @ObjectType()
 export class Script {
@@ -20,14 +20,14 @@ export class Script {
     path!: string;
 
     @Field(() => Date, {nullable:false})
-    createdAt!: Date;
+    created_at!: Date;
 
     @Field(() => Date, {nullable:false})
-    updatedAt!: Date;
+    updated_at!: Date;
 
-    @Field(() => [UserScript], {nullable:true})
-    userScripts?: Array<UserScript>;
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 
-    @Field(() => ScriptCount, {nullable:false})
-    _count?: ScriptCount;
+    @Field(() => User, {nullable:false})
+    user?: User;
 }

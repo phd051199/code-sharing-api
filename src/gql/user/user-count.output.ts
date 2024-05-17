@@ -6,8 +6,8 @@ import { Int } from '@nestjs/graphql';
 export class UserCount {
 
     @Field(() => Int, {nullable:false})
-    userScripts?: number;
+    auth_providers?: number;
 
     @Field(() => Int, {nullable:false})
-    oauthProviders?: number;
+    scripts?: number;
 }

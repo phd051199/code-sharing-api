@@ -1,39 +1,40 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { OAuthProviders } from '@prisma/client';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthProviders } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Public } from '@/auth/decorators';
 
 import { OAuthLoginCommand } from './commands';
-import { GoogleOAuthGuard } from './guards/google-oauth.guard';
 
+@Public()
 @Controller('oauth')
 export class OAuthController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Public()
-  @UseGuards(GoogleOAuthGuard)
   @Get('google')
+  @UseGuards(AuthGuard(AuthProviders.google))
   google() {}
 
-  @Public()
-  @UseGuards(GoogleOAuthGuard)
   @Get('google/callback')
-  async googleCallback(
-    @Req() req: FastifyRequest,
-    @Res() res: FastifyReply,
-  ): Promise<void> {
-    await this.commandBus.execute(
-      new OAuthLoginCommand(OAuthProviders.google, req.user, res),
-    );
+  @UseGuards(AuthGuard(AuthProviders.google))
+  googleCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
+    return this.commandBus.execute(new OAuthLoginCommand(req.user, res));
   }
 
-  @Public()
+  @Get('github')
+  @UseGuards(AuthGuard(AuthProviders.github))
+  github() {}
+
+  @Get('github/callback')
+  @UseGuards(AuthGuard(AuthProviders.github))
+  githubCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
+    return this.commandBus.execute(new OAuthLoginCommand(req.user, res));
+  }
+
   @Get('status')
   status(@Req() req: FastifyRequest) {
-    return {
-      status: req.cookies.accessToken ? 'authenticated' : 'unauthenticated',
-    };
+    return req.cookies;
   }
 }

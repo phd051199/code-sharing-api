@@ -7,4 +7,7 @@ export class ScriptAvgOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    user_id?: keyof typeof SortOrder;
 }

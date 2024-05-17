@@ -7,4 +7,7 @@ export class ScriptSumAggregate {
 
     @Field(() => Int, {nullable:true})
     id?: number;
+
+    @Field(() => Int, {nullable:true})
+    user_id?: number;
 }

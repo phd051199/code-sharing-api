@@ -1,4 +1,7 @@
-import fastifyCookie from '@fastify/cookie';
+import fastifyCookie, { type FastifyCookieOptions } from '@fastify/cookie';
+import fastifyCsrf, {
+  type FastifyCsrfProtectionOptions,
+} from '@fastify/csrf-protection';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -7,10 +10,10 @@ import {
 } from '@nestjs/platform-fastify';
 
 import { AppModule } from '@/app.module';
+import { FastifyHooks } from '@/common/enums';
+import { fastifyPassportAdditionalHook } from '@/common/utils';
 import { type AppConfiguration } from '@/config/types';
 import { APP_CFG } from '@/constants';
-
-import { fastifyOnRequestHook } from './common/utils';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -20,16 +23,21 @@ async function bootstrap() {
       cors: true,
     },
   );
-  const appInstance = app.getHttpAdapter().getInstance();
-  const configService = app.get(ConfigService);
 
-  app.register(fastifyCookie, {
+  app
+    .getHttpAdapter()
+    .getInstance()
+    .addHook(FastifyHooks.onRequest, fastifyPassportAdditionalHook);
+
+  const configService = app.get(ConfigService);
+  const { host, port } = configService.get<AppConfiguration>(APP_CFG);
+
+  await app.register<FastifyCookieOptions>(fastifyCookie, {
     secret: configService.get<string>('cookie.secret'),
   });
 
-  appInstance.addHook('onRequest', fastifyOnRequestHook);
+  await app.register<FastifyCsrfProtectionOptions>(fastifyCsrf);
 
-  const { host, port } = configService.get<AppConfiguration>(APP_CFG);
   await app.listen(port, host);
 }
 

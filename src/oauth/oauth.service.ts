@@ -1,11 +1,11 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable } from '@nestjs/common';
-import { type OAuthProviders } from '@prisma/client';
+import { type AuthProviders } from '@prisma/client';
 import { Queue } from 'bullmq';
 
 import { type AuthResponse } from '@/auth/models';
 import { TokenService } from '@/token/token.service';
-import { update_last_login_queue } from '@/user/queues';
+import { UPDATE_LAST_LOGIN_QUEUE } from '@/user/queues';
 import { UserService } from '@/user/user.service';
 
 @Injectable()
@@ -14,21 +14,19 @@ export class OAuthService {
     private readonly usersService: UserService,
     private readonly tokenService: TokenService,
 
-    @InjectQueue(update_last_login_queue)
+    @InjectQueue(UPDATE_LAST_LOGIN_QUEUE)
     private readonly updateLastLoginQueue: Queue,
   ) {}
 
-  public async login(
-    provider: OAuthProviders,
+  async login(
+    provider: AuthProviders,
     email: string,
     name: string,
   ): Promise<AuthResponse> {
-    const user = await this.usersService.findOrCreate({
-      data: {
-        email,
-        profile: { create: { name } },
-        oauthProviders: { create: [{ provider }] },
-      },
+    const user = await this.usersService.findUniqueOrNew({
+      provider,
+      email,
+      name,
     });
 
     await this.updateLastLoginQueue.add('update-last-login', {

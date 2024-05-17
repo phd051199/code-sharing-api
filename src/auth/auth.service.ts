@@ -8,9 +8,9 @@ import { compare, hash } from 'bcrypt';
 import { Queue } from 'bullmq';
 
 import { PrismaErrorCode } from '@/prisma/enums';
+import { PrismaService } from '@/prisma/prisma.service';
 import { TokenService } from '@/token/token.service';
-import { update_last_login_queue } from '@/user/queues';
-import { UserService } from '@/user/user.service';
+import { UPDATE_LAST_LOGIN_QUEUE } from '@/user/queues';
 
 import {
   type LoginInput,
@@ -21,10 +21,10 @@ import {
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
     private readonly tokenService: TokenService,
+    private readonly prisma: PrismaService,
 
-    @InjectQueue(update_last_login_queue)
+    @InjectQueue(UPDATE_LAST_LOGIN_QUEUE)
     private readonly updateLastLoginQueue: Queue,
   ) {}
 
@@ -32,14 +32,13 @@ export class AuthService {
     const hashedPassword = await hash(input.password, 10);
 
     try {
-      const user = await this.userService.create({
+      const user = await this.prisma.user.create({
         data: {
           email: input.email,
           password: hashedPassword,
-          profile: {
-            create: {
-              name: input.name,
-            },
+          display_name: input.name,
+          role: {
+            connect: { id: 0 },
           },
         },
       });
@@ -58,7 +57,7 @@ export class AuthService {
   async login(input: LoginInput) {
     const { email, password } = input;
     try {
-      const user = await this.userService.findUniqueOrThrow({
+      const user = await this.prisma.user.findUniqueOrThrow({
         where: { email },
       });
 
@@ -81,7 +80,9 @@ export class AuthService {
     const { refreshToken } = input;
     try {
       const { uid } = await this.tokenService.verifyRefreshToken(refreshToken);
-      const user = await this.userService.findId(uid);
+      const user = await this.prisma.user.findUnique({
+        where: { id: uid },
+      });
 
       await this.updateLastLogin(user.id);
       return this.tokenService.getAuthPayload(user);

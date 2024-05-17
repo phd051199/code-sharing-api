@@ -6,14 +6,14 @@ import {
 
 import { Env } from '@/env';
 
-import { appConfiguration } from './app.config';
+import { appConfiguration } from './factories/app.config';
 import {
   cookieConfiguration,
   jwtConfiguration,
   oauthConfiguration,
-} from './auth.config';
-import { minioConfiguration } from './minio.config';
-import { redisConfiguration } from './redis.config';
+} from './factories/auth.config';
+import { minioConfiguration } from './factories/minio.config';
+import { redisConfiguration } from './factories/redis.config';
 
 @Global()
 @Module({

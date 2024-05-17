@@ -1,17 +1,17 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
-import { set } from 'lodash';
+import _ from 'lodash';
 
-export const fastifyOnRequestHook = (
+export const fastifyPassportAdditionalHook = (
   request: FastifyRequest,
   reply: FastifyReply,
   done: () => void,
 ) => {
-  set(reply, 'setHeader', function (key: string, value: string) {
+  _.set(reply, 'setHeader', function (key: string, value: string) {
     return this.raw.setHeader(key, value);
   });
-  set(reply, 'end', function () {
+  _.set(reply, 'end', function () {
     return this.raw.end();
   });
-  set(request, 'res', reply);
+  _.set(request, 'res', reply);
   done();
 };

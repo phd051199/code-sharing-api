@@ -13,6 +13,9 @@ class HealthDetails {
 
   @Field(() => Status, { nullable: true })
   redis?: Status;
+
+  @Field(() => Status, { nullable: true })
+  prisma?: Status;
 }
 
 @ObjectType()

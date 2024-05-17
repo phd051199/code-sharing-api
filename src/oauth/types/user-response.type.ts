@@ -1,11 +1,15 @@
+import { type AuthProviders } from '@prisma/client';
+
 export type GoogleUser = {
-  sub: string;
+  provider: AuthProviders;
   name: string;
-  given_name: string;
-  family_name: string;
-  picture: string;
+  picture?: string;
   email: string;
-  email_verified: boolean;
-  locale: string;
-  hd: string;
+};
+
+export type GithubUser = {
+  provider: AuthProviders;
+  name: string;
+  email: string;
+  picture?: string;
 };

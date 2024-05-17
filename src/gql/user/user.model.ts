@@ -1,11 +1,10 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
-import { Role } from '../prisma/role.enum';
-import { HideField } from '@nestjs/graphql';
-import { UserScript } from '../user-script/user-script.model';
-import { OAuthProvider } from '../o-auth-provider/o-auth-provider.model';
-import { Profile } from '../profile/profile.model';
+import { Int } from '@nestjs/graphql';
+import { Role } from '../role/role.model';
+import { AuthProvider } from '../auth-provider/auth-provider.model';
+import { Script } from '../script/script.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -17,29 +16,35 @@ export class User {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:false,defaultValue:'user'})
-    role!: keyof typeof Role;
+    @Field(() => String, {nullable:true})
+    user_name!: string | null;
 
-    @HideField()
+    @Field(() => String, {nullable:true})
+    display_name!: string | null;
+
+    @Field(() => Int, {nullable:false})
+    role_id!: number;
+
+    @Field(() => String, {nullable:true})
     password!: string | null;
 
     @Field(() => Date, {nullable:true})
-    lastLogin!: Date | null;
+    last_login!: Date | null;
 
-    @HideField()
-    createdAt!: Date;
+    @Field(() => Date, {nullable:false})
+    created_at!: Date;
 
-    @HideField()
-    updatedAt!: Date;
+    @Field(() => Date, {nullable:false})
+    updated_at!: Date;
 
-    @Field(() => [UserScript], {nullable:true})
-    userScripts?: Array<UserScript>;
+    @Field(() => Role, {nullable:false})
+    role?: Role;
 
-    @Field(() => [OAuthProvider], {nullable:true})
-    oauthProviders?: Array<OAuthProvider>;
+    @Field(() => [AuthProvider], {nullable:true})
+    auth_providers?: Array<AuthProvider>;
 
-    @Field(() => Profile, {nullable:true})
-    profile?: Profile | null;
+    @Field(() => [Script], {nullable:true})
+    scripts?: Array<Script>;
 
     @Field(() => UserCount, {nullable:false})
     _count?: UserCount;

@@ -2,13 +2,12 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
-import { EnumRoleFilter } from '../prisma/enum-role-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { DateTimeNullableFilter } from '../prisma/date-time-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { UserScriptListRelationFilter } from '../user-script/user-script-list-relation-filter.input';
-import { OAuthProviderListRelationFilter } from '../o-auth-provider/o-auth-provider-list-relation-filter.input';
-import { ProfileNullableRelationFilter } from '../profile/profile-nullable-relation-filter.input';
+import { RoleRelationFilter } from '../role/role-relation-filter.input';
+import { AuthProviderListRelationFilter } from '../auth-provider/auth-provider-list-relation-filter.input';
+import { ScriptListRelationFilter } from '../script/script-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -28,27 +27,33 @@ export class UserWhereInput {
     @Field(() => StringFilter, {nullable:true})
     email?: StringFilter;
 
-    @Field(() => EnumRoleFilter, {nullable:true})
-    role?: EnumRoleFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    user_name?: StringNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    display_name?: StringNullableFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    role_id?: IntFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     password?: StringNullableFilter;
 
     @Field(() => DateTimeNullableFilter, {nullable:true})
-    lastLogin?: DateTimeNullableFilter;
+    last_login?: DateTimeNullableFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    createdAt?: DateTimeFilter;
+    created_at?: DateTimeFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    updatedAt?: DateTimeFilter;
+    updated_at?: DateTimeFilter;
 
-    @Field(() => UserScriptListRelationFilter, {nullable:true})
-    userScripts?: UserScriptListRelationFilter;
+    @Field(() => RoleRelationFilter, {nullable:true})
+    role?: RoleRelationFilter;
 
-    @Field(() => OAuthProviderListRelationFilter, {nullable:true})
-    oauthProviders?: OAuthProviderListRelationFilter;
+    @Field(() => AuthProviderListRelationFilter, {nullable:true})
+    auth_providers?: AuthProviderListRelationFilter;
 
-    @Field(() => ProfileNullableRelationFilter, {nullable:true})
-    profile?: ProfileNullableRelationFilter;
+    @Field(() => ScriptListRelationFilter, {nullable:true})
+    scripts?: ScriptListRelationFilter;
 }

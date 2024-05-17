@@ -9,14 +9,14 @@ import { OAuthLoginCommand } from '../impl';
 
 @CommandHandler(OAuthLoginCommand)
 export class OAuthLoginHandler implements ICommandHandler<OAuthLoginCommand> {
-  private redirectUrl: string = 'http://localhost:3000/oauth/status';
+  private redirectUrl = '/oauth/status';
 
   constructor(private readonly oauthService: OAuthService) {}
 
   async execute(command: OAuthLoginCommand): Promise<void> {
-    const { provider, user, res } = command;
+    const { user, res } = command;
     const token = await this.oauthService.login(
-      provider,
+      user.provider,
       user.email,
       user.name,
     );

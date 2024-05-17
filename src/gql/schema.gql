@@ -5,29 +5,36 @@
 type UserCountAggregate {
   id: Int!
   email: Int!
-  role: Int!
-  lastLogin: Int!
+  user_name: Int!
+  display_name: Int!
+  role_id: Int!
+  password: Int!
+  last_login: Int!
+  created_at: Int!
+  updated_at: Int!
   _all: Int!
 }
 
 type UserAvgAggregate {
   id: Float
+  role_id: Float
 }
 
 type UserSumAggregate {
   id: Int
+  role_id: Int
 }
 
 type UserMinAggregate {
   id: Int
   email: String
-  role: Role
-  lastLogin: DateTime
-}
-
-enum Role {
-  admin
-  user
+  user_name: String
+  display_name: String
+  role_id: Int
+  password: String
+  last_login: DateTime
+  created_at: DateTime
+  updated_at: DateTime
 }
 
 """
@@ -38,17 +45,72 @@ scalar DateTime
 type UserMaxAggregate {
   id: Int
   email: String
-  role: Role
-  lastLogin: DateTime
+  user_name: String
+  display_name: String
+  role_id: Int
+  password: String
+  last_login: DateTime
+  created_at: DateTime
+  updated_at: DateTime
 }
 
 type UserCount {
-  userScripts: Int!
-  oauthProviders: Int!
+  auth_providers: Int!
+  scripts: Int!
 }
 
-type ScriptCount {
-  userScripts: Int!
+type Permission {
+  id: ID!
+  role_id: Int!
+  action: Action!
+  subject: String!
+  inverted: Boolean!
+  conditions: JSON
+  reason: String
+  created_at: DateTime!
+  updated_at: DateTime
+  role: Role!
+}
+
+enum Action {
+  manage
+  create
+  read
+  update
+  delete
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type RoleCount {
+  permissions: Int!
+  users: Int!
+}
+
+type Role {
+  id: ID!
+  name: String!
+  created_at: DateTime!
+  updated_at: DateTime
+  permissions: [Permission!]
+  users: [User!]
+  _count: RoleCount!
+}
+
+type AuthProvider {
+  provider: AuthProviders!
+  user_id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  user: User!
+}
+
+enum AuthProviders {
+  google
+  github
 }
 
 type Script {
@@ -56,49 +118,25 @@ type Script {
   name: String
   description: String
   path: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  userScripts: [UserScript!]
-  _count: ScriptCount!
-}
-
-type UserScript {
-  userId: Int!
-  scriptId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  created_at: DateTime!
+  updated_at: DateTime!
+  user_id: Int!
   user: User!
-  script: Script!
-}
-
-type OAuthProvider {
-  provider: OAuthProviders!
-  userId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-enum OAuthProviders {
-  google
-  github
-}
-
-type Profile {
-  id: ID!
-  name: String
-  userId: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type User {
   id: ID!
   email: String!
+  user_name: String
+  display_name: String
+  role_id: Int!
+  password: String
+  last_login: DateTime
+  created_at: DateTime!
+  updated_at: DateTime!
   role: Role!
-  lastLogin: DateTime
-  userScripts: [UserScript!]
-  oauthProviders: [OAuthProvider!]
-  profile: Profile
+  auth_providers: [AuthProvider!]
+  scripts: [Script!]
   _count: UserCount!
 }
 
@@ -115,6 +153,7 @@ type Status {
 type HealthDetails {
   network: Status
   redis: Status
+  prisma: Status
 }
 
 type HealthInfo {

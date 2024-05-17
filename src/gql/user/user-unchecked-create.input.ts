@@ -1,10 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { Role } from '../prisma/role.enum';
-import { UserScriptUncheckedCreateNestedManyWithoutUserInput } from '../user-script/user-script-unchecked-create-nested-many-without-user.input';
-import { OAuthProviderUncheckedCreateNestedManyWithoutUserInput } from '../o-auth-provider/o-auth-provider-unchecked-create-nested-many-without-user.input';
-import { ProfileUncheckedCreateNestedOneWithoutUserInput } from '../profile/profile-unchecked-create-nested-one-without-user.input';
+import { AuthProviderUncheckedCreateNestedManyWithoutUserInput } from '../auth-provider/auth-provider-unchecked-create-nested-many-without-user.input';
+import { ScriptUncheckedCreateNestedManyWithoutUserInput } from '../script/script-unchecked-create-nested-many-without-user.input';
 
 @InputType()
 export class UserUncheckedCreateInput {
@@ -15,27 +13,30 @@ export class UserUncheckedCreateInput {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:true})
-    role?: keyof typeof Role;
+    @Field(() => String, {nullable:true})
+    user_name?: string;
+
+    @Field(() => String, {nullable:true})
+    display_name?: string;
+
+    @Field(() => Int, {nullable:false})
+    role_id!: number;
 
     @Field(() => String, {nullable:true})
     password?: string;
 
     @Field(() => Date, {nullable:true})
-    lastLogin?: Date | string;
+    last_login?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
+    created_at?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
+    updated_at?: Date | string;
 
-    @Field(() => UserScriptUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
-    userScripts?: UserScriptUncheckedCreateNestedManyWithoutUserInput;
+    @Field(() => AuthProviderUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    auth_providers?: AuthProviderUncheckedCreateNestedManyWithoutUserInput;
 
-    @Field(() => OAuthProviderUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
-    oauthProviders?: OAuthProviderUncheckedCreateNestedManyWithoutUserInput;
-
-    @Field(() => ProfileUncheckedCreateNestedOneWithoutUserInput, {nullable:true})
-    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput;
+    @Field(() => ScriptUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    scripts?: ScriptUncheckedCreateNestedManyWithoutUserInput;
 }

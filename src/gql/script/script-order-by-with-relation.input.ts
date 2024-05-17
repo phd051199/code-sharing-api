@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { SortOrderInput } from '../prisma/sort-order.input';
-import { UserScriptOrderByRelationAggregateInput } from '../user-script/user-script-order-by-relation-aggregate.input';
+import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relation.input';
 
 @InputType()
 export class ScriptOrderByWithRelationInput {
@@ -20,11 +20,14 @@ export class ScriptOrderByWithRelationInput {
     path?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
+    created_at?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    updatedAt?: keyof typeof SortOrder;
+    updated_at?: keyof typeof SortOrder;
 
-    @Field(() => UserScriptOrderByRelationAggregateInput, {nullable:true})
-    userScripts?: UserScriptOrderByRelationAggregateInput;
+    @Field(() => SortOrder, {nullable:true})
+    user_id?: keyof typeof SortOrder;
+
+    @Field(() => UserOrderByWithRelationInput, {nullable:true})
+    user?: UserOrderByWithRelationInput;
 }

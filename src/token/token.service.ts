@@ -5,10 +5,10 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import { type AuthResponse } from '@/auth/models';
-import { type TokenPayload } from '@/common/types/context.type';
 import { RedisService } from '@/redis/redis.service';
 
 import { TokenStatus } from './enums';
+import { type TokenPayload } from './types';
 
 export type TokenResponse = {
   payload: TokenPayload;
@@ -29,7 +29,7 @@ export class TokenService {
     const accessToken = this.jwtService.sign({
       uid: user.id,
       email: user.email,
-      role: user.role,
+      role: user.role_id,
       iat: secondSinceEpoch,
       exp: secondSinceEpoch + 60 * 60 * 6,
     });

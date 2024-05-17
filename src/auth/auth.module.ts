@@ -4,10 +4,9 @@ import { PassportModule } from '@nestjs/passport';
 
 import { TokenModule } from '@/token/token.module';
 import {
-  update_last_login_queue,
+  UPDATE_LAST_LOGIN_QUEUE,
   UpdateLastLoginProcessor,
 } from '@/user/queues';
-import { UserService } from '@/user/user.service';
 
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
@@ -18,7 +17,7 @@ import { JwtStrategy } from './strategies';
   imports: [
     TokenModule,
     BullModule.registerQueue({
-      name: update_last_login_queue,
+      name: UPDATE_LAST_LOGIN_QUEUE,
       prefix: 'auth',
     }),
     PassportModule.register({ session: false }),
@@ -27,7 +26,6 @@ import { JwtStrategy } from './strategies';
     ...CommandHandlers,
     AuthResolver,
     AuthService,
-    UserService,
     JwtStrategy,
     UpdateLastLoginProcessor,
   ],

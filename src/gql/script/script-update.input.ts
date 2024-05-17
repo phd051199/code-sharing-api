@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
-import { UserScriptUpdateManyWithoutScriptNestedInput } from '../user-script/user-script-update-many-without-script-nested.input';
+import { UserUpdateOneRequiredWithoutScriptsNestedInput } from '../user/user-update-one-required-without-scripts-nested.input';
 
 @InputType()
 export class ScriptUpdateInput {
@@ -18,11 +18,11 @@ export class ScriptUpdateInput {
     path?: StringFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    createdAt?: DateTimeFieldUpdateOperationsInput;
+    created_at?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updatedAt?: DateTimeFieldUpdateOperationsInput;
+    updated_at?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => UserScriptUpdateManyWithoutScriptNestedInput, {nullable:true})
-    userScripts?: UserScriptUpdateManyWithoutScriptNestedInput;
+    @Field(() => UserUpdateOneRequiredWithoutScriptsNestedInput, {nullable:true})
+    user?: UserUpdateOneRequiredWithoutScriptsNestedInput;
 }

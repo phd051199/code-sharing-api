@@ -1,9 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { Role } from '../prisma/role.enum';
-import { UserScriptCreateNestedManyWithoutUserInput } from '../user-script/user-script-create-nested-many-without-user.input';
-import { OAuthProviderCreateNestedManyWithoutUserInput } from '../o-auth-provider/o-auth-provider-create-nested-many-without-user.input';
-import { ProfileCreateNestedOneWithoutUserInput } from '../profile/profile-create-nested-one-without-user.input';
+import { RoleCreateNestedOneWithoutUsersInput } from '../role/role-create-nested-one-without-users.input';
+import { AuthProviderCreateNestedManyWithoutUserInput } from '../auth-provider/auth-provider-create-nested-many-without-user.input';
+import { ScriptCreateNestedManyWithoutUserInput } from '../script/script-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateInput {
@@ -11,27 +10,30 @@ export class UserCreateInput {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:true})
-    role?: keyof typeof Role;
+    @Field(() => String, {nullable:true})
+    user_name?: string;
+
+    @Field(() => String, {nullable:true})
+    display_name?: string;
 
     @Field(() => String, {nullable:true})
     password?: string;
 
     @Field(() => Date, {nullable:true})
-    lastLogin?: Date | string;
+    last_login?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
+    created_at?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
+    updated_at?: Date | string;
 
-    @Field(() => UserScriptCreateNestedManyWithoutUserInput, {nullable:true})
-    userScripts?: UserScriptCreateNestedManyWithoutUserInput;
+    @Field(() => RoleCreateNestedOneWithoutUsersInput, {nullable:false})
+    role!: RoleCreateNestedOneWithoutUsersInput;
 
-    @Field(() => OAuthProviderCreateNestedManyWithoutUserInput, {nullable:true})
-    oauthProviders?: OAuthProviderCreateNestedManyWithoutUserInput;
+    @Field(() => AuthProviderCreateNestedManyWithoutUserInput, {nullable:true})
+    auth_providers?: AuthProviderCreateNestedManyWithoutUserInput;
 
-    @Field(() => ProfileCreateNestedOneWithoutUserInput, {nullable:true})
-    profile?: ProfileCreateNestedOneWithoutUserInput;
+    @Field(() => ScriptCreateNestedManyWithoutUserInput, {nullable:true})
+    scripts?: ScriptCreateNestedManyWithoutUserInput;
 }

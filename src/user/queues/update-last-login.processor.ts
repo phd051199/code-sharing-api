@@ -3,13 +3,13 @@ import { type Job } from 'bullmq';
 import dayjs from 'dayjs';
 
 import { BaseQueueProcessor } from '@/common/base/base.processor';
-import { UserService } from '@/user/user.service';
+import { PrismaService } from '@/prisma/prisma.service';
 
-export const update_last_login_queue = 'update:last-login';
+export const UPDATE_LAST_LOGIN_QUEUE = 'update:last-login';
 
-@Processor(update_last_login_queue)
+@Processor(UPDATE_LAST_LOGIN_QUEUE)
 export class UpdateLastLoginProcessor extends BaseQueueProcessor {
-  constructor(private readonly userService: UserService) {
+  constructor(private readonly prisma: PrismaService) {
     super();
   }
 
@@ -20,9 +20,9 @@ export class UpdateLastLoginProcessor extends BaseQueueProcessor {
   }
 
   private async updateLastLogin(userId: number) {
-    await this.userService.update({
+    await this.prisma.user.update({
       where: { id: userId },
-      data: { lastLogin: { set: dayjs().toDate() } },
+      data: { last_login: { set: dayjs().toDate() } },
     });
   }
 }

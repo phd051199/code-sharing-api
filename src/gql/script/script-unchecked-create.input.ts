@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { UserScriptUncheckedCreateNestedManyWithoutScriptInput } from '../user-script/user-script-unchecked-create-nested-many-without-script.input';
 
 @InputType()
 export class ScriptUncheckedCreateInput {
@@ -19,11 +18,11 @@ export class ScriptUncheckedCreateInput {
     path!: string;
 
     @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
+    created_at?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
+    updated_at?: Date | string;
 
-    @Field(() => UserScriptUncheckedCreateNestedManyWithoutScriptInput, {nullable:true})
-    userScripts?: UserScriptUncheckedCreateNestedManyWithoutScriptInput;
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 }

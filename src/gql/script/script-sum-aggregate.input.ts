@@ -6,4 +6,7 @@ export class ScriptSumAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     id?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    user_id?: true;
 }

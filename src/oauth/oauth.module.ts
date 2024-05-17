@@ -1,10 +1,11 @@
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
+import { AuthProviders } from '@prisma/client';
 
 import { TokenModule } from '@/token/token.module';
 import {
-  update_last_login_queue,
+  UPDATE_LAST_LOGIN_QUEUE,
   UpdateLastLoginProcessor,
 } from '@/user/queues';
 import { UserService } from '@/user/user.service';
@@ -12,13 +13,13 @@ import { UserService } from '@/user/user.service';
 import { CommandHandlers } from './commands';
 import { OAuthController } from './oauth.controller';
 import { OAuthService } from './oauth.service';
-import { GoogleStrategy } from './strategies/google.strategy';
+import { OAuthStrategy } from './strategies';
 
 @Module({
   imports: [
     TokenModule,
     BullModule.registerQueue({
-      name: update_last_login_queue,
+      name: UPDATE_LAST_LOGIN_QUEUE,
       prefix: 'auth',
     }),
     PassportModule.register({ session: false }),
@@ -28,7 +29,8 @@ import { GoogleStrategy } from './strategies/google.strategy';
     OAuthService,
     UserService,
     UpdateLastLoginProcessor,
-    GoogleStrategy,
+    OAuthStrategy(AuthProviders.github),
+    OAuthStrategy(AuthProviders.google),
   ],
   controllers: [OAuthController],
 })

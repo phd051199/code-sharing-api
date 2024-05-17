@@ -1,6 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { UserScriptCreateNestedManyWithoutScriptInput } from '../user-script/user-script-create-nested-many-without-script.input';
+import { UserCreateNestedOneWithoutScriptsInput } from '../user/user-create-nested-one-without-scripts.input';
 
 @InputType()
 export class ScriptCreateInput {
@@ -15,11 +15,11 @@ export class ScriptCreateInput {
     path!: string;
 
     @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
+    created_at?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updatedAt?: Date | string;
+    updated_at?: Date | string;
 
-    @Field(() => UserScriptCreateNestedManyWithoutScriptInput, {nullable:true})
-    userScripts?: UserScriptCreateNestedManyWithoutScriptInput;
+    @Field(() => UserCreateNestedOneWithoutScriptsInput, {nullable:false})
+    user!: UserCreateNestedOneWithoutScriptsInput;
 }

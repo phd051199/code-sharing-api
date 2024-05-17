@@ -17,10 +17,13 @@ export class ScriptCountAggregateInput {
     path?: true;
 
     @Field(() => Boolean, {nullable:true})
-    createdAt?: true;
+    created_at?: true;
 
     @Field(() => Boolean, {nullable:true})
-    updatedAt?: true;
+    updated_at?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    user_id?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

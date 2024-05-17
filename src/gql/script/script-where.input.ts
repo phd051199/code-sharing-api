@@ -4,7 +4,7 @@ import { IntFilter } from '../prisma/int-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { UserScriptListRelationFilter } from '../user-script/user-script-list-relation-filter.input';
+import { UserRelationFilter } from '../user/user-relation-filter.input';
 
 @InputType()
 export class ScriptWhereInput {
@@ -31,11 +31,14 @@ export class ScriptWhereInput {
     path?: StringFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    createdAt?: DateTimeFilter;
+    created_at?: DateTimeFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    updatedAt?: DateTimeFilter;
+    updated_at?: DateTimeFilter;
 
-    @Field(() => UserScriptListRelationFilter, {nullable:true})
-    userScripts?: UserScriptListRelationFilter;
+    @Field(() => IntFilter, {nullable:true})
+    user_id?: IntFilter;
+
+    @Field(() => UserRelationFilter, {nullable:true})
+    user?: UserRelationFilter;
 }

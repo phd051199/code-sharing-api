@@ -1,24 +1,21 @@
-import { ParseIntPipe, UseGuards } from '@nestjs/common';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { ParseIntPipe } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Action } from '@prisma/client';
 
-import { Roles } from '@/auth/decorators';
-import { GqlJwtGuard } from '@/auth/guards';
-import { Role } from '@/gql/prisma';
+import { Authorized, Permissions } from '@/casl/decorators';
+import { can } from '@/casl/utils';
 import { User } from '@/gql/user';
 
 import { GetUserByIdQuery } from './queries';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-  ) {}
+  constructor(private readonly queryBus: QueryBus) {}
 
   @Query(() => User, { nullable: true })
-  @UseGuards(GqlJwtGuard)
-  @Roles(Role.admin)
+  @Authorized()
+  @Permissions(can(Action.read, 'users'))
   getUser(@Args('id', ParseIntPipe) id: number) {
     return this.queryBus.execute(new GetUserByIdQuery(id));
   }

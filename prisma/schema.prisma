@@ -17,92 +17,94 @@ datasource db {
   relationMode = "prisma"
 }
 
-enum Role {
-  admin @map("admin")
-  user  @map("user")
+model Role {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt()
+
+  permissions Permission[]
+  users       User[]
+
+  @@map("roles")
+}
+
+enum Action {
+  manage @map("manage")
+  create @map("create")
+  read   @map("read")
+  update @map("update")
+  delete @map("delete")
+}
+
+model Permission {
+  id         Int     @id @default(autoincrement())
+  role_id    Int
+  action     Action
+  subject    String  @db.VarChar(255)
+  inverted   Boolean @default(false)
+  conditions Json?   @db.Json
+  reason     String? @db.Text()
+
+  role Role @relation(fields: [role_id], references: [id])
+
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt()
+
+  @@unique([role_id, action])
+  @@index([role_id])
+  @@map("permissions")
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  role  Role   @default(user)
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  user_name    String?   @db.MediumText
+  display_name String?   @db.MediumText
+  role_id      Int
+  password     String?   @db.MediumText
+  last_login   DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
 
-  /// @HideField()
-  password  String?   @db.MediumText
-  lastLogin DateTime? @map("last_login")
+  role           Role           @relation(fields: [role_id], references: [id])
+  auth_providers AuthProvider[]
+  scripts        Script[]
 
-  /// @HideField()
-  createdAt DateTime @default(now()) @map("created_at")
-  /// @HideField()
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  userScripts    UserScript[]
-  oauthProviders OAuthProvider[]
-  profile        Profile?
-
+  @@index([role_id])
+  @@index([email])
   @@map("users")
 }
 
-model Profile {
-  id   Int     @id @default(autoincrement())
-  name String? @db.MediumText
-
-  userId Int  @unique @map("user_id")
-  /// @HideField()
-  user   User @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("profile")
-}
-
-enum OAuthProviders {
+enum AuthProviders {
   google @map("google")
   github @map("github")
 }
 
-model OAuthProvider {
-  provider OAuthProviders
-  userId   Int            @map("user_id")
+model AuthProvider {
+  provider   AuthProviders
+  user_id    Int
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  /// @HideField()
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, userId])
-  @@index([userId])
-  @@map("oauth_provider")
+  @@unique([provider, user_id])
+  @@index([user_id])
+  @@map("auth_providers")
 }
 
 model Script {
-  id          Int     @id @default(autoincrement())
-  name        String? @db.TinyText
-  description String? @db.LongText
-  path        String  @db.MediumText
+  id          Int      @id @default(autoincrement())
+  name        String?  @db.TinyText
+  description String?  @db.LongText
+  path        String   @db.MediumText
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user_id     Int
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  user User @relation(fields: [user_id], references: [id])
 
-  userScripts UserScript[]
-
+  @@index([user_id])
   @@map("scripts")
-}
-
-model UserScript {
-  userId   Int @map("user_id")
-  scriptId Int @map("script_id")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  user   User   @relation(fields: [userId], references: [id])
-  script Script @relation(fields: [scriptId], references: [id])
-
-  @@unique([userId, scriptId])
-  @@index([userId])
-  @@index([scriptId])
-  @@map("user_scripts")
 }

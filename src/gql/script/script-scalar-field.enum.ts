@@ -5,8 +5,9 @@ export enum ScriptScalarFieldEnum {
     name = "name",
     description = "description",
     path = "path",
-    createdAt = "createdAt",
-    updatedAt = "updatedAt"
+    created_at = "created_at",
+    updated_at = "updated_at",
+    user_id = "user_id"
 }
 
 

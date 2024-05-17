@@ -18,10 +18,13 @@ export class ScriptCountAggregate {
     path!: number;
 
     @Field(() => Int, {nullable:false})
-    createdAt!: number;
+    created_at!: number;
 
     @Field(() => Int, {nullable:false})
-    updatedAt!: number;
+    updated_at!: number;
+
+    @Field(() => Int, {nullable:false})
+    user_id!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

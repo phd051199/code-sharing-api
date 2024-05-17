@@ -2,13 +2,11 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
-import { EnumRoleFieldUpdateOperationsInput } from '../prisma/enum-role-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { NullableDateTimeFieldUpdateOperationsInput } from '../prisma/nullable-date-time-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
-import { UserScriptUncheckedUpdateManyWithoutUserNestedInput } from '../user-script/user-script-unchecked-update-many-without-user-nested.input';
-import { OAuthProviderUncheckedUpdateManyWithoutUserNestedInput } from '../o-auth-provider/o-auth-provider-unchecked-update-many-without-user-nested.input';
-import { ProfileUncheckedUpdateOneWithoutUserNestedInput } from '../profile/profile-unchecked-update-one-without-user-nested.input';
+import { AuthProviderUncheckedUpdateManyWithoutUserNestedInput } from '../auth-provider/auth-provider-unchecked-update-many-without-user-nested.input';
+import { ScriptUncheckedUpdateManyWithoutUserNestedInput } from '../script/script-unchecked-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUncheckedUpdateInput {
@@ -19,27 +17,30 @@ export class UserUncheckedUpdateInput {
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     email?: StringFieldUpdateOperationsInput;
 
-    @Field(() => EnumRoleFieldUpdateOperationsInput, {nullable:true})
-    role?: EnumRoleFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    user_name?: NullableStringFieldUpdateOperationsInput;
+
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    display_name?: NullableStringFieldUpdateOperationsInput;
+
+    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
+    role_id?: IntFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     password?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
-    lastLogin?: NullableDateTimeFieldUpdateOperationsInput;
+    last_login?: NullableDateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    createdAt?: DateTimeFieldUpdateOperationsInput;
+    created_at?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updatedAt?: DateTimeFieldUpdateOperationsInput;
+    updated_at?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => UserScriptUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
-    userScripts?: UserScriptUncheckedUpdateManyWithoutUserNestedInput;
+    @Field(() => AuthProviderUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    auth_providers?: AuthProviderUncheckedUpdateManyWithoutUserNestedInput;
 
-    @Field(() => OAuthProviderUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
-    oauthProviders?: OAuthProviderUncheckedUpdateManyWithoutUserNestedInput;
-
-    @Field(() => ProfileUncheckedUpdateOneWithoutUserNestedInput, {nullable:true})
-    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput;
+    @Field(() => ScriptUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    scripts?: ScriptUncheckedUpdateManyWithoutUserNestedInput;
 }

@@ -4,7 +4,6 @@ import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operat
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
-import { UserScriptUncheckedUpdateManyWithoutScriptNestedInput } from '../user-script/user-script-unchecked-update-many-without-script-nested.input';
 
 @InputType()
 export class ScriptUncheckedUpdateInput {
@@ -22,11 +21,11 @@ export class ScriptUncheckedUpdateInput {
     path?: StringFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    createdAt?: DateTimeFieldUpdateOperationsInput;
+    created_at?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updatedAt?: DateTimeFieldUpdateOperationsInput;
+    updated_at?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => UserScriptUncheckedUpdateManyWithoutScriptNestedInput, {nullable:true})
-    userScripts?: UserScriptUncheckedUpdateManyWithoutScriptNestedInput;
+    @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
+    user_id?: IntFieldUpdateOperationsInput;
 }
