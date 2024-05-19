@@ -1,7 +1,7 @@
 import { type PureAbility } from '@casl/ability';
-import { type Action } from '@prisma/client';
+import { type Action, type Prisma } from '@prisma/client';
 
-export type Subjects = 'all' | string;
+export type Subjects = 'all' | Prisma.ModelName;
 
 export type Abilities = [Action, Subjects];
 

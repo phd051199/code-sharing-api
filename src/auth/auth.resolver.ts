@@ -1,16 +1,15 @@
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { LoginCommand, RefreshTokenCommand, RegisterCommand } from './commands';
+import { Public } from './decorators';
 import { LoginInput, RefreshTokenInput, RegisterInput } from './dtos';
 import { AuthResponse } from './models';
 
+@Public()
 @Resolver(() => AuthResponse)
 export class AuthResolver {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-  ) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @Mutation(() => AuthResponse)
   login(@Args('loginInput') input: LoginInput) {

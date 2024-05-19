@@ -1,7 +1,7 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { Action } from '@prisma/client';
+import { Action, Prisma } from '@prisma/client';
 
 import { Authorized, Permissions } from '@/casl/decorators';
 import { can } from '@/casl/utils';
@@ -15,7 +15,7 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   @Authorized()
-  @Permissions(can(Action.read, 'users'))
+  @Permissions(can(Action.read, Prisma.ModelName.User))
   getUser(@Args('id', ParseIntPipe) id: number) {
     return this.queryBus.execute(new GetUserByIdQuery(id));
   }

@@ -1,7 +1,7 @@
 import { AbilityBuilder, type ExtractSubjectType } from '@casl/ability';
 import { createPrismaAbility } from '@casl/prisma';
 import { Injectable } from '@nestjs/common';
-import { type Permission, type User } from '@prisma/client';
+import { type Permission, type Prisma, type User } from '@prisma/client';
 import _ from 'lodash';
 import Mustache from 'mustache';
 
@@ -19,9 +19,13 @@ export class CaslAbilityFactory {
       const conditions = this.parseCondition(permission, user);
 
       if (permission.inverted) {
-        cannot(action, subject, conditions).because(permission.reason);
+        cannot(action, <Prisma.ModelName>subject, conditions).because(
+          permission.reason,
+        );
       } else {
-        can(action, subject, conditions).because(permission.reason);
+        can(action, <Prisma.ModelName>subject, conditions).because(
+          permission.reason,
+        );
       }
     });
 

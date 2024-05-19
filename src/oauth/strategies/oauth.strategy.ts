@@ -1,9 +1,8 @@
-import { Injectable, mixin, type Type } from '@nestjs/common';
+import { Injectable, mixin } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
+import { PassportStrategy, type Type } from '@nestjs/passport';
 import { memoize } from '@nestjs/passport/dist/utils/memoize.util';
 import { AuthProviders } from '@prisma/client';
-import _ from 'lodash';
 import { type Strategy } from 'passport';
 import {
   type Profile as GithubProfile,
@@ -13,6 +12,8 @@ import {
   type Profile as GoogleProfile,
   Strategy as GoogleStrategy,
 } from 'passport-google-oauth20';
+
+import { type OAuthClient } from '@/config/factories';
 
 export const OAuthStrategy: (provider: AuthProviders) => Type<Strategy> =
   memoize(createOAuthStrategyFactory);
@@ -34,7 +35,7 @@ function createOAuthStrategyFactory(provider: AuthProviders): Type<Strategy> {
   @Injectable()
   class OAuthStrategyMixin extends PassportStrategy(strategy, provider) {
     constructor(readonly configService: ConfigService) {
-      const { id, secret, callbackURL } = configService.get(
+      const { id, secret, callbackURL } = configService.get<OAuthClient>(
         `oauth.${provider}`,
       );
 
@@ -47,17 +48,21 @@ function createOAuthStrategyFactory(provider: AuthProviders): Type<Strategy> {
     }
 
     validate(
-      accessToken: string,
+      _accessToken: string,
       _refreshToken: string,
       profile: GithubProfile | GoogleProfile,
     ) {
-      const { emails, photos, displayName, provider } = profile;
+      const {
+        emails: [email],
+        photos: [photo],
+        displayName,
+        provider,
+      } = profile;
 
       return {
-        email: _.first(emails).value,
-        picture: _.first(photos).value,
-        accessToken,
-        name: displayName,
+        email: email.value,
+        picture: photo.value,
+        displayName,
         provider,
       };
     }

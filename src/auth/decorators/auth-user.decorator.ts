@@ -1,10 +1,12 @@
 import { createParamDecorator, type ExecutionContext } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
+import _ from 'lodash';
 
-import { type AuthContext } from '../types/auth-context.type';
+import { extractContext } from '@/common/utils';
 
-export const AuthUser = createParamDecorator((_, context: ExecutionContext) => {
-  const { user } =
-    GqlExecutionContext.create(context).getContext<AuthContext>();
-  return user;
-});
+export const AuthUser = createParamDecorator(
+  (_data, context: ExecutionContext) => {
+    const { req } = extractContext(context);
+
+    return _.pick(req.user, ['id', 'email', 'user_name', 'display_name']);
+  },
+);

@@ -23,11 +23,17 @@ export class UserOrderByWithAggregationInput {
     @Field(() => SortOrderInput, {nullable:true})
     display_name?: SortOrderInput;
 
+    @Field(() => SortOrderInput, {nullable:true})
+    avatar?: SortOrderInput;
+
     @Field(() => SortOrder, {nullable:true})
     role_id?: keyof typeof SortOrder;
 
     @Field(() => SortOrderInput, {nullable:true})
     password?: SortOrderInput;
+
+    @Field(() => SortOrder, {nullable:true})
+    is_verified?: keyof typeof SortOrder;
 
     @Field(() => SortOrderInput, {nullable:true})
     last_login?: SortOrderInput;

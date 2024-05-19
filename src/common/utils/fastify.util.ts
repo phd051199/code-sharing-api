@@ -1,7 +1,7 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 import _ from 'lodash';
 
-export const fastifyPassportAdditionalHook = (
+export const fastifyPassport = (
   request: FastifyRequest,
   reply: FastifyReply,
   done: () => void,

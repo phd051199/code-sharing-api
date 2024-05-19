@@ -2,6 +2,7 @@ import fastifyCookie, { type FastifyCookieOptions } from '@fastify/cookie';
 import fastifyCsrf, {
   type FastifyCsrfProtectionOptions,
 } from '@fastify/csrf-protection';
+import fastifyHelmet, { type FastifyHelmetOptions } from '@fastify/helmet';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -11,7 +12,7 @@ import {
 
 import { AppModule } from '@/app.module';
 import { FastifyHooks } from '@/common/enums';
-import { fastifyPassportAdditionalHook } from '@/common/utils';
+import { fastifyPassport } from '@/common/utils';
 import { type AppConfiguration } from '@/config/types';
 import { APP_CFG } from '@/constants';
 
@@ -27,7 +28,7 @@ async function bootstrap() {
   app
     .getHttpAdapter()
     .getInstance()
-    .addHook(FastifyHooks.onRequest, fastifyPassportAdditionalHook);
+    .addHook(FastifyHooks.onRequest, fastifyPassport);
 
   const configService = app.get(ConfigService);
   const { host, port } = configService.get<AppConfiguration>(APP_CFG);
@@ -37,6 +38,10 @@ async function bootstrap() {
   });
 
   await app.register<FastifyCsrfProtectionOptions>(fastifyCsrf);
+
+  await app.register<FastifyHelmetOptions>(fastifyHelmet, {
+    contentSecurityPolicy: false,
+  });
 
   await app.listen(port, host);
 }

@@ -4,14 +4,13 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
-import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 
+import { extractContext } from '@/common/utils';
 import { IS_PUBLIC } from '@/constants';
 
 @Injectable()
-export class GqlJwtGuard extends AuthGuard('jwt') implements CanActivate {
+export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
   constructor(private reflector: Reflector) {
     super();
   }
@@ -26,9 +25,8 @@ export class GqlJwtGuard extends AuthGuard('jwt') implements CanActivate {
       return true;
     }
 
-    const ctx = GqlExecutionContext.create(context);
-    const { req } = ctx.getContext();
+    const { executionContext } = extractContext(context);
 
-    return super.canActivate(new ExecutionContextHost([req]));
+    return super.canActivate(executionContext);
   }
 }

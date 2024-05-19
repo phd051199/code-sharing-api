@@ -1,5 +1,4 @@
 import { BullModule } from '@nestjs/bullmq';
-import { CacheModule } from '@nestjs/cache-manager';
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -26,7 +25,6 @@ import { WebpackModule } from './webpack/webpack.module';
 
 @Module({
   imports: [
-    CqrsModule.forRoot(),
     BullModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
@@ -36,16 +34,10 @@ import { WebpackModule } from './webpack/webpack.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
         configService.get<MinioOptions>(MINIO_CFG),
+      isGlobal: true,
     }),
+    CqrsModule.forRoot(),
     ScheduleModule.forRoot(),
-    CacheModule.registerAsync<RedisConfiguation>({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        ...configService.get<RedisConfiguation>(REDIS_CFG),
-        isGlobal: true,
-      }),
-    }),
-
     HealthModule,
     AuthModule,
     UserModule,

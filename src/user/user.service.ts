@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 
 import { type GithubUser, type GoogleUser } from '@/oauth/types';
@@ -8,19 +9,24 @@ import { PrismaService } from '@/prisma/prisma.service';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findIdCache(id: number) {
-    return this.prisma.withAccelerate.user.findFirst({
-      where: { id },
-      cacheStrategy: {
-        swr: 30,
-        ttl: 60,
+  async updateLastLogin(userId: number) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        last_login: dayjs().toDate(),
       },
+    });
+  }
+
+  findUnique(id: number) {
+    return this.prisma.user.findUnique({
+      where: { id },
     });
   }
 
   async findUniqueOrNew(data: GoogleUser | GithubUser) {
     data.email = data.email?.toLowerCase();
-    const { email, name: display_name, provider } = data;
+    const { email, displayName: display_name, provider } = data;
 
     const existingUser = await this.prisma.user.findUnique({
       include: {

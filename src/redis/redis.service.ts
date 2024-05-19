@@ -8,13 +8,13 @@ import { RedisClient } from './redis.provider';
 export class RedisService {
   constructor(@Inject(REDIS_CLIENT) private readonly client: RedisClient) {}
 
-  set(
+  async set(
     prefix: string,
     key: string,
     value: string | Buffer | number,
     expirationSeconds?: number,
   ) {
-    return this.client.set(`${prefix}:` + key, value, 'EX', expirationSeconds);
+    await this.client.set(`${prefix}:` + key, value, 'EX', expirationSeconds);
   }
 
   getString(prefix: string, key: string): Promise<string> {

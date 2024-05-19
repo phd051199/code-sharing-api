@@ -1,7 +1,11 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import {
+  Module,
+  UnprocessableEntityException,
+  type ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
-
-import { exceptionFactory } from './validation.factory';
+import _ from 'lodash';
 
 @Module({
   providers: [
@@ -10,7 +14,8 @@ import { exceptionFactory } from './validation.factory';
       useFactory() {
         return new ValidationPipe({
           transform: true,
-          exceptionFactory,
+          exceptionFactory: (errors: ValidationError[]) =>
+            new UnprocessableEntityException(_.map(errors, 'constraints')),
         });
       },
     },

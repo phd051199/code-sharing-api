@@ -3,15 +3,15 @@ import { type JwtModuleOptions } from '@nestjs/jwt';
 
 import { JWT_CFG } from '@/constants';
 
-type Client = {
+export type OAuthClient = {
   id: string;
   secret: string;
   callbackURL: string;
 };
 
-type OAuthConfiguration = {
-  google?: Client;
-  github?: Client;
+export type OAuthConfiguration = {
+  google?: OAuthClient;
+  github?: OAuthClient;
 };
 
 export const jwtConfiguration = registerAs<JwtModuleOptions>(JWT_CFG, () => ({

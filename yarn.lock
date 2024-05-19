@@ -852,6 +852,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/helmet@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "@fastify/helmet@npm:11.1.1"
+  dependencies:
+    fastify-plugin: "npm:^4.2.1"
+    helmet: "npm:^7.0.0"
+  checksum: 10c0/03d38fdb188cde84066df90e0033e29430d3db2e1e8692e4a37421034d5d162bc17492fce4c20869904adb39e0f91c082ad42fd81530d517073eaf3f50727783
+  languageName: node
+  linkType: hard
+
 "@fastify/merge-json-schemas@npm:^0.1.0":
   version: 0.1.1
   resolution: "@fastify/merge-json-schemas@npm:0.1.1"
@@ -1994,13 +2004,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/debug@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@prisma/debug@npm:5.13.0"
-  checksum: 10c0/9e3a84e473a77ae16adeeae3de27ec9f8431bffdd563fd7441f42596c6f6a7a766832c3c17a84a8d89e4133028b361dd274b48291425f388b4fb4575093cf3ed
-  languageName: node
-  linkType: hard
-
 "@prisma/debug@npm:5.14.0":
   version: 5.14.0
   resolution: "@prisma/debug@npm:5.14.0"
@@ -2027,15 +2030,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/extension-accelerate@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@prisma/extension-accelerate@npm:1.0.0"
-  peerDependencies:
-    "@prisma/client": ">=4.16.1"
-  checksum: 10c0/03f026c89cdf0bd7e7cd4998b5bda49b4f9be54bf387c5a5ade61b62e207796171ea85b5a92ae1d106709b047865f17bfce7180a67de9757b2a0d69a96d95cf4
-  languageName: node
-  linkType: hard
-
 "@prisma/fetch-engine@npm:5.14.0":
   version: 5.14.0
   resolution: "@prisma/fetch-engine@npm:5.14.0"
@@ -2047,12 +2041,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/generator-helper@npm:^5.7.0":
-  version: 5.13.0
-  resolution: "@prisma/generator-helper@npm:5.13.0"
+"@prisma/generator-helper@npm:^5.14.0":
+  version: 5.14.0
+  resolution: "@prisma/generator-helper@npm:5.14.0"
   dependencies:
-    "@prisma/debug": "npm:5.13.0"
-  checksum: 10c0/aa042503250e76fcd5f4ad84e064f53618ade1f819b727ea421395e9c2aabea92b61259136ca468c4f756938d0d67b8725b38af9e612c870d4d8ad06d506def2
+    "@prisma/debug": "npm:5.14.0"
+  checksum: 10c0/ed4ef8a20bd1e032c0f9ce9fefee66e7b2736c35186f2fe8c10b1403e06945e35fe4d0873a47d24142dd62e6dacb608a0e74b676cbc36ed3f577988bab05c5f1
   languageName: node
   linkType: hard
 
@@ -2135,6 +2129,62 @@ __metadata:
   version: 1.1.0
   resolution: "@protobufjs/utf8@npm:1.1.0"
   checksum: 10c0/a3fe31fe3fa29aa3349e2e04ee13dc170cc6af7c23d92ad49e3eeaf79b9766264544d3da824dba93b7855bd6a2982fb40032ef40693da98a136d835752beb487
+  languageName: node
+  linkType: hard
+
+"@redis/bloom@npm:1.2.0, @redis/bloom@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@redis/bloom@npm:1.2.0"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 10c0/7dde8e67188164e96226c8a5c78ebd2801f1662947371e78fb95fb180c1e9ddff8d237012eb5e9182775be61cb546f67f759927cdaee0d178d863ee290e1fb27
+  languageName: node
+  linkType: hard
+
+"@redis/client@npm:1.5.16, @redis/client@npm:^1.5.14":
+  version: 1.5.16
+  resolution: "@redis/client@npm:1.5.16"
+  dependencies:
+    cluster-key-slot: "npm:1.1.2"
+    generic-pool: "npm:3.9.0"
+    yallist: "npm:4.0.0"
+  checksum: 10c0/80098cff9253a78f7f9f8ffb216ef414196f148f34992a3c921595e5c358cbbea7e5c6a2e01ac55a15ef40fe929753b267941e8d71e63f93c9d396755b4ad9db
+  languageName: node
+  linkType: hard
+
+"@redis/graph@npm:1.1.1, @redis/graph@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@redis/graph@npm:1.1.1"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 10c0/64199db2cb3669c4911af8aba3b7116c4c2c1df37ca74b2a65555e62c863935a0cea74bc41bd92acf2e551074eb2a30c75f54a9f439b40e0f9bb67fc5fb66614
+  languageName: node
+  linkType: hard
+
+"@redis/json@npm:1.0.6, @redis/json@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@redis/json@npm:1.0.6"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 10c0/ac6072c33ac4552cf4748b6b2dc5fdc63f7a9396e6453b59ee03831cdde8d495caa90786e04036633d058c39cdf5c6fce903272c43ff942941b15c157ac34498
+  languageName: node
+  linkType: hard
+
+"@redis/search@npm:1.1.6, @redis/search@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "@redis/search@npm:1.1.6"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 10c0/690b30dc914f013c10c03899ddc5585194e891323c14f4d974d51d912944e50b5f21208e0fc5eed958dde87b730254846e9ffe5caf0b54ff1ff2c64a051df057
+  languageName: node
+  linkType: hard
+
+"@redis/time-series@npm:1.0.5, @redis/time-series@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@redis/time-series@npm:1.0.5"
+  peerDependencies:
+    "@redis/client": ^1.0.0
+  checksum: 10c0/3c7f31f64a5f215534db6f0a10845be046ffee2928972037713acdd72cdb9ccc4a476ecce70d896333346a8f4081bd2139a4d50da4d19b9d61a6836066188d68
   languageName: node
   linkType: hard
 
@@ -2260,6 +2310,23 @@ __metadata:
     "@types/connect": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/aebeb200f25e8818d8cf39cd0209026750d77c9b85381cdd8deeb50913e4d18a1ebe4b74ca9b0b4d21952511eeaba5e9fbbf739b52731a2061e206ec60d568df
+  languageName: node
+  linkType: hard
+
+"@types/cache-manager-redis-store@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@types/cache-manager-redis-store@npm:2.0.4"
+  dependencies:
+    "@types/cache-manager": "npm:*"
+    "@types/redis": "npm:^2.8.0"
+  checksum: 10c0/a8e28cb59b4e54f6a19966888ed7e17eb0c491d3a186d888619529d775e265736551e69f9894821322ef97af3a231df460e5617388da75cf6d215fb6f382d29a
+  languageName: node
+  linkType: hard
+
+"@types/cache-manager@npm:*":
+  version: 4.0.6
+  resolution: "@types/cache-manager@npm:4.0.6"
+  checksum: 10c0/3cf78d7ec98a03f651ceb31cc7fbd56f25476c90892d3b19a60c645e8fdd6fe7df99b14afde3fcaec407ab8bb5c8e77332dded77b335cad0fc4b06fbf2df5d62
   languageName: node
   linkType: hard
 
@@ -2413,10 +2480,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.17.1":
-  version: 4.17.1
-  resolution: "@types/lodash@npm:4.17.1"
-  checksum: 10c0/af2ad8a3c8d7deb170a7ec6e18afc5ae8980576e5f7fe798d8a95a1df7222c15bdf967a25a35879f575a3b64743de00145710ee461a0051e055e94e4fe253f45
+"@types/lodash@npm:^4.17.4":
+  version: 4.17.4
+  resolution: "@types/lodash@npm:4.17.4"
+  checksum: 10c0/0124c64cb9fe7a0f78b6777955abd05ef0d97844d49118652eae45f8fa57bfb7f5a7a9bccc0b5a84c0a6dc09631042e4590cb665acb9d58dfd5e6543c75341ec
   languageName: node
   linkType: hard
 
@@ -2448,7 +2515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mustache@npm:^4":
+"@types/mustache@npm:^4.2.5":
   version: 4.2.5
   resolution: "@types/mustache@npm:4.2.5"
   checksum: 10c0/624975c39068d47407eadb89628aaff5ef60f3b7a71eef92a254310896a4e90518a01dcf71d95779ab2c986034a6ca5403d22fea237c67ff87f2e2b3fb794ea6
@@ -2565,6 +2632,15 @@ __metadata:
   version: 1.2.7
   resolution: "@types/range-parser@npm:1.2.7"
   checksum: 10c0/361bb3e964ec5133fa40644a0b942279ed5df1949f21321d77de79f48b728d39253e5ce0408c9c17e4e0fd95ca7899da36841686393b9f7a1e209916e9381a3c
+  languageName: node
+  linkType: hard
+
+"@types/redis@npm:^2.8.0":
+  version: 2.8.32
+  resolution: "@types/redis@npm:2.8.32"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/99fd52ffc1f4c2cbe3f1ec7a38f9a85a128a430fcbf8e241914d8687ea53555e90dc7b66b3ff1a0c9b74afa1c677551ee405b1f73926c944dadc6026e5e6a80a
   languageName: node
   linkType: hard
 
@@ -3461,14 +3537,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.8":
-  version: 1.6.8
-  resolution: "axios@npm:1.6.8"
+"axios@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "axios@npm:1.7.0"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/0f22da6f490335479a89878bc7d5a1419484fbb437b564a80c34888fc36759ae4f56ea28d55a191695e5ed327f0bad56e7ff60fb6770c14d1be6501505d47ab9
+  checksum: 10c0/340ea17372f532c35b0713314b3454611a14fa9ed5ac31b6b84791e05231e878e72ea8d8b8cf780c00285052eea33549afa8fede495d9ee38248a2dac16492ee
   languageName: node
   linkType: hard
 
@@ -3799,7 +3875,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cache-manager@npm:^5.5.2":
+"cache-manager-redis-yet@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "cache-manager-redis-yet@npm:5.0.0"
+  dependencies:
+    "@redis/bloom": "npm:^1.2.0"
+    "@redis/client": "npm:^1.5.14"
+    "@redis/graph": "npm:^1.1.1"
+    "@redis/json": "npm:^1.0.6"
+    "@redis/search": "npm:^1.1.6"
+    "@redis/time-series": "npm:^1.0.5"
+    cache-manager: "npm:^5.4.0"
+    redis: "npm:^4.6.13"
+  checksum: 10c0/f5f3466b9954369b2b7c004b49334249518bb75fad22ab05ac9eb2c541ae98bd4b91d5a0826443244dd6779dc9b09fec5986d131bb7fafa1ade7d7aaee6992b6
+  languageName: node
+  linkType: hard
+
+"cache-manager@npm:^5.4.0, cache-manager@npm:^5.5.2":
   version: 5.5.2
   resolution: "cache-manager@npm:5.5.2"
   dependencies:
@@ -4041,7 +4133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cluster-key-slot@npm:^1.1.0":
+"cluster-key-slot@npm:1.1.2, cluster-key-slot@npm:^1.1.0":
   version: 1.1.2
   resolution: "cluster-key-slot@npm:1.1.2"
   checksum: 10c0/d7d39ca28a8786e9e801eeb8c770e3c3236a566625d7299a47bb71113fb2298ce1039596acb82590e598c52dbc9b1f088c8f587803e697cb58e1867a95ff94d3
@@ -5325,7 +5417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-plugin@npm:^4.0.0, fastify-plugin@npm:^4.4.0":
+"fastify-plugin@npm:^4.0.0, fastify-plugin@npm:^4.2.1, fastify-plugin@npm:^4.4.0":
   version: 4.5.1
   resolution: "fastify-plugin@npm:4.5.1"
   checksum: 10c0/f58f79cd9d3c88fd7f79a3270276c6339fc57bbe72ef14d20b73779193c404e317ac18e8eae2c5071b3909ebee45d7eb6871da4e65464ac64ed0d9746b4e9b9f
@@ -5703,6 +5795,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"generic-pool@npm:3.9.0":
+  version: 3.9.0
+  resolution: "generic-pool@npm:3.9.0"
+  checksum: 10c0/6b314d0d71170d5cbaf7162c423f53f8d6556b2135626a65bcdc03c089840b0a2f59eeb2d907939b8200e945eaf71ceb6630426f22d2128a1d242aec4b232aa7
+  languageName: node
+  linkType: hard
+
 "gensync@npm:^1.0.0-beta.2":
   version: 1.0.0-beta.2
   resolution: "gensync@npm:1.0.0-beta.2"
@@ -6015,6 +6114,13 @@ __metadata:
   dependencies:
     function-bind: "npm:^1.1.2"
   checksum: 10c0/3769d434703b8ac66b209a4cca0737519925bbdb61dd887f93a16372b14694c63ff4e797686d87c90f08168e81082248b9b028bad60d4da9e0d1148766f56eb9
+  languageName: node
+  linkType: hard
+
+"helmet@npm:^7.0.0":
+  version: 7.1.0
+  resolution: "helmet@npm:7.1.0"
+  checksum: 10c0/8c3370d07487be11ac918577c68952e05d779a1a2c037023c1ba763034c381a025899bc52f8acfab5209304a1dc618a3764dbfd26386a0d1173befe4fb932e84
   languageName: node
   linkType: hard
 
@@ -8658,11 +8764,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma-nestjs-graphql@npm:^20.0.2":
-  version: 20.0.2
-  resolution: "prisma-nestjs-graphql@npm:20.0.2"
+"prisma-nestjs-graphql@npm:^20.0.3":
+  version: 20.0.3
+  resolution: "prisma-nestjs-graphql@npm:20.0.3"
   dependencies:
-    "@prisma/generator-helper": "npm:^5.7.0"
+    "@prisma/generator-helper": "npm:^5.14.0"
     await-event-emitter: "npm:^2.0.2"
     filenamify: "npm:4.X"
     flat: "npm:5.X"
@@ -8676,7 +8782,7 @@ __metadata:
     ts-morph: "npm:>=11 <=16"
   bin:
     prisma-nestjs-graphql: bin.js
-  checksum: 10c0/435410bde572e7f0fc1fc0fd2bd79b989ffd3084105d4a45691c52e60b62f5da873cd7127172d896badd03f430846081ff4b0b95cc5979720d20d11596dd1665
+  checksum: 10c0/5257a224304379fe6a78ba783f233fcd01d9fbec243f464e85ef3f614404f53f213ca00d4842084fa42c18dcd7a4b604321e5d51b0caef8a70bf55b4f5b6a194
   languageName: node
   linkType: hard
 
@@ -8927,6 +9033,20 @@ __metadata:
   dependencies:
     redis-errors: "npm:^1.0.0"
   checksum: 10c0/ee16ac4c7b2a60b1f42a2cdaee22b005bd4453eb2d0588b8a4939718997ae269da717434da5d570fe0b05030466eeb3f902a58cf2e8e1ca058bf6c9c596f632f
+  languageName: node
+  linkType: hard
+
+"redis@npm:^4.6.13":
+  version: 4.6.14
+  resolution: "redis@npm:4.6.14"
+  dependencies:
+    "@redis/bloom": "npm:1.2.0"
+    "@redis/client": "npm:1.5.16"
+    "@redis/graph": "npm:1.1.1"
+    "@redis/json": "npm:1.0.6"
+    "@redis/search": "npm:1.1.6"
+    "@redis/time-series": "npm:1.0.5"
+  checksum: 10c0/b031399a558fd6f06bf12bfe7722b67901a5cb46128ef3fb7634fbd1d3ce7dfc801ddab2500960ea7cd1c8f4a4cdda93657a4aa0eb8b705b5ed63154834ed91e
   languageName: node
   linkType: hard
 
@@ -9932,6 +10052,7 @@ __metadata:
     "@casl/prisma": "npm:^1.4.1"
     "@fastify/cookie": "npm:^9.3.1"
     "@fastify/csrf-protection": "npm:^6.4.1"
+    "@fastify/helmet": "npm:^11.1.1"
     "@fastify/static": "npm:^7.0.4"
     "@nestjs/apollo": "npm:^12.1.0"
     "@nestjs/axios": "npm:^3.0.2"
@@ -9952,11 +10073,11 @@ __metadata:
     "@nestjs/terminus": "npm:^10.2.3"
     "@nestjs/testing": "npm:^10.3.8"
     "@prisma/client": "npm:^5.14.0"
-    "@prisma/extension-accelerate": "npm:^1.0.0"
     "@types/bcrypt": "npm:^5.0.2"
+    "@types/cache-manager-redis-store": "npm:^2.0.4"
     "@types/jest": "npm:^29.5.12"
-    "@types/lodash": "npm:^4.17.1"
-    "@types/mustache": "npm:^4"
+    "@types/lodash": "npm:^4.17.4"
+    "@types/mustache": "npm:^4.2.5"
     "@types/node": "npm:^20.12.12"
     "@types/passport": "npm:^1.0.16"
     "@types/passport-github2": "npm:^1.2.9"
@@ -9966,10 +10087,11 @@ __metadata:
     "@types/uuid": "npm:^9.0.8"
     "@typescript-eslint/eslint-plugin": "npm:^6.21.0"
     "@typescript-eslint/parser": "npm:^6.21.0"
-    axios: "npm:^1.6.8"
+    axios: "npm:^1.7.0"
     bcrypt: "npm:^5.1.1"
     bullmq: "npm:^5.7.9"
     cache-manager: "npm:^5.5.2"
+    cache-manager-redis-yet: "npm:^5.0.0"
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.1"
     dayjs: "npm:^1.11.11"
@@ -9991,7 +10113,7 @@ __metadata:
     prettier: "npm:^3.2.5"
     prettier-plugin-organize-imports: "npm:^3.2.4"
     prisma: "npm:^5.14.0"
-    prisma-nestjs-graphql: "npm:^20.0.2"
+    prisma-nestjs-graphql: "npm:^20.0.3"
     reflect-metadata: "npm:^0.2.2"
     rxjs: "npm:^7.8.1"
     source-map-support: "npm:^0.5.21"
@@ -10823,17 +10945,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yallist@npm:4.0.0, yallist@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "yallist@npm:4.0.0"
+  checksum: 10c0/2286b5e8dbfe22204ab66e2ef5cc9bbb1e55dfc873bbe0d568aa943eb255d131890dfd5bf243637273d31119b870f49c18fcde2c6ffbb7a7a092b870dc90625a
+  languageName: node
+  linkType: hard
+
 "yallist@npm:^3.0.2":
   version: 3.1.1
   resolution: "yallist@npm:3.1.1"
   checksum: 10c0/c66a5c46bc89af1625476f7f0f2ec3653c1a1791d2f9407cfb4c2ba812a1e1c9941416d71ba9719876530e3340a99925f697142989371b72d93b9ee628afd8c1
-  languageName: node
-  linkType: hard
-
-"yallist@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "yallist@npm:4.0.0"
-  checksum: 10c0/2286b5e8dbfe22204ab66e2ef5cc9bbb1e55dfc873bbe0d568aa943eb255d131890dfd5bf243637273d31119b870f49c18fcde2c6ffbb7a7a092b870dc90625a
   languageName: node
   linkType: hard
 

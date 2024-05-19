@@ -17,11 +17,17 @@ export class UserCreateManyInput {
     @Field(() => String, {nullable:true})
     display_name?: string;
 
+    @Field(() => String, {nullable:true})
+    avatar?: string;
+
     @Field(() => Int, {nullable:false})
     role_id!: number;
 
     @Field(() => String, {nullable:true})
     password?: string;
+
+    @Field(() => Boolean, {nullable:true})
+    is_verified?: boolean;
 
     @Field(() => Date, {nullable:true})
     last_login?: Date | string;

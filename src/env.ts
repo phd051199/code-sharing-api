@@ -19,6 +19,8 @@ export class Env {
   @IsOptional() REDIS_PORT?: string;
   @IsOptional() REDIS_PASSWORD?: string;
 
+  @IsNotEmpty() DATABASE_URL: string;
+
   @IsNotEmpty() MINIO_ENDPOINT: string;
   @IsNotEmpty() MINIO_PORT: string;
   @IsNotEmpty() MINIO_ACCESSKEY: string;

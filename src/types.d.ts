@@ -2,6 +2,6 @@ import { type User } from './gql/user';
 
 declare module 'fastify' {
   export interface FastifyRequest {
-    user: User | GoogleUser;
+    user: User | GoogleUser | GithubUser;
   }
 }

@@ -1,7 +1,7 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
 
-import { GqlJwtGuard } from '../guards';
+import { JwtGuard } from '../guards';
 
 export const Authenticated = () => {
-  return applyDecorators(UseGuards(GqlJwtGuard));
+  return applyDecorators(UseGuards(JwtGuard));
 };

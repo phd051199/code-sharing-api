@@ -20,7 +20,13 @@ export class UserUncheckedCreateWithoutRoleInput {
     display_name?: string;
 
     @Field(() => String, {nullable:true})
+    avatar?: string;
+
+    @Field(() => String, {nullable:true})
     password?: string;
+
+    @Field(() => Boolean, {nullable:true})
+    is_verified?: boolean;
 
     @Field(() => Date, {nullable:true})
     last_login?: Date | string;

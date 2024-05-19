@@ -13,7 +13,7 @@ generator nestgraphql {
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
+  // directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
 }
 
@@ -57,15 +57,20 @@ model Permission {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  user_name    String?   @db.MediumText
-  display_name String?   @db.MediumText
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  user_name    String? @db.MediumText
+  display_name String? @db.MediumText
+  avatar       String? @db.MediumText
   role_id      Int
-  password     String?   @db.MediumText
-  last_login   DateTime?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
+
+  /// @HideField()
+  password    String?   @db.MediumText
+  is_verified Boolean   @default(false)
+  last_login  DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   role           Role           @relation(fields: [role_id], references: [id])
   auth_providers AuthProvider[]

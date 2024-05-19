@@ -5,10 +5,9 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { GqlExecutionContext } from '@nestjs/graphql';
 import _ from 'lodash';
 
-import { PrismaService } from '@/prisma/prisma.service';
+import { extractContext } from '@/common/utils';
 
 import { CaslAbilityFactory } from '../casl-ability.factory';
 import { PERMISSION_CHECKER } from '../decorators';
@@ -19,31 +18,9 @@ export class CaslAbilitiesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private abilityFactory: CaslAbilityFactory,
-    private prisma: PrismaService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const ctx = GqlExecutionContext.create(context);
-    const { req } = ctx.getContext();
-
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id: req.user.id,
-      },
-      include: {
-        role: {
-          include: {
-            permissions: true,
-          },
-        },
-      },
-    });
-
-    const ability = this.abilityFactory.defineAbility(
-      user,
-      user.role.permissions,
-    );
-
     const policyHandlers = this.reflector.getAllAndOverride<
       PermissionHandler[]
     >(PERMISSION_CHECKER, [context.getHandler(), context.getClass()]);
@@ -51,6 +28,15 @@ export class CaslAbilitiesGuard implements CanActivate {
     if (_.isNil(policyHandlers) || !_.size(policyHandlers)) {
       return true;
     }
+
+    const {
+      req: { user },
+    } = extractContext(context);
+
+    const ability = this.abilityFactory.defineAbility(
+      user,
+      user.role.permissions,
+    );
 
     try {
       const permitted = policyHandlers.some((handler: PermissionHandler) =>
@@ -70,7 +56,7 @@ export class CaslAbilitiesGuard implements CanActivate {
     handler: PermissionHandler,
     ability: AppAbility,
   ) {
-    if (typeof handler === 'function') {
+    if (handler instanceof Function) {
       return handler(ability);
     }
 

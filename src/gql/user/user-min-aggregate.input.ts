@@ -17,10 +17,16 @@ export class UserMinAggregateInput {
     display_name?: true;
 
     @Field(() => Boolean, {nullable:true})
+    avatar?: true;
+
+    @Field(() => Boolean, {nullable:true})
     role_id?: true;
 
     @Field(() => Boolean, {nullable:true})
     password?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    is_verified?: true;
 
     @Field(() => Boolean, {nullable:true})
     last_login?: true;

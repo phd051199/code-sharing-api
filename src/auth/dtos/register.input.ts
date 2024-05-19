@@ -27,5 +27,5 @@ export class RegisterInput {
   @MinLength(1)
   @MaxLength(255)
   @IsOptional()
-  name?: string;
+  displayName?: string;
 }

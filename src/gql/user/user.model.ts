@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { Role } from '../role/role.model';
 import { AuthProvider } from '../auth-provider/auth-provider.model';
 import { Script } from '../script/script.model';
@@ -22,11 +23,17 @@ export class User {
     @Field(() => String, {nullable:true})
     display_name!: string | null;
 
+    @Field(() => String, {nullable:true})
+    avatar!: string | null;
+
     @Field(() => Int, {nullable:false})
     role_id!: number;
 
-    @Field(() => String, {nullable:true})
+    @HideField()
     password!: string | null;
+
+    @Field(() => Boolean, {nullable:false,defaultValue:false})
+    is_verified!: boolean;
 
     @Field(() => Date, {nullable:true})
     last_login!: Date | null;

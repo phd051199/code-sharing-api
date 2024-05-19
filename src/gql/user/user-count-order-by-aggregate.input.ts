@@ -18,10 +18,16 @@ export class UserCountOrderByAggregateInput {
     display_name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    avatar?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     role_id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     password?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    is_verified?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     last_login?: keyof typeof SortOrder;
