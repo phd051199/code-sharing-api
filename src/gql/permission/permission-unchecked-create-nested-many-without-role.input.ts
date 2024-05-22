@@ -24,5 +24,5 @@ export class PermissionUncheckedCreateNestedManyWithoutRoleInput {
 
     @Field(() => [PermissionWhereUniqueInput], {nullable:true})
     @Type(() => PermissionWhereUniqueInput)
-    connect?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action'>>;
+    connect?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>>;
 }

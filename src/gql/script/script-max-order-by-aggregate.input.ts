@@ -18,6 +18,9 @@ export class ScriptMaxOrderByAggregateInput {
     path?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    bundle?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     created_at?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -25,4 +28,10 @@ export class ScriptMaxOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     user_id?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    status?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    failed_reason?: keyof typeof SortOrder;
 }

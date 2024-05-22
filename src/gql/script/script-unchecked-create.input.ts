@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { ScriptStatus } from '../prisma/script-status.enum';
 
 @InputType()
 export class ScriptUncheckedCreateInput {
@@ -14,8 +15,11 @@ export class ScriptUncheckedCreateInput {
     @Field(() => String, {nullable:true})
     description?: string;
 
-    @Field(() => String, {nullable:false})
-    path!: string;
+    @Field(() => String, {nullable:true})
+    path?: string;
+
+    @Field(() => String, {nullable:true})
+    bundle?: string;
 
     @Field(() => Date, {nullable:true})
     created_at?: Date | string;
@@ -25,4 +29,10 @@ export class ScriptUncheckedCreateInput {
 
     @Field(() => Int, {nullable:false})
     user_id!: number;
+
+    @Field(() => ScriptStatus, {nullable:true})
+    status?: keyof typeof ScriptStatus;
+
+    @Field(() => String, {nullable:true})
+    failed_reason?: string;
 }

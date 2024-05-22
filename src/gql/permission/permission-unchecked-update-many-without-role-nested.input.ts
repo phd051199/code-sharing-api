@@ -32,19 +32,19 @@ export class PermissionUncheckedUpdateManyWithoutRoleNestedInput {
 
     @Field(() => [PermissionWhereUniqueInput], {nullable:true})
     @Type(() => PermissionWhereUniqueInput)
-    set?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action'>>;
+    set?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>>;
 
     @Field(() => [PermissionWhereUniqueInput], {nullable:true})
     @Type(() => PermissionWhereUniqueInput)
-    disconnect?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action'>>;
+    disconnect?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>>;
 
     @Field(() => [PermissionWhereUniqueInput], {nullable:true})
     @Type(() => PermissionWhereUniqueInput)
-    delete?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action'>>;
+    delete?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>>;
 
     @Field(() => [PermissionWhereUniqueInput], {nullable:true})
     @Type(() => PermissionWhereUniqueInput)
-    connect?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action'>>;
+    connect?: Array<Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>>;
 
     @Field(() => [PermissionUpdateWithWhereUniqueWithoutRoleInput], {nullable:true})
     @Type(() => PermissionUpdateWithWhereUniqueWithoutRoleInput)

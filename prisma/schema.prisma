@@ -51,7 +51,7 @@ model Permission {
   created_at DateTime  @default(now())
   updated_at DateTime? @updatedAt()
 
-  @@unique([role_id, action])
+  @@unique([role_id, action, subject])
   @@index([role_id])
   @@map("permissions")
 }
@@ -99,14 +99,25 @@ model AuthProvider {
   @@map("auth_providers")
 }
 
+enum ScriptStatus {
+  waiting @map("waiting")
+  running @map("running")
+  success @map("success")
+  failed  @map("failed")
+}
+
 model Script {
   id          Int      @id @default(autoincrement())
   name        String?  @db.TinyText
   description String?  @db.LongText
-  path        String   @db.MediumText
+  path        String?  @db.MediumText
+  bundle      String?  @db.MediumText
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   user_id     Int
+
+  status        ScriptStatus?
+  failed_reason String?       @db.LongText
 
   user User @relation(fields: [user_id], references: [id])
 

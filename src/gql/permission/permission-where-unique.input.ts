@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { PermissionRole_idActionCompoundUniqueInput } from './permission-role-id-action-compound-unique.input';
+import { PermissionRole_idActionSubjectCompoundUniqueInput } from './permission-role-id-action-subject-compound-unique.input';
 import { PermissionWhereInput } from './permission-where.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { EnumActionFilter } from '../prisma/enum-action-filter.input';
@@ -19,8 +19,8 @@ export class PermissionWhereUniqueInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
-    @Field(() => PermissionRole_idActionCompoundUniqueInput, {nullable:true})
-    role_id_action?: PermissionRole_idActionCompoundUniqueInput;
+    @Field(() => PermissionRole_idActionSubjectCompoundUniqueInput, {nullable:true})
+    role_id_action_subject?: PermissionRole_idActionSubjectCompoundUniqueInput;
 
     @Field(() => [PermissionWhereInput], {nullable:true})
     AND?: Array<PermissionWhereInput>;

@@ -11,7 +11,7 @@ export class UpsertOnePermissionArgs {
 
     @Field(() => PermissionWhereUniqueInput, {nullable:false})
     @Type(() => PermissionWhereUniqueInput)
-    where!: Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action'>;
+    where!: Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>;
 
     @Field(() => PermissionCreateInput, {nullable:false})
     @Type(() => PermissionCreateInput)

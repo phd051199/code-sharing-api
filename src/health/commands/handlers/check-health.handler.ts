@@ -18,7 +18,9 @@ import { CheckHealthCommand } from '../impl/check-health.command';
 
 @Injectable()
 @CommandHandler(CheckHealthCommand)
-export class CheckHealthHandler implements ICommandHandler<CheckHealthCommand> {
+export class CheckHealthCommandHandler
+  implements ICommandHandler<CheckHealthCommand>
+{
   constructor(
     private readonly configService: ConfigService,
     private readonly health: HealthCheckService,

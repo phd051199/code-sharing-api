@@ -1,3 +1,3 @@
-import { CheckHealthHandler } from './check-health.handler';
+import { CheckHealthCommandHandler } from './check-health.handler';
 
-export const CommandHandlers = [CheckHealthHandler];
+export const CommandHandlers = [CheckHealthCommandHandler];

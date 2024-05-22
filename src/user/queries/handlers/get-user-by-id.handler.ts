@@ -7,7 +7,9 @@ import { GetUserByIdQuery } from '../impl/get-user-by-id.query';
 
 @Injectable()
 @QueryHandler(GetUserByIdQuery)
-export class GetUserByIdHandler implements IQueryHandler<GetUserByIdQuery> {
+export class GetUserByIdQueryHandler
+  implements IQueryHandler<GetUserByIdQuery>
+{
   constructor(private readonly userService: UserService) {}
 
   execute(query: GetUserByIdQuery) {

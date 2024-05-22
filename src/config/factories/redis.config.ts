@@ -7,7 +7,6 @@ import { type RedisConfiguation } from '../types';
 export const redisConfiguration = registerAs<RedisConfiguation>(
   REDIS_CFG,
   () => ({
-    prefix: 'bullmq_queue',
     connection: {
       host: process.env.REDIS_HOST,
       port: Number(process.env.REDIS_PORT || 6379),

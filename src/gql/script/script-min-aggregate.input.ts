@@ -17,6 +17,9 @@ export class ScriptMinAggregateInput {
     path?: true;
 
     @Field(() => Boolean, {nullable:true})
+    bundle?: true;
+
+    @Field(() => Boolean, {nullable:true})
     created_at?: true;
 
     @Field(() => Boolean, {nullable:true})
@@ -24,4 +27,10 @@ export class ScriptMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     user_id?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    status?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    failed_reason?: true;
 }

@@ -1,3 +1,3 @@
-import { OAuthLoginHandler } from './oauth-login.handler';
+import { OAuthLoginCommandHandler } from './oauth-login.handler';
 
-export const CommandHandlers = [OAuthLoginHandler];
+export const CommandHandlers = [OAuthLoginCommandHandler];

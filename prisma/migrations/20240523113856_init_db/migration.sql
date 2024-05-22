@@ -21,7 +21,7 @@ CREATE TABLE `permissions` (
     `updated_at` DATETIME(3) NULL,
 
     INDEX `permissions_role_id_idx`(`role_id`),
-    UNIQUE INDEX `permissions_role_id_action_key`(`role_id`, `action`),
+    UNIQUE INDEX `permissions_role_id_action_subject_key`(`role_id`, `action`, `subject`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -29,10 +29,13 @@ CREATE TABLE `permissions` (
 CREATE TABLE `users` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(191) NOT NULL,
+    `user_name` MEDIUMTEXT NULL,
+    `display_name` MEDIUMTEXT NULL,
+    `avatar` MEDIUMTEXT NULL,
     `role_id` INTEGER NOT NULL,
     `password` MEDIUMTEXT NULL,
+    `is_verified` BOOLEAN NOT NULL DEFAULT false,
     `last_login` DATETIME(3) NULL,
-    `name` MEDIUMTEXT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -58,10 +61,13 @@ CREATE TABLE `scripts` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` TINYTEXT NULL,
     `description` LONGTEXT NULL,
-    `path` MEDIUMTEXT NOT NULL,
+    `path` MEDIUMTEXT NULL,
+    `bundle` MEDIUMTEXT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
     `user_id` INTEGER NOT NULL,
+    `status` ENUM('waiting', 'running', 'success', 'failed') NULL,
+    `failed_reason` LONGTEXT NULL,
 
     INDEX `scripts_user_id_idx`(`user_id`),
     PRIMARY KEY (`id`)

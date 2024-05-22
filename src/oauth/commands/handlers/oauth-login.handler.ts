@@ -6,7 +6,9 @@ import { OAuthService } from '@/oauth/oauth.service';
 import { OAuthLoginCommand } from '../impl';
 
 @CommandHandler(OAuthLoginCommand)
-export class OAuthLoginHandler implements ICommandHandler<OAuthLoginCommand> {
+export class OAuthLoginCommandHandler
+  implements ICommandHandler<OAuthLoginCommand>
+{
   constructor(private readonly oauthService: OAuthService) {}
 
   execute(command: OAuthLoginCommand): Promise<AuthResponse> {

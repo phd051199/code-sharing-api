@@ -18,6 +18,9 @@ export class ScriptCountAggregate {
     path!: number;
 
     @Field(() => Int, {nullable:false})
+    bundle!: number;
+
+    @Field(() => Int, {nullable:false})
     created_at!: number;
 
     @Field(() => Int, {nullable:false})
@@ -25,6 +28,12 @@ export class ScriptCountAggregate {
 
     @Field(() => Int, {nullable:false})
     user_id!: number;
+
+    @Field(() => Int, {nullable:false})
+    status!: number;
+
+    @Field(() => Int, {nullable:false})
+    failed_reason!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

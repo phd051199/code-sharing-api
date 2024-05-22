@@ -9,6 +9,7 @@ import {
   FastifyAdapter,
   type NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { contentParser } from 'fastify-multer';
 
 import { AppModule } from '@/app.module';
 import { FastifyHooks } from '@/common/enums';
@@ -42,6 +43,8 @@ async function bootstrap() {
   await app.register<FastifyHelmetOptions>(fastifyHelmet, {
     contentSecurityPolicy: false,
   });
+
+  await app.register(contentParser);
 
   await app.listen(port, host);
 }

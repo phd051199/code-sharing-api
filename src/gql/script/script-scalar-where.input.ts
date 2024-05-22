@@ -2,8 +2,8 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
-import { StringFilter } from '../prisma/string-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { EnumScriptStatusNullableFilter } from '../prisma/enum-script-status-nullable-filter.input';
 
 @InputType()
 export class ScriptScalarWhereInput {
@@ -26,8 +26,11 @@ export class ScriptScalarWhereInput {
     @Field(() => StringNullableFilter, {nullable:true})
     description?: StringNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
-    path?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    path?: StringNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    bundle?: StringNullableFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     created_at?: DateTimeFilter;
@@ -37,4 +40,10 @@ export class ScriptScalarWhereInput {
 
     @Field(() => IntFilter, {nullable:true})
     user_id?: IntFilter;
+
+    @Field(() => EnumScriptStatusNullableFilter, {nullable:true})
+    status?: EnumScriptStatusNullableFilter;
+
+    @Field(() => StringNullableFilter, {nullable:true})
+    failed_reason?: StringNullableFilter;
 }
