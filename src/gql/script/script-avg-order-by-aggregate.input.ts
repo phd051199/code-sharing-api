@@ -9,5 +9,8 @@ export class ScriptAvgOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    categoryId?: keyof typeof SortOrder;
 }

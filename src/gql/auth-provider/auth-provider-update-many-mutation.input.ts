@@ -10,8 +10,8 @@ export class AuthProviderUpdateManyMutationInput {
     provider?: EnumAuthProvidersFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: DateTimeFieldUpdateOperationsInput;
+    updatedAt?: DateTimeFieldUpdateOperationsInput;
 }

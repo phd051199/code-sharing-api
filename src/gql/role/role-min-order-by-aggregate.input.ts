@@ -12,8 +12,8 @@ export class RoleMinOrderByAggregateInput {
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 }

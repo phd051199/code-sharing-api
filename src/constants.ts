@@ -8,3 +8,4 @@ export const OAUTH_CFG = 'OAUTH_CFG';
 export const REDIS_CLIENT = 'REDIS_CLIENT';
 export const IS_PUBLIC = 'IS_PUBLIC';
 export const ROLES = 'ROLES';
+export const PUB_SUB = 'PUB_SUB';

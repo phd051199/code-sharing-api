@@ -25,7 +25,7 @@ export class PermissionScalarWhereWithAggregatesInput {
     id?: IntWithAggregatesFilter;
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
-    role_id?: IntWithAggregatesFilter;
+    roleId?: IntWithAggregatesFilter;
 
     @Field(() => EnumActionWithAggregatesFilter, {nullable:true})
     action?: EnumActionWithAggregatesFilter;
@@ -43,8 +43,8 @@ export class PermissionScalarWhereWithAggregatesInput {
     reason?: StringNullableWithAggregatesFilter;
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
-    created_at?: DateTimeWithAggregatesFilter;
+    createdAt?: DateTimeWithAggregatesFilter;
 
     @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
-    updated_at?: DateTimeNullableWithAggregatesFilter;
+    updatedAt?: DateTimeNullableWithAggregatesFilter;
 }

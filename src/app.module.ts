@@ -3,8 +3,8 @@ import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ScheduleModule } from '@nestjs/schedule';
 
+import { LoggingInterceptor } from '@/common/logger';
 import { type RedisConfiguation } from '@/config/types';
 import { REDIS_CFG } from '@/constants';
 
@@ -31,7 +31,6 @@ import { ValidationModule } from './validation/validation.module';
     }),
 
     CqrsModule.forRoot(),
-    ScheduleModule.forRoot(),
     HealthModule,
     AuthModule,
     UserModule,
@@ -45,11 +44,16 @@ import { ValidationModule } from './validation/validation.module';
     GqlModule,
     ScriptModule,
     MinioModule,
+    CommonModule,
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })

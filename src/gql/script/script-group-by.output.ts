@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { ScriptStatus } from '../prisma/script-status.enum';
 import { ScriptCountAggregate } from './script-count-aggregate.output';
 import { ScriptAvgAggregate } from './script-avg-aggregate.output';
 import { ScriptSumAggregate } from './script-sum-aggregate.output';
@@ -21,25 +20,22 @@ export class ScriptGroupBy {
     description?: string;
 
     @Field(() => String, {nullable:true})
+    icon?: string;
+
+    @Field(() => String, {nullable:true})
     path?: string;
 
-    @Field(() => String, {nullable:true})
-    bundle?: string;
-
-    @Field(() => Date, {nullable:false})
-    created_at!: Date | string;
-
-    @Field(() => Date, {nullable:false})
-    updated_at!: Date | string;
-
     @Field(() => Int, {nullable:false})
-    user_id!: number;
+    authorId!: number;
 
-    @Field(() => ScriptStatus, {nullable:true})
-    status?: keyof typeof ScriptStatus;
+    @Field(() => Int, {nullable:true})
+    categoryId?: number;
 
-    @Field(() => String, {nullable:true})
-    failed_reason?: string;
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date | string;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date | string;
 
     @Field(() => ScriptCountAggregate, {nullable:true})
     _count?: ScriptCountAggregate;

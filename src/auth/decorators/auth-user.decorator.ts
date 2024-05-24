@@ -4,9 +4,10 @@ import _ from 'lodash';
 import { extractContext } from '@/common/utils';
 
 export const AuthUser = createParamDecorator(
-  (_data, context: ExecutionContext) => {
+  (args: string, context: ExecutionContext) => {
     const { req } = extractContext(context);
+    const user = _.pick(req.user, ['id', 'email', 'user_name', 'display_name']);
 
-    return _.pick(req.user, ['id', 'email', 'user_name', 'display_name']);
+    return args ? _.get(user, args) : user;
   },
 );

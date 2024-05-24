@@ -25,7 +25,7 @@ export { AuthProviderMinOrderByAggregateInput } from './auth-provider-min-order-
 export { AuthProviderOrderByRelationAggregateInput } from './auth-provider-order-by-relation-aggregate.input';
 export { AuthProviderOrderByWithAggregationInput } from './auth-provider-order-by-with-aggregation.input';
 export { AuthProviderOrderByWithRelationInput } from './auth-provider-order-by-with-relation.input';
-export { AuthProviderProviderUser_idCompoundUniqueInput } from './auth-provider-provider-user-id-compound-unique.input';
+export { AuthProviderProviderUserIdCompoundUniqueInput } from './auth-provider-provider-user-id-compound-unique.input';
 export { AuthProviderScalarFieldEnum } from './auth-provider-scalar-field.enum';
 export { AuthProviderScalarWhereWithAggregatesInput } from './auth-provider-scalar-where-with-aggregates.input';
 export { AuthProviderScalarWhereInput } from './auth-provider-scalar-where.input';

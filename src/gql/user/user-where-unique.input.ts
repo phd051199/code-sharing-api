@@ -10,6 +10,7 @@ import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { RoleRelationFilter } from '../role/role-relation-filter.input';
 import { AuthProviderListRelationFilter } from '../auth-provider/auth-provider-list-relation-filter.input';
 import { ScriptListRelationFilter } from '../script/script-list-relation-filter.input';
+import { UserFavoriteListRelationFilter } from '../user-favorite/user-favorite-list-relation-filter.input';
 
 @InputType()
 export class UserWhereUniqueInput {
@@ -30,38 +31,41 @@ export class UserWhereUniqueInput {
     NOT?: Array<UserWhereInput>;
 
     @Field(() => StringNullableFilter, {nullable:true})
-    user_name?: StringNullableFilter;
+    userName?: StringNullableFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
-    display_name?: StringNullableFilter;
+    displayName?: StringNullableFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     avatar?: StringNullableFilter;
 
     @Field(() => IntFilter, {nullable:true})
-    role_id?: IntFilter;
+    roleId?: IntFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     password?: StringNullableFilter;
 
     @Field(() => BoolFilter, {nullable:true})
-    is_verified?: BoolFilter;
+    isVerified?: BoolFilter;
 
     @Field(() => DateTimeNullableFilter, {nullable:true})
-    last_login?: DateTimeNullableFilter;
+    lastLogin?: DateTimeNullableFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    created_at?: DateTimeFilter;
+    createdAt?: DateTimeFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    updated_at?: DateTimeFilter;
+    updatedAt?: DateTimeFilter;
 
     @Field(() => RoleRelationFilter, {nullable:true})
     role?: RoleRelationFilter;
 
     @Field(() => AuthProviderListRelationFilter, {nullable:true})
-    auth_providers?: AuthProviderListRelationFilter;
+    authProviders?: AuthProviderListRelationFilter;
 
     @Field(() => ScriptListRelationFilter, {nullable:true})
     scripts?: ScriptListRelationFilter;
+
+    @Field(() => UserFavoriteListRelationFilter, {nullable:true})
+    userFavorite?: UserFavoriteListRelationFilter;
 }

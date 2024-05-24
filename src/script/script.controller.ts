@@ -1,24 +1,36 @@
 import { File, FileInterceptor } from '@nest-lab/fastify-multer';
 import {
-  BadRequestException,
-  Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseFilePipe,
   ParseIntPipe,
   Post,
   UploadedFile,
+  UseFilters,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Action, Prisma, type Script, User } from '@prisma/client';
-import _ from 'lodash';
+import { Action, Prisma, type Script } from '@prisma/client';
+import { diskStorage } from 'fastify-multer';
+import { mkdtempSync } from 'fs';
+import { tmpdir } from 'os';
+import path, { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
 import { AuthUser, Public } from '@/auth/decorators';
-import { Authorized, Permissions } from '@/casl/decorators';
+import { Authorized, CheckPermissions } from '@/casl/decorators';
 import { can } from '@/casl/utils';
+import { FileExceptionFilter } from '@/common/filters';
+import { FileExtensionValidator } from '@/validation/custom-validator';
 
-import { CompileScriptCommand, CreateScriptCommand } from './commands';
+import {
+  AddToFavoriteCommand,
+  CompileScriptCommand,
+  CreateScriptCommand,
+  RemoveFromFavoriteCommand,
+} from './commands';
 import {
   GetFavoriteScriptsQuery,
   GetPublicScriptsQuery,
@@ -41,43 +53,77 @@ export class ScriptController {
 
   @Get('favorite')
   @Authorized()
-  @Permissions(can(Action.read, Prisma.ModelName.Script))
-  getFavorite(@AuthUser() user: User): Promise<Script[]> {
-    return this.queryBus.execute(new GetFavoriteScriptsQuery(user.id));
+  @CheckPermissions(can(Action.read, Prisma.ModelName.Script))
+  getFavorite(@AuthUser('id') userId: number): Promise<Script[]> {
+    return this.queryBus.execute(new GetFavoriteScriptsQuery(userId));
   }
 
   @Get('self')
   @Authorized()
-  @Permissions(can(Action.read, Prisma.ModelName.Script))
-  getSelf(@AuthUser() user: User): Promise<Script[]> {
-    return this.queryBus.execute(new GetSelfScriptsQuery(user.id));
+  @CheckPermissions(can(Action.read, Prisma.ModelName.Script))
+  getSelf(@AuthUser('id') userId: number): Promise<Script[]> {
+    return this.queryBus.execute(new GetSelfScriptsQuery(userId));
   }
 
   @Get(':id(\\d+)')
   @Authorized()
-  @Permissions(can(Action.read, Prisma.ModelName.Script))
+  @CheckPermissions(can(Action.read, Prisma.ModelName.Script))
   getScript(@Param('id', ParseIntPipe) id: number): Promise<Script> {
     return this.queryBus.execute(new GetScriptByIdQuery(id));
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
   @Authorized()
-  @Permissions(can(Action.create, Prisma.ModelName.Script))
+  @CheckPermissions(can(Action.create, Prisma.ModelName.Script))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: (_req, _file, callback): void =>
+          callback(null, mkdtempSync(join(tmpdir(), 'upload-'))),
+        filename: (_req, file, callback): void =>
+          callback(null, uuidv4() + path.extname(file.originalname)),
+      }),
+    }),
+  )
+  @UseFilters(FileExceptionFilter)
   async upload(
-    @AuthUser() user: User,
-    @UploadedFile() file?: File,
-    @Body('data') fileData?: string,
+    @AuthUser('id') userId: number,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new FileExtensionValidator({
+            accepted: ['js', 'ts'],
+          }),
+        ],
+      }),
+    )
+    file: File,
   ): Promise<void> {
-    if (_.isNil(file) && _.isNil(fileData)) {
-      throw new BadRequestException('No file or data provided');
-    }
-
     const script = await this.commandBus.execute(
-      new CreateScriptCommand(user.id),
+      new CreateScriptCommand(userId),
     );
+    await this.commandBus.execute(new CompileScriptCommand(file.path, script));
+  }
+
+  @Post('favorite/:scriptId(\\d+)')
+  @Authorized()
+  @CheckPermissions(can(Action.create, 'UserFavorite'))
+  async addToFavorite(
+    @AuthUser('id') userId: number,
+    @Param('scriptId', ParseIntPipe) scriptId: number,
+  ): Promise<void> {
+    await this.commandBus.execute(new AddToFavoriteCommand(userId, scriptId));
+  }
+
+  @Delete('favorite/:scriptId(\\d+)')
+  @Authorized()
+  @CheckPermissions(can(Action.delete, 'UserFavorite'))
+  async removeFavorite(
+    @AuthUser('id') userId: number,
+    @Param('scriptId', ParseIntPipe) scriptId: number,
+  ): Promise<void> {
     await this.commandBus.execute(
-      new CompileScriptCommand(fileData ?? file.buffer, script.id),
+      new RemoveFromFavoriteCommand(userId, scriptId),
     );
   }
 }

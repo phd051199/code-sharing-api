@@ -13,10 +13,10 @@ export class UserUpdateManyMutationInput {
     email?: StringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    user_name?: NullableStringFieldUpdateOperationsInput;
+    userName?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    display_name?: NullableStringFieldUpdateOperationsInput;
+    displayName?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     avatar?: NullableStringFieldUpdateOperationsInput;
@@ -25,14 +25,14 @@ export class UserUpdateManyMutationInput {
     password?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => BoolFieldUpdateOperationsInput, {nullable:true})
-    is_verified?: BoolFieldUpdateOperationsInput;
+    isVerified?: BoolFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
-    last_login?: NullableDateTimeFieldUpdateOperationsInput;
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: DateTimeFieldUpdateOperationsInput;
+    updatedAt?: DateTimeFieldUpdateOperationsInput;
 }

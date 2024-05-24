@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { PermissionRole_idActionSubjectCompoundUniqueInput } from './permission-role-id-action-subject-compound-unique.input';
+import { PermissionRoleIdActionSubjectCompoundUniqueInput } from './permission-role-id-action-subject-compound-unique.input';
 import { PermissionWhereInput } from './permission-where.input';
 import { IntFilter } from '../prisma/int-filter.input';
 import { EnumActionFilter } from '../prisma/enum-action-filter.input';
@@ -19,8 +19,8 @@ export class PermissionWhereUniqueInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
-    @Field(() => PermissionRole_idActionSubjectCompoundUniqueInput, {nullable:true})
-    role_id_action_subject?: PermissionRole_idActionSubjectCompoundUniqueInput;
+    @Field(() => PermissionRoleIdActionSubjectCompoundUniqueInput, {nullable:true})
+    roleId_action_subject?: PermissionRoleIdActionSubjectCompoundUniqueInput;
 
     @Field(() => [PermissionWhereInput], {nullable:true})
     AND?: Array<PermissionWhereInput>;
@@ -32,7 +32,7 @@ export class PermissionWhereUniqueInput {
     NOT?: Array<PermissionWhereInput>;
 
     @Field(() => IntFilter, {nullable:true})
-    role_id?: IntFilter;
+    roleId?: IntFilter;
 
     @Field(() => EnumActionFilter, {nullable:true})
     action?: EnumActionFilter;
@@ -50,10 +50,10 @@ export class PermissionWhereUniqueInput {
     reason?: StringNullableFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    created_at?: DateTimeFilter;
+    createdAt?: DateTimeFilter;
 
     @Field(() => DateTimeNullableFilter, {nullable:true})
-    updated_at?: DateTimeNullableFilter;
+    updatedAt?: DateTimeNullableFilter;
 
     @Field(() => RoleRelationFilter, {nullable:true})
     role?: RoleRelationFilter;

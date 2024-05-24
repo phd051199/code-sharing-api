@@ -28,10 +28,10 @@ export class PermissionUpdateInput {
     reason?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput;
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput;
 
     @Field(() => RoleUpdateOneRequiredWithoutPermissionsNestedInput, {nullable:true})
     role?: RoleUpdateOneRequiredWithoutPermissionsNestedInput;

@@ -2,7 +2,9 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
-import { NullableEnumScriptStatusFieldUpdateOperationsInput } from '../prisma/nullable-enum-script-status-field-update-operations.input';
+import { CategoryUpdateOneWithoutScriptsNestedInput } from '../category/category-update-one-without-scripts-nested.input';
+import { UserFavoriteUpdateManyWithoutScriptNestedInput } from '../user-favorite/user-favorite-update-many-without-script-nested.input';
+import { BundleDetailUpdateOneWithoutScriptNestedInput } from '../bundle-detail/bundle-detail-update-one-without-script-nested.input';
 
 @InputType()
 export class ScriptUpdateWithoutUserInput {
@@ -14,20 +16,23 @@ export class ScriptUpdateWithoutUserInput {
     description?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    icon?: NullableStringFieldUpdateOperationsInput;
+
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     path?: NullableStringFieldUpdateOperationsInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    bundle?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    updatedAt?: DateTimeFieldUpdateOperationsInput;
 
-    @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: DateTimeFieldUpdateOperationsInput;
+    @Field(() => CategoryUpdateOneWithoutScriptsNestedInput, {nullable:true})
+    category?: CategoryUpdateOneWithoutScriptsNestedInput;
 
-    @Field(() => NullableEnumScriptStatusFieldUpdateOperationsInput, {nullable:true})
-    status?: NullableEnumScriptStatusFieldUpdateOperationsInput;
+    @Field(() => UserFavoriteUpdateManyWithoutScriptNestedInput, {nullable:true})
+    userFavorite?: UserFavoriteUpdateManyWithoutScriptNestedInput;
 
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    failed_reason?: NullableStringFieldUpdateOperationsInput;
+    @Field(() => BundleDetailUpdateOneWithoutScriptNestedInput, {nullable:true})
+    bundleDetail?: BundleDetailUpdateOneWithoutScriptNestedInput;
 }

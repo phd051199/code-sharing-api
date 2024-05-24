@@ -3,7 +3,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Action, Prisma } from '@prisma/client';
 
-import { Authorized, Permissions } from '@/casl/decorators';
+import { Authorized, CheckPermissions } from '@/casl/decorators';
 import { can } from '@/casl/utils';
 import { User } from '@/gql/user';
 
@@ -15,7 +15,7 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   @Authorized()
-  @Permissions(can(Action.read, Prisma.ModelName.User))
+  @CheckPermissions(can(Action.read, Prisma.ModelName.User))
   getUser(@Args('id', ParseIntPipe) id: number) {
     return this.queryBus.execute(new GetUserByIdQuery(id));
   }

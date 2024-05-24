@@ -6,6 +6,7 @@ import { HideField } from '@nestjs/graphql';
 import { Role } from '../role/role.model';
 import { AuthProvider } from '../auth-provider/auth-provider.model';
 import { Script } from '../script/script.model';
+import { UserFavorite } from '../user-favorite/user-favorite.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -18,40 +19,43 @@ export class User {
     email!: string;
 
     @Field(() => String, {nullable:true})
-    user_name!: string | null;
+    userName!: string | null;
 
     @Field(() => String, {nullable:true})
-    display_name!: string | null;
+    displayName!: string | null;
 
     @Field(() => String, {nullable:true})
     avatar!: string | null;
 
     @Field(() => Int, {nullable:false})
-    role_id!: number;
+    roleId!: number;
 
     @HideField()
     password!: string | null;
 
     @Field(() => Boolean, {nullable:false,defaultValue:false})
-    is_verified!: boolean;
+    isVerified!: boolean;
 
     @Field(() => Date, {nullable:true})
-    last_login!: Date | null;
+    lastLogin!: Date | null;
 
     @Field(() => Date, {nullable:false})
-    created_at!: Date;
+    createdAt!: Date;
 
     @Field(() => Date, {nullable:false})
-    updated_at!: Date;
+    updatedAt!: Date;
 
     @Field(() => Role, {nullable:false})
     role?: Role;
 
     @Field(() => [AuthProvider], {nullable:true})
-    auth_providers?: Array<AuthProvider>;
+    authProviders?: Array<AuthProvider>;
 
     @Field(() => [Script], {nullable:true})
     scripts?: Array<Script>;
+
+    @Field(() => [UserFavorite], {nullable:true})
+    userFavorite?: Array<UserFavorite>;
 
     @Field(() => UserCount, {nullable:false})
     _count?: UserCount;

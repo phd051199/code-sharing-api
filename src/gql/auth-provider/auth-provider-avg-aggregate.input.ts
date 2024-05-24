@@ -5,5 +5,5 @@ import { InputType } from '@nestjs/graphql';
 export class AuthProviderAvgAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
-    user_id?: true;
+    userId?: true;
 }

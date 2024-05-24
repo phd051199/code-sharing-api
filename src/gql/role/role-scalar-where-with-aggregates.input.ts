@@ -24,8 +24,8 @@ export class RoleScalarWhereWithAggregatesInput {
     name?: StringWithAggregatesFilter;
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
-    created_at?: DateTimeWithAggregatesFilter;
+    createdAt?: DateTimeWithAggregatesFilter;
 
     @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
-    updated_at?: DateTimeNullableWithAggregatesFilter;
+    updatedAt?: DateTimeNullableWithAggregatesFilter;
 }

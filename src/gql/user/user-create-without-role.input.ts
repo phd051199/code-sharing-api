@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { AuthProviderCreateNestedManyWithoutUserInput } from '../auth-provider/auth-provider-create-nested-many-without-user.input';
 import { ScriptCreateNestedManyWithoutUserInput } from '../script/script-create-nested-many-without-user.input';
+import { UserFavoriteCreateNestedManyWithoutUserInput } from '../user-favorite/user-favorite-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateWithoutRoleInput {
@@ -10,10 +11,10 @@ export class UserCreateWithoutRoleInput {
     email!: string;
 
     @Field(() => String, {nullable:true})
-    user_name?: string;
+    userName?: string;
 
     @Field(() => String, {nullable:true})
-    display_name?: string;
+    displayName?: string;
 
     @Field(() => String, {nullable:true})
     avatar?: string;
@@ -22,20 +23,23 @@ export class UserCreateWithoutRoleInput {
     password?: string;
 
     @Field(() => Boolean, {nullable:true})
-    is_verified?: boolean;
+    isVerified?: boolean;
 
     @Field(() => Date, {nullable:true})
-    last_login?: Date | string;
+    lastLogin?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
+    createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 
     @Field(() => AuthProviderCreateNestedManyWithoutUserInput, {nullable:true})
-    auth_providers?: AuthProviderCreateNestedManyWithoutUserInput;
+    authProviders?: AuthProviderCreateNestedManyWithoutUserInput;
 
     @Field(() => ScriptCreateNestedManyWithoutUserInput, {nullable:true})
     scripts?: ScriptCreateNestedManyWithoutUserInput;
+
+    @Field(() => UserFavoriteCreateNestedManyWithoutUserInput, {nullable:true})
+    userFavorite?: UserFavoriteCreateNestedManyWithoutUserInput;
 }

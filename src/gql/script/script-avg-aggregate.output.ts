@@ -9,5 +9,8 @@ export class ScriptAvgAggregate {
     id?: number;
 
     @Field(() => Float, {nullable:true})
-    user_id?: number;
+    authorId?: number;
+
+    @Field(() => Float, {nullable:true})
+    categoryId?: number;
 }

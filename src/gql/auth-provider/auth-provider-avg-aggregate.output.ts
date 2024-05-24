@@ -6,5 +6,5 @@ import { Float } from '@nestjs/graphql';
 export class AuthProviderAvgAggregate {
 
     @Field(() => Float, {nullable:true})
-    user_id?: number;
+    userId?: number;
 }

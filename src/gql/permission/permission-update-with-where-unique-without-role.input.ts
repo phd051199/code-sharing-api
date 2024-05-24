@@ -10,7 +10,7 @@ export class PermissionUpdateWithWhereUniqueWithoutRoleInput {
 
     @Field(() => PermissionWhereUniqueInput, {nullable:false})
     @Type(() => PermissionWhereUniqueInput)
-    where!: Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>;
+    where!: Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'roleId_action_subject'>;
 
     @Field(() => PermissionUpdateWithoutRoleInput, {nullable:false})
     @Type(() => PermissionUpdateWithoutRoleInput)

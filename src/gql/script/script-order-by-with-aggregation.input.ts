@@ -21,25 +21,22 @@ export class ScriptOrderByWithAggregationInput {
     description?: SortOrderInput;
 
     @Field(() => SortOrderInput, {nullable:true})
+    icon?: SortOrderInput;
+
+    @Field(() => SortOrderInput, {nullable:true})
     path?: SortOrderInput;
 
-    @Field(() => SortOrderInput, {nullable:true})
-    bundle?: SortOrderInput;
-
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
 
     @Field(() => SortOrderInput, {nullable:true})
-    status?: SortOrderInput;
+    categoryId?: SortOrderInput;
 
-    @Field(() => SortOrderInput, {nullable:true})
-    failed_reason?: SortOrderInput;
+    @Field(() => SortOrder, {nullable:true})
+    createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    updatedAt?: keyof typeof SortOrder;
 
     @Field(() => ScriptCountOrderByAggregateInput, {nullable:true})
     _count?: ScriptCountOrderByAggregateInput;

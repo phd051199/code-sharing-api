@@ -8,5 +8,5 @@ export class UserAvgAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    role_id?: true;
+    roleId?: true;
 }

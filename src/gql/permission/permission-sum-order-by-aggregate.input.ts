@@ -9,5 +9,5 @@ export class PermissionSumOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    role_id?: keyof typeof SortOrder;
+    roleId?: keyof typeof SortOrder;
 }

@@ -12,29 +12,29 @@ export class UserMinOrderByAggregateInput {
     email?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    user_name?: keyof typeof SortOrder;
+    userName?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    display_name?: keyof typeof SortOrder;
+    displayName?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     avatar?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    role_id?: keyof typeof SortOrder;
+    roleId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     password?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    is_verified?: keyof typeof SortOrder;
+    isVerified?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    last_login?: keyof typeof SortOrder;
+    lastLogin?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 }

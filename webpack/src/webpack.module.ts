@@ -30,9 +30,6 @@ import { ScriptService, WebpackService } from './services';
     BullModule.registerQueue({
       name: UPLOAD_SCRIPT_QUEUE,
       prefix: 'script',
-      defaultJobOptions: {
-        removeOnComplete: true,
-      },
     }),
   ],
   providers: [WebpackService, BuildScriptProcessor, ScriptService],

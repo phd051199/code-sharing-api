@@ -4,11 +4,11 @@ import { AuthProviders } from '../prisma/auth-providers.enum';
 import { Int } from '@nestjs/graphql';
 
 @InputType()
-export class AuthProviderProviderUser_idCompoundUniqueInput {
+export class AuthProviderProviderUserIdCompoundUniqueInput {
 
     @Field(() => AuthProviders, {nullable:false})
     provider!: keyof typeof AuthProviders;
 
     @Field(() => Int, {nullable:false})
-    user_id!: number;
+    userId!: number;
 }

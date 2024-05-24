@@ -8,7 +8,7 @@ export class PermissionCountAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    role_id?: true;
+    roleId?: true;
 
     @Field(() => Boolean, {nullable:true})
     action?: true;
@@ -26,10 +26,10 @@ export class PermissionCountAggregateInput {
     reason?: true;
 
     @Field(() => Boolean, {nullable:true})
-    created_at?: true;
+    createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})
-    updated_at?: true;
+    updatedAt?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

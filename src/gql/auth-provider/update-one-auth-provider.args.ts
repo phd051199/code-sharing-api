@@ -14,5 +14,5 @@ export class UpdateOneAuthProviderArgs {
 
     @Field(() => AuthProviderWhereUniqueInput, {nullable:false})
     @Type(() => AuthProviderWhereUniqueInput)
-    where!: Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>;
+    where!: Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>;
 }

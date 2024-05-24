@@ -24,5 +24,5 @@ export class AuthProviderUncheckedCreateNestedManyWithoutUserInput {
 
     @Field(() => [AuthProviderWhereUniqueInput], {nullable:true})
     @Type(() => AuthProviderWhereUniqueInput)
-    connect?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>>;
+    connect?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>>;
 }

@@ -13,16 +13,14 @@ generator nestgraphql {
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
-  // directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
 }
 
 model Role {
-  id         Int       @id @default(autoincrement())
-  name       String    @db.VarChar(255)
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt()
-
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(255)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime?    @updatedAt() @map("updated_at")
   permissions Permission[]
   users       User[]
 
@@ -38,45 +36,42 @@ enum Action {
 }
 
 model Permission {
-  id         Int     @id @default(autoincrement())
-  role_id    Int
+  id         Int       @id @default(autoincrement())
+  roleId     Int       @map("role_id")
   action     Action
-  subject    String  @db.VarChar(255)
-  inverted   Boolean @default(false)
-  conditions Json?   @db.Json
-  reason     String? @db.Text()
+  subject    String    @db.VarChar(255)
+  inverted   Boolean   @default(false)
+  conditions Json?     @db.Json
+  reason     String?   @db.Text()
+  role       Role      @relation(fields: [roleId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt() @map("updated_at")
 
-  role Role @relation(fields: [role_id], references: [id])
-
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt()
-
-  @@unique([role_id, action, subject])
-  @@index([role_id])
+  @@unique([roleId, action, subject])
+  @@index([roleId])
   @@map("permissions")
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  email        String  @unique
-  user_name    String? @db.MediumText
-  display_name String? @db.MediumText
-  avatar       String? @db.MediumText
-  role_id      Int
-
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
+  userName    String?   @map("user_name") @db.MediumText
+  displayName String?   @map("display_name") @db.MediumText
+  avatar      String?   @db.MediumText
+  roleId      Int       @map("role_id")
   /// @HideField()
   password    String?   @db.MediumText
-  is_verified Boolean   @default(false)
-  last_login  DateTime?
+  isVerified  Boolean   @default(false) @map("is_verified")
+  lastLogin   DateTime? @map("last_login")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  role          Role           @relation(fields: [roleId], references: [id])
+  authProviders AuthProvider[]
+  scripts       Script[]
+  userFavorite  UserFavorite[]
 
-  role           Role           @relation(fields: [role_id], references: [id])
-  auth_providers AuthProvider[]
-  scripts        Script[]
-
-  @@index([role_id])
+  @@index([roleId])
   @@index([email])
   @@map("users")
 }
@@ -87,40 +82,81 @@ enum AuthProviders {
 }
 
 model AuthProvider {
-  provider   AuthProviders
-  user_id    Int
-  created_at DateTime      @default(now())
-  updated_at DateTime      @updatedAt
+  userId    Int           @map("user_id")
+  provider  AuthProviders
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@unique([provider, user_id])
-  @@index([user_id])
+  @@unique([provider, userId])
+  @@index([userId])
   @@map("auth_providers")
 }
 
-enum ScriptStatus {
-  waiting @map("waiting")
-  running @map("running")
-  success @map("success")
-  failed  @map("failed")
+model Script {
+  id           Int            @id @default(autoincrement())
+  name         String?        @db.TinyText
+  description  String?        @db.LongText
+  icon         String?        @db.TinyText
+  path         String?        @db.MediumText
+  authorId     Int            @map("author_id")
+  categoryId   Int?           @map("category_id")
+  user         User           @relation(fields: [authorId], references: [id])
+  category     Category?      @relation(fields: [categoryId], references: [id])
+  userFavorite UserFavorite[]
+  bundleDetail BundleDetail?
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+
+  @@index([categoryId])
+  @@index([authorId])
+  @@map("scripts")
 }
 
-model Script {
-  id          Int      @id @default(autoincrement())
-  name        String?  @db.TinyText
-  description String?  @db.LongText
-  path        String?  @db.MediumText
-  bundle      String?  @db.MediumText
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  user_id     Int
+model UserFavorite {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  scriptId  Int      @map("script_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+  script    Script   @relation(fields: [scriptId], references: [id])
 
-  status        ScriptStatus?
-  failed_reason String?       @db.LongText
+  @@unique([userId, scriptId])
+  @@index([userId, scriptId])
+  @@index([scriptId])
+  @@map("user_favorites")
+}
 
-  user User @relation(fields: [user_id], references: [id])
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  scripts   Script[]
 
-  @@index([user_id])
-  @@map("scripts")
+  @@map("categories")
+}
+
+enum BuildStatus {
+  waiting   @map("waiting")
+  running   @map("running")
+  uploading @map("uploading")
+  success   @map("success")
+  failed    @map("failed")
+}
+
+model BundleDetail {
+  id           Int          @id @default(autoincrement())
+  scriptId     Int          @unique @map("script_id")
+  bundlePath   String?      @map("bundle_path") @db.MediumText
+  priority     Int?
+  status       BuildStatus?
+  failedReason String?      @map("failed_reason") @db.LongText
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+  script       Script       @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+
+  @@index([scriptId])
+  @@map("bundle_detail")
 }

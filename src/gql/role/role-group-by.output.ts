@@ -17,10 +17,10 @@ export class RoleGroupBy {
     name!: string;
 
     @Field(() => Date, {nullable:false})
-    created_at!: Date | string;
+    createdAt!: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 
     @Field(() => RoleCountAggregate, {nullable:true})
     _count?: RoleCountAggregate;

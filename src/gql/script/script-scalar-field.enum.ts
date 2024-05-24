@@ -4,13 +4,12 @@ export enum ScriptScalarFieldEnum {
     id = "id",
     name = "name",
     description = "description",
+    icon = "icon",
     path = "path",
-    bundle = "bundle",
-    created_at = "created_at",
-    updated_at = "updated_at",
-    user_id = "user_id",
-    status = "status",
-    failed_reason = "failed_reason"
+    authorId = "authorId",
+    categoryId = "categoryId",
+    createdAt = "createdAt",
+    updatedAt = "updatedAt"
 }
 
 

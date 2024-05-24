@@ -1,7 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { ScriptStatus } from '../prisma/script-status.enum';
+import { UserFavoriteUncheckedCreateNestedManyWithoutScriptInput } from '../user-favorite/user-favorite-unchecked-create-nested-many-without-script.input';
+import { BundleDetailUncheckedCreateNestedOneWithoutScriptInput } from '../bundle-detail/bundle-detail-unchecked-create-nested-one-without-script.input';
 
 @InputType()
 export class ScriptUncheckedCreateWithoutUserInput {
@@ -16,20 +17,23 @@ export class ScriptUncheckedCreateWithoutUserInput {
     description?: string;
 
     @Field(() => String, {nullable:true})
+    icon?: string;
+
+    @Field(() => String, {nullable:true})
     path?: string;
 
-    @Field(() => String, {nullable:true})
-    bundle?: string;
+    @Field(() => Int, {nullable:true})
+    categoryId?: number;
 
     @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
+    createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 
-    @Field(() => ScriptStatus, {nullable:true})
-    status?: keyof typeof ScriptStatus;
+    @Field(() => UserFavoriteUncheckedCreateNestedManyWithoutScriptInput, {nullable:true})
+    userFavorite?: UserFavoriteUncheckedCreateNestedManyWithoutScriptInput;
 
-    @Field(() => String, {nullable:true})
-    failed_reason?: string;
+    @Field(() => BundleDetailUncheckedCreateNestedOneWithoutScriptInput, {nullable:true})
+    bundleDetail?: BundleDetailUncheckedCreateNestedOneWithoutScriptInput;
 }

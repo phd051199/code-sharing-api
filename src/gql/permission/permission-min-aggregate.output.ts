@@ -10,7 +10,7 @@ export class PermissionMinAggregate {
     id?: number;
 
     @Field(() => Int, {nullable:true})
-    role_id?: number;
+    roleId?: number;
 
     @Field(() => Action, {nullable:true})
     action?: keyof typeof Action;
@@ -25,8 +25,8 @@ export class PermissionMinAggregate {
     reason?: string;
 
     @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
+    createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 }

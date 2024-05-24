@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { type IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { UserService } from '@/user/user.service';
+import { UserService } from '@/user/services';
 
 import { GetUserByIdQuery } from '../impl/get-user-by-id.query';
 

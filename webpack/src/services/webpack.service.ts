@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { exec } from 'child_process';
-import { writeFile } from 'fs/promises';
+import _ from 'lodash';
 import { join } from 'path';
 import webpack from 'webpack';
 
@@ -13,19 +13,15 @@ type BuildBundleOutput = {
 export class WebpackService {
   private compiler: webpack.Compiler;
 
-  async compile(
-    fileData: string | Buffer | NodeJS.ReadableStream,
-    tempDir: string,
-  ) {
+  async compile(tempPath: string) {
     try {
-      const file = join(tempDir, 'index.ts');
+      const tempDir = join(tempPath, '..');
 
-      await writeFile(file, fileData);
-      this.setupCompiler(file, tempDir);
+      this.setupCompiler(tempPath, tempDir);
 
       const result = await this.buildBundle(tempDir);
 
-      return { ...result, file };
+      return { ...result };
     } catch (error) {
       throw error;
     }
@@ -65,9 +61,13 @@ export class WebpackService {
     outputPath: string,
   ): Promise<BuildBundleOutput> {
     if (stats.hasErrors()) {
-      const missingDeps = stats.compilation.errors.map(
-        (err: webpack.WebpackError) => this.getMissingDepFromErr(err.message),
-      );
+      const missingDeps = _(stats.compilation.errors)
+        .map((err: webpack.WebpackError) =>
+          this.getMissingDepFromErr(err.message),
+        )
+        .compact()
+        .uniq()
+        .value();
 
       if (missingDeps.length > 0) {
         await this.installMissingDependencies(
@@ -76,7 +76,9 @@ export class WebpackService {
         );
         return this.buildBundle(outputPath);
       } else {
-        throw stats.compilation.errors;
+        throw new Error(
+          _.map(stats.compilation.errors, 'error.message').join('\n\n'),
+        );
       }
     } else {
       return {
@@ -110,14 +112,14 @@ export class WebpackService {
   }
 
   private getMissingDepFromErr(err: string): string {
-    const [matches, dependency] =
-      /(?:(?:Cannot resolve module)|(?:Can't resolve)) '(?<dependency>[@\w\/\.-]+)' in/.exec(
+    const matches =
+      /(?:(?:Cannot resolve module)|(?:Can't resolve)) '([@\w\/\.-]+)' in/.exec(
         err,
       );
 
     if (!matches) {
       return;
     }
-    return dependency;
+    return matches[1];
   }
 }

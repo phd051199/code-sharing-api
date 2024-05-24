@@ -7,16 +7,16 @@ import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relatio
 export class AuthProviderOrderByWithRelationInput {
 
     @Field(() => SortOrder, {nullable:true})
+    userId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     provider?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
     user?: UserOrderByWithRelationInput;

@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { ScriptStatus } from '../prisma/script-status.enum';
 
 @ObjectType()
 export class ScriptMaxAggregate {
@@ -16,23 +15,20 @@ export class ScriptMaxAggregate {
     description?: string;
 
     @Field(() => String, {nullable:true})
+    icon?: string;
+
+    @Field(() => String, {nullable:true})
     path?: string;
 
-    @Field(() => String, {nullable:true})
-    bundle?: string;
-
-    @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
-
-    @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    @Field(() => Int, {nullable:true})
+    authorId?: number;
 
     @Field(() => Int, {nullable:true})
-    user_id?: number;
+    categoryId?: number;
 
-    @Field(() => ScriptStatus, {nullable:true})
-    status?: keyof typeof ScriptStatus;
+    @Field(() => Date, {nullable:true})
+    createdAt?: Date | string;
 
-    @Field(() => String, {nullable:true})
-    failed_reason?: string;
+    @Field(() => Date, {nullable:true})
+    updatedAt?: Date | string;
 }

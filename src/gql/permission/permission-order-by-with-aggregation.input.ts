@@ -15,7 +15,7 @@ export class PermissionOrderByWithAggregationInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    role_id?: keyof typeof SortOrder;
+    roleId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     action?: keyof typeof SortOrder;
@@ -33,10 +33,10 @@ export class PermissionOrderByWithAggregationInput {
     reason?: SortOrderInput;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrderInput, {nullable:true})
-    updated_at?: SortOrderInput;
+    updatedAt?: SortOrderInput;
 
     @Field(() => PermissionCountOrderByAggregateInput, {nullable:true})
     _count?: PermissionCountOrderByAggregateInput;

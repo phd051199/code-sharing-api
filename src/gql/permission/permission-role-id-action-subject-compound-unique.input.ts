@@ -4,10 +4,10 @@ import { Int } from '@nestjs/graphql';
 import { Action } from '../prisma/action.enum';
 
 @InputType()
-export class PermissionRole_idActionSubjectCompoundUniqueInput {
+export class PermissionRoleIdActionSubjectCompoundUniqueInput {
 
     @Field(() => Int, {nullable:false})
-    role_id!: number;
+    roleId!: number;
 
     @Field(() => Action, {nullable:false})
     action!: keyof typeof Action;

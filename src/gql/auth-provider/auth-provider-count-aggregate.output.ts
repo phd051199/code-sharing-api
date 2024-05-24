@@ -6,16 +6,16 @@ import { Int } from '@nestjs/graphql';
 export class AuthProviderCountAggregate {
 
     @Field(() => Int, {nullable:false})
+    userId!: number;
+
+    @Field(() => Int, {nullable:false})
     provider!: number;
 
     @Field(() => Int, {nullable:false})
-    user_id!: number;
+    createdAt!: number;
 
     @Field(() => Int, {nullable:false})
-    created_at!: number;
-
-    @Field(() => Int, {nullable:false})
-    updated_at!: number;
+    updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

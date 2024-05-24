@@ -6,14 +6,14 @@ import { SortOrder } from '../prisma/sort-order.enum';
 export class AuthProviderCountOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
+    userId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     provider?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 }

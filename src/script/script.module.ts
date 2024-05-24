@@ -11,7 +11,7 @@ import {
   UploadScriptProcessor,
 } from './queues';
 import { ScriptController } from './script.controller';
-import { ScriptService } from './script.service';
+import { ScriptService } from './services';
 
 @Module({
   imports: [
@@ -19,9 +19,6 @@ import { ScriptService } from './script.service';
     BullModule.registerQueue({
       name: BUILD_SCRIPT_QUEUE,
       prefix: 'script',
-      defaultJobOptions: {
-        removeOnComplete: true,
-      },
     }),
     BullModule.registerQueue({
       name: UPLOAD_SCRIPT_QUEUE,

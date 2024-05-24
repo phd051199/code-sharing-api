@@ -1,20 +1,20 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { UserUpdateWithoutAuth_providersInput } from './user-update-without-auth-providers.input';
+import { UserUpdateWithoutAuthProvidersInput } from './user-update-without-auth-providers.input';
 import { Type } from 'class-transformer';
-import { UserCreateWithoutAuth_providersInput } from './user-create-without-auth-providers.input';
+import { UserCreateWithoutAuthProvidersInput } from './user-create-without-auth-providers.input';
 import { UserWhereInput } from './user-where.input';
 
 @InputType()
-export class UserUpsertWithoutAuth_providersInput {
+export class UserUpsertWithoutAuthProvidersInput {
 
-    @Field(() => UserUpdateWithoutAuth_providersInput, {nullable:false})
-    @Type(() => UserUpdateWithoutAuth_providersInput)
-    update!: UserUpdateWithoutAuth_providersInput;
+    @Field(() => UserUpdateWithoutAuthProvidersInput, {nullable:false})
+    @Type(() => UserUpdateWithoutAuthProvidersInput)
+    update!: UserUpdateWithoutAuthProvidersInput;
 
-    @Field(() => UserCreateWithoutAuth_providersInput, {nullable:false})
-    @Type(() => UserCreateWithoutAuth_providersInput)
-    create!: UserCreateWithoutAuth_providersInput;
+    @Field(() => UserCreateWithoutAuthProvidersInput, {nullable:false})
+    @Type(() => UserCreateWithoutAuthProvidersInput)
+    create!: UserCreateWithoutAuthProvidersInput;
 
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)

@@ -11,7 +11,7 @@ export class PermissionUncheckedCreateInput {
     id?: number;
 
     @Field(() => Int, {nullable:false})
-    role_id!: number;
+    roleId!: number;
 
     @Field(() => Action, {nullable:false})
     action!: keyof typeof Action;
@@ -29,8 +29,8 @@ export class PermissionUncheckedCreateInput {
     reason?: string;
 
     @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
+    createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 }

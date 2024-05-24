@@ -4,6 +4,5 @@ import { JwtGuard } from '@/auth/guards';
 
 import { CaslAbilitiesGuard } from '../guards';
 
-export const Authorized = () => {
-  return applyDecorators(UseGuards(JwtGuard, CaslAbilitiesGuard));
-};
+export const Authorized = () =>
+  applyDecorators(UseGuards(JwtGuard, CaslAbilitiesGuard));

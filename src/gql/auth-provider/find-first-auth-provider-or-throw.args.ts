@@ -19,7 +19,7 @@ export class FindFirstAuthProviderOrThrowArgs {
     orderBy?: Array<AuthProviderOrderByWithRelationInput>;
 
     @Field(() => AuthProviderWhereUniqueInput, {nullable:true})
-    cursor?: Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>;
+    cursor?: Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>;
 
     @Field(() => Int, {nullable:true})
     take?: number;

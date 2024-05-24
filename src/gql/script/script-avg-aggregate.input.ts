@@ -8,5 +8,8 @@ export class ScriptAvgAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    user_id?: true;
+    authorId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    categoryId?: true;
 }

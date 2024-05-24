@@ -2,11 +2,11 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-yet';
+import Redis from 'ioredis';
 
 import { type RedisConfiguation } from '@/config/types';
-import { REDIS_CFG } from '@/constants';
+import { REDIS_CFG, REDIS_CLIENT } from '@/constants';
 
-import { redisProviders } from './redis.provider';
 import { RedisService } from './redis.service';
 
 @Global()
@@ -25,7 +25,17 @@ import { RedisService } from './redis.service';
       isGlobal: true,
     }),
   ],
-  providers: [RedisService, ...redisProviders],
+  providers: [
+    RedisService,
+    {
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): Redis => {
+        const { connection } = configService.get<RedisConfiguation>(REDIS_CFG);
+        return new Redis(connection);
+      },
+      provide: REDIS_CLIENT,
+    },
+  ],
   exports: [RedisService],
 })
 export class RedisModule {}

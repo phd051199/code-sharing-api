@@ -3,6 +3,9 @@ import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { SortOrderInput } from '../prisma/sort-order.input';
 import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relation.input';
+import { CategoryOrderByWithRelationInput } from '../category/category-order-by-with-relation.input';
+import { UserFavoriteOrderByRelationAggregateInput } from '../user-favorite/user-favorite-order-by-relation-aggregate.input';
+import { BundleDetailOrderByWithRelationInput } from '../bundle-detail/bundle-detail-order-by-with-relation.input';
 
 @InputType()
 export class ScriptOrderByWithRelationInput {
@@ -17,26 +20,32 @@ export class ScriptOrderByWithRelationInput {
     description?: SortOrderInput;
 
     @Field(() => SortOrderInput, {nullable:true})
+    icon?: SortOrderInput;
+
+    @Field(() => SortOrderInput, {nullable:true})
     path?: SortOrderInput;
 
-    @Field(() => SortOrderInput, {nullable:true})
-    bundle?: SortOrderInput;
-
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
 
     @Field(() => SortOrderInput, {nullable:true})
-    status?: SortOrderInput;
+    categoryId?: SortOrderInput;
 
-    @Field(() => SortOrderInput, {nullable:true})
-    failed_reason?: SortOrderInput;
+    @Field(() => SortOrder, {nullable:true})
+    createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    updatedAt?: keyof typeof SortOrder;
 
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
     user?: UserOrderByWithRelationInput;
+
+    @Field(() => CategoryOrderByWithRelationInput, {nullable:true})
+    category?: CategoryOrderByWithRelationInput;
+
+    @Field(() => UserFavoriteOrderByRelationAggregateInput, {nullable:true})
+    userFavorite?: UserFavoriteOrderByRelationAggregateInput;
+
+    @Field(() => BundleDetailOrderByWithRelationInput, {nullable:true})
+    bundleDetail?: BundleDetailOrderByWithRelationInput;
 }

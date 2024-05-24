@@ -13,6 +13,7 @@ import { contentParser } from 'fastify-multer';
 
 import { AppModule } from '@/app.module';
 import { FastifyHooks } from '@/common/enums';
+import { LoggerService } from '@/common/logger';
 import { fastifyPassport } from '@/common/utils';
 import { type AppConfiguration } from '@/config/types';
 import { APP_CFG } from '@/constants';
@@ -25,25 +26,24 @@ async function bootstrap() {
       cors: true,
     },
   );
+  const configService = app.get(ConfigService);
+  const loggerService = app.get(LoggerService);
+  const { host, port } = configService.get<AppConfiguration>(APP_CFG);
 
   app
     .getHttpAdapter()
     .getInstance()
     .addHook(FastifyHooks.onRequest, fastifyPassport);
 
-  const configService = app.get(ConfigService);
-  const { host, port } = configService.get<AppConfiguration>(APP_CFG);
+  app.useLogger(loggerService);
 
   await app.register<FastifyCookieOptions>(fastifyCookie, {
     secret: configService.get<string>('cookie.secret'),
   });
-
   await app.register<FastifyCsrfProtectionOptions>(fastifyCsrf);
-
   await app.register<FastifyHelmetOptions>(fastifyHelmet, {
     contentSecurityPolicy: false,
   });
-
   await app.register(contentParser);
 
   await app.listen(port, host);

@@ -1,6 +1,6 @@
 import { type IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { ScriptService } from '@/script/script.service';
+import { ScriptService } from '@/script/services';
 
 import { GetScriptByIdQuery } from '../impl';
 

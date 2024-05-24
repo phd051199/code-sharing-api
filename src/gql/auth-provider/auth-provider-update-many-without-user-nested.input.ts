@@ -32,19 +32,19 @@ export class AuthProviderUpdateManyWithoutUserNestedInput {
 
     @Field(() => [AuthProviderWhereUniqueInput], {nullable:true})
     @Type(() => AuthProviderWhereUniqueInput)
-    set?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>>;
+    set?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>>;
 
     @Field(() => [AuthProviderWhereUniqueInput], {nullable:true})
     @Type(() => AuthProviderWhereUniqueInput)
-    disconnect?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>>;
+    disconnect?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>>;
 
     @Field(() => [AuthProviderWhereUniqueInput], {nullable:true})
     @Type(() => AuthProviderWhereUniqueInput)
-    delete?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>>;
+    delete?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>>;
 
     @Field(() => [AuthProviderWhereUniqueInput], {nullable:true})
     @Type(() => AuthProviderWhereUniqueInput)
-    connect?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_user_id'>>;
+    connect?: Array<Prisma.AtLeast<AuthProviderWhereUniqueInput, 'provider_userId'>>;
 
     @Field(() => [AuthProviderUpdateWithWhereUniqueWithoutUserInput], {nullable:true})
     @Type(() => AuthProviderUpdateWithWhereUniqueWithoutUserInput)

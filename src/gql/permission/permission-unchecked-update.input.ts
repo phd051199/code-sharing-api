@@ -16,7 +16,7 @@ export class PermissionUncheckedUpdateInput {
     id?: IntFieldUpdateOperationsInput;
 
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
-    role_id?: IntFieldUpdateOperationsInput;
+    roleId?: IntFieldUpdateOperationsInput;
 
     @Field(() => EnumActionFieldUpdateOperationsInput, {nullable:true})
     action?: EnumActionFieldUpdateOperationsInput;
@@ -34,8 +34,8 @@ export class PermissionUncheckedUpdateInput {
     reason?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput;
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput;
 }

@@ -5,16 +5,16 @@ import { InputType } from '@nestjs/graphql';
 export class AuthProviderCountAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
+    userId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     provider?: true;
 
     @Field(() => Boolean, {nullable:true})
-    user_id?: true;
+    createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})
-    created_at?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    updated_at?: true;
+    updatedAt?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

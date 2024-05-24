@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
 import { QueryHandlers } from './queries';
+import { UserService } from './services';
 import { UserResolver } from './user.resolver';
-import { UserService } from './user.service';
 
 @Module({
   providers: [...QueryHandlers, UserResolver, UserService],

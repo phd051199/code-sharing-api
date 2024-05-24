@@ -6,5 +6,5 @@ import { Int } from '@nestjs/graphql';
 export class AuthProviderSumAggregate {
 
     @Field(() => Int, {nullable:true})
-    user_id?: number;
+    userId?: number;
 }

@@ -7,6 +7,7 @@ import { NullableDateTimeFieldUpdateOperationsInput } from '../prisma/nullable-d
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { AuthProviderUpdateManyWithoutUserNestedInput } from '../auth-provider/auth-provider-update-many-without-user-nested.input';
 import { ScriptUpdateManyWithoutUserNestedInput } from '../script/script-update-many-without-user-nested.input';
+import { UserFavoriteUpdateManyWithoutUserNestedInput } from '../user-favorite/user-favorite-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUpdateWithoutRoleInput {
@@ -15,10 +16,10 @@ export class UserUpdateWithoutRoleInput {
     email?: StringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    user_name?: NullableStringFieldUpdateOperationsInput;
+    userName?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    display_name?: NullableStringFieldUpdateOperationsInput;
+    displayName?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     avatar?: NullableStringFieldUpdateOperationsInput;
@@ -27,20 +28,23 @@ export class UserUpdateWithoutRoleInput {
     password?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => BoolFieldUpdateOperationsInput, {nullable:true})
-    is_verified?: BoolFieldUpdateOperationsInput;
+    isVerified?: BoolFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
-    last_login?: NullableDateTimeFieldUpdateOperationsInput;
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: DateTimeFieldUpdateOperationsInput;
+    updatedAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => AuthProviderUpdateManyWithoutUserNestedInput, {nullable:true})
-    auth_providers?: AuthProviderUpdateManyWithoutUserNestedInput;
+    authProviders?: AuthProviderUpdateManyWithoutUserNestedInput;
 
     @Field(() => ScriptUpdateManyWithoutUserNestedInput, {nullable:true})
     scripts?: ScriptUpdateManyWithoutUserNestedInput;
+
+    @Field(() => UserFavoriteUpdateManyWithoutUserNestedInput, {nullable:true})
+    userFavorite?: UserFavoriteUpdateManyWithoutUserNestedInput;
 }

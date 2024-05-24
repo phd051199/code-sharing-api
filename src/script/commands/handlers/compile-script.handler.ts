@@ -2,8 +2,9 @@ import { InjectQueue } from '@nestjs/bullmq';
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 import { Queue } from 'bullmq';
 
-import { BUILD_SCRIPT_QUEUE } from '../../queues';
 import { CompileScriptCommand } from '../impl';
+
+const BUILD_SCRIPT_QUEUE = 'build-script';
 
 @CommandHandler(CompileScriptCommand)
 export class CompileScriptCommandHandler
@@ -15,9 +16,14 @@ export class CompileScriptCommandHandler
   ) {}
 
   async execute(command: CompileScriptCommand): Promise<void> {
-    await this.buildScriptQueue.add(BUILD_SCRIPT_QUEUE, {
-      fileData: command.fileData.toString(),
-      scriptId: command.scriptId,
-    });
+    await this.buildScriptQueue.add(
+      BUILD_SCRIPT_QUEUE,
+      {
+        filePath: command.filePath,
+        scriptId: command.script.id,
+        userId: command.script.authorId,
+      },
+      // { priority },
+    );
   }
 }

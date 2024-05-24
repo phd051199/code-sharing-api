@@ -11,29 +11,29 @@ export class UserMaxAggregateInput {
     email?: true;
 
     @Field(() => Boolean, {nullable:true})
-    user_name?: true;
+    userName?: true;
 
     @Field(() => Boolean, {nullable:true})
-    display_name?: true;
+    displayName?: true;
 
     @Field(() => Boolean, {nullable:true})
     avatar?: true;
 
     @Field(() => Boolean, {nullable:true})
-    role_id?: true;
+    roleId?: true;
 
     @Field(() => Boolean, {nullable:true})
     password?: true;
 
     @Field(() => Boolean, {nullable:true})
-    is_verified?: true;
+    isVerified?: true;
 
     @Field(() => Boolean, {nullable:true})
-    last_login?: true;
+    lastLogin?: true;
 
     @Field(() => Boolean, {nullable:true})
-    created_at?: true;
+    createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})
-    updated_at?: true;
+    updatedAt?: true;
 }

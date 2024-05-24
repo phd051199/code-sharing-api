@@ -9,5 +9,5 @@ export class UserAvgAggregate {
     id?: number;
 
     @Field(() => Float, {nullable:true})
-    role_id?: number;
+    roleId?: number;
 }

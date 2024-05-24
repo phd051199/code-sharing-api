@@ -15,23 +15,20 @@ export class ScriptCountOrderByAggregateInput {
     description?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    icon?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     path?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    bundle?: keyof typeof SortOrder;
+    authorId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
+    categoryId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    status?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    failed_reason?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 }

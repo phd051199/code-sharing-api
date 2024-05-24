@@ -12,10 +12,10 @@ export class RoleCountAggregate {
     name!: number;
 
     @Field(() => Int, {nullable:false})
-    created_at!: number;
+    createdAt!: number;
 
     @Field(() => Int, {nullable:false})
-    updated_at!: number;
+    updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

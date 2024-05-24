@@ -1,7 +1,7 @@
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 import { type Script } from '@prisma/client';
 
-import { ScriptService } from '@/script/script.service';
+import { ScriptService } from '@/script/services';
 
 import { CreateScriptCommand } from '../impl';
 

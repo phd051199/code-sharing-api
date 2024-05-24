@@ -27,10 +27,10 @@ export class RoleWhereUniqueInput {
     name?: StringFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    created_at?: DateTimeFilter;
+    createdAt?: DateTimeFilter;
 
     @Field(() => DateTimeNullableFilter, {nullable:true})
-    updated_at?: DateTimeNullableFilter;
+    updatedAt?: DateTimeNullableFilter;
 
     @Field(() => PermissionListRelationFilter, {nullable:true})
     permissions?: PermissionListRelationFilter;

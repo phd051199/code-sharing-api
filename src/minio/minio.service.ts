@@ -23,11 +23,16 @@ export class MinioService {
     file: Buffer | Readable,
     baseBucket: string = this.baseBucket,
   ) {
-    await this.minio.client.putObject(baseBucket, fileName, file);
+    await this.client.putObject(baseBucket, fileName, file);
+  }
+
+  async getObject(fileName: string, baseBucket: string = this.baseBucket) {
+    const file = await this.client.getObject(baseBucket, fileName);
+    return file;
   }
 
   async getPresignUrl(fileName: string, baseBucket: string = this.baseBucket) {
-    const presignUrl = await this.minio.client.presignedGetObject(
+    const presignUrl = await this.client.presignedGetObject(
       baseBucket,
       fileName,
     );

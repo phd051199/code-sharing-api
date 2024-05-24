@@ -35,7 +35,7 @@ export { PermissionOrderByRelationAggregateInput } from './permission-order-by-r
 export { PermissionOrderByWithAggregationInput } from './permission-order-by-with-aggregation.input';
 export { PermissionOrderByWithRelationInput } from './permission-order-by-with-relation.input';
 export { PermissionRole_idActionCompoundUniqueInput } from './permission-role-id-action-compound-unique.input';
-export { PermissionRole_idActionSubjectCompoundUniqueInput } from './permission-role-id-action-subject-compound-unique.input';
+export { PermissionRoleIdActionSubjectCompoundUniqueInput } from './permission-role-id-action-subject-compound-unique.input';
 export { PermissionScalarFieldEnum } from './permission-scalar-field.enum';
 export { PermissionScalarWhereWithAggregatesInput } from './permission-scalar-where-with-aggregates.input';
 export { PermissionScalarWhereInput } from './permission-scalar-where.input';

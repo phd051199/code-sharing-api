@@ -13,31 +13,31 @@ export class UserCountAggregate {
     email!: number;
 
     @Field(() => Int, {nullable:false})
-    user_name!: number;
+    userName!: number;
 
     @Field(() => Int, {nullable:false})
-    display_name!: number;
+    displayName!: number;
 
     @Field(() => Int, {nullable:false})
     avatar!: number;
 
     @Field(() => Int, {nullable:false})
-    role_id!: number;
+    roleId!: number;
 
     @HideField()
     password!: number;
 
     @Field(() => Int, {nullable:false})
-    is_verified!: number;
+    isVerified!: number;
 
     @Field(() => Int, {nullable:false})
-    last_login!: number;
+    lastLogin!: number;
 
     @Field(() => Int, {nullable:false})
-    created_at!: number;
+    createdAt!: number;
 
     @Field(() => Int, {nullable:false})
-    updated_at!: number;
+    updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

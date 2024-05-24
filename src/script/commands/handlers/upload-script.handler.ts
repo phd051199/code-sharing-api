@@ -1,6 +1,6 @@
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 
-import { ScriptService } from '@/script/script.service';
+import { ScriptService } from '@/script/services';
 
 import { UploadScriptCommand } from '../impl';
 
@@ -11,11 +11,11 @@ export class UploadScriptCommandHandler
   constructor(private readonly scriptService: ScriptService) {}
 
   async execute(command: UploadScriptCommand): Promise<void> {
-    await this.scriptService.uploadScript(
-      command.scriptId,
-      command.fileName,
-      command.filePath,
-      command.bundlePath,
-    );
+    const { scriptId, fileName, filePath, bundlePath } = command;
+    await this.scriptService.uploadScript(scriptId, {
+      fileName,
+      filePath,
+      bundlePath,
+    });
   }
 }

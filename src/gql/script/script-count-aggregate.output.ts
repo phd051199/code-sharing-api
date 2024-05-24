@@ -15,25 +15,22 @@ export class ScriptCountAggregate {
     description!: number;
 
     @Field(() => Int, {nullable:false})
+    icon!: number;
+
+    @Field(() => Int, {nullable:false})
     path!: number;
 
     @Field(() => Int, {nullable:false})
-    bundle!: number;
+    authorId!: number;
 
     @Field(() => Int, {nullable:false})
-    created_at!: number;
+    categoryId!: number;
 
     @Field(() => Int, {nullable:false})
-    updated_at!: number;
+    createdAt!: number;
 
     @Field(() => Int, {nullable:false})
-    user_id!: number;
-
-    @Field(() => Int, {nullable:false})
-    status!: number;
-
-    @Field(() => Int, {nullable:false})
-    failed_reason!: number;
+    updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

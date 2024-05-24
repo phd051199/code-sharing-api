@@ -15,10 +15,10 @@ export class Role {
     name!: string;
 
     @Field(() => Date, {nullable:false})
-    created_at!: Date;
+    createdAt!: Date;
 
     @Field(() => Date, {nullable:true})
-    updated_at!: Date | null;
+    updatedAt!: Date | null;
 
     @Field(() => [Permission], {nullable:true})
     permissions?: Array<Permission>;

@@ -2,8 +2,11 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { ScriptStatus } from '../prisma/script-status.enum';
 import { User } from '../user/user.model';
+import { Category } from '../category/category.model';
+import { UserFavorite } from '../user-favorite/user-favorite.model';
+import { BundleDetail } from '../bundle-detail/bundle-detail.model';
+import { ScriptCount } from './script-count.output';
 
 @ObjectType()
 export class Script {
@@ -18,26 +21,35 @@ export class Script {
     description!: string | null;
 
     @Field(() => String, {nullable:true})
+    icon!: string | null;
+
+    @Field(() => String, {nullable:true})
     path!: string | null;
 
-    @Field(() => String, {nullable:true})
-    bundle!: string | null;
-
-    @Field(() => Date, {nullable:false})
-    created_at!: Date;
-
-    @Field(() => Date, {nullable:false})
-    updated_at!: Date;
-
     @Field(() => Int, {nullable:false})
-    user_id!: number;
+    authorId!: number;
 
-    @Field(() => ScriptStatus, {nullable:true})
-    status!: keyof typeof ScriptStatus | null;
+    @Field(() => Int, {nullable:true})
+    categoryId!: number | null;
 
-    @Field(() => String, {nullable:true})
-    failed_reason!: string | null;
+    @Field(() => Date, {nullable:false})
+    createdAt!: Date;
+
+    @Field(() => Date, {nullable:false})
+    updatedAt!: Date;
 
     @Field(() => User, {nullable:false})
     user?: User;
+
+    @Field(() => Category, {nullable:true})
+    category?: Category | null;
+
+    @Field(() => [UserFavorite], {nullable:true})
+    userFavorite?: Array<UserFavorite>;
+
+    @Field(() => BundleDetail, {nullable:true})
+    bundleDetail?: BundleDetail | null;
+
+    @Field(() => ScriptCount, {nullable:false})
+    _count?: ScriptCount;
 }

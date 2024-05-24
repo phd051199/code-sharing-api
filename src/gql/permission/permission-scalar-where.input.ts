@@ -25,7 +25,7 @@ export class PermissionScalarWhereInput {
     id?: IntFilter;
 
     @Field(() => IntFilter, {nullable:true})
-    role_id?: IntFilter;
+    roleId?: IntFilter;
 
     @Field(() => EnumActionFilter, {nullable:true})
     action?: EnumActionFilter;
@@ -43,8 +43,8 @@ export class PermissionScalarWhereInput {
     reason?: StringNullableFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
-    created_at?: DateTimeFilter;
+    createdAt?: DateTimeFilter;
 
     @Field(() => DateTimeNullableFilter, {nullable:true})
-    updated_at?: DateTimeNullableFilter;
+    updatedAt?: DateTimeNullableFilter;
 }

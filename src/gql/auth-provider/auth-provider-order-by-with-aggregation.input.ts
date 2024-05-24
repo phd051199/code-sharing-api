@@ -11,16 +11,16 @@ import { AuthProviderSumOrderByAggregateInput } from './auth-provider-sum-order-
 export class AuthProviderOrderByWithAggregationInput {
 
     @Field(() => SortOrder, {nullable:true})
+    userId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     provider?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 
     @Field(() => AuthProviderCountOrderByAggregateInput, {nullable:true})
     _count?: AuthProviderCountOrderByAggregateInput;

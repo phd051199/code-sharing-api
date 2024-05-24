@@ -9,7 +9,7 @@ export class PermissionMinOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    role_id?: keyof typeof SortOrder;
+    roleId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     action?: keyof typeof SortOrder;
@@ -24,8 +24,8 @@ export class PermissionMinOrderByAggregateInput {
     reason?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    updated_at?: keyof typeof SortOrder;
+    updatedAt?: keyof typeof SortOrder;
 }

@@ -10,7 +10,7 @@ import _ from 'lodash';
 import { extractContext } from '@/common/utils';
 
 import { CaslAbilityFactory } from '../casl-ability.factory';
-import { PERMISSION_CHECKER } from '../decorators';
+import { PERMISSION } from '../decorators';
 import { type AppAbility, type PermissionHandler } from '../types';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class CaslAbilitiesGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const policyHandlers = this.reflector.getAllAndOverride<
       PermissionHandler[]
-    >(PERMISSION_CHECKER, [context.getHandler(), context.getClass()]);
+    >(PERMISSION, [context.getHandler(), context.getClass()]);
 
     if (_.isNil(policyHandlers) || !_.size(policyHandlers)) {
       return true;

@@ -11,10 +11,10 @@ export class RoleCountAggregateInput {
     name?: true;
 
     @Field(() => Boolean, {nullable:true})
-    created_at?: true;
+    createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})
-    updated_at?: true;
+    updatedAt?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

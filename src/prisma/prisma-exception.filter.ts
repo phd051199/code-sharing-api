@@ -15,13 +15,13 @@ export class PrismaExceptionFilter implements ExceptionFilter {
     switch (exception.code) {
       case PrismaErrorCode.RecordNotFound:
       case PrismaErrorCode.DependentRecordsNotFound:
-        throw new NotFoundException(exception.message);
+        throw new NotFoundException();
 
       case PrismaErrorCode.UniqueConstraint:
-        throw new ConflictException(exception.message);
+        throw new ConflictException();
 
       default:
-        throw new InternalServerErrorException(exception.message);
+        throw new InternalServerErrorException();
     }
   }
 }

@@ -12,10 +12,10 @@ export class RoleUpdateWithoutPermissionsInput {
     name?: StringFieldUpdateOperationsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
-    created_at?: DateTimeFieldUpdateOperationsInput;
+    createdAt?: DateTimeFieldUpdateOperationsInput;
 
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput;
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput;
 
     @Field(() => UserUpdateManyWithoutRoleNestedInput, {nullable:true})
     users?: UserUpdateManyWithoutRoleNestedInput;

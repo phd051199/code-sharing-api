@@ -1,6 +1,6 @@
 import { type IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
-import { ScriptService } from '@/script/script.service';
+import { ScriptService } from '@/script/services';
 
 import { GetFavoriteScriptsQuery } from '../impl';
 
@@ -11,8 +11,6 @@ export class GetFavoriteScriptsQueryHandler
   constructor(private readonly scriptService: ScriptService) {}
 
   async execute(query: GetFavoriteScriptsQuery) {
-    console.log('query', query);
-
-    throw new Error('Method not implemented.');
+    return this.scriptService.getFavoriteScripts(query.userId);
   }
 }

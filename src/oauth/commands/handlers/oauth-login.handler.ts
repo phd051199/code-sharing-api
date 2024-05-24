@@ -1,7 +1,7 @@
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 
 import { type AuthResponse } from '@/auth/models';
-import { OAuthService } from '@/oauth/oauth.service';
+import { OAuthService } from '@/oauth/services';
 
 import { OAuthLoginCommand } from '../impl';
 

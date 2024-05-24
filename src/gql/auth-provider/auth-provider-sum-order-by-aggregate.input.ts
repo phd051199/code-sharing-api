@@ -6,5 +6,5 @@ import { SortOrder } from '../prisma/sort-order.enum';
 export class AuthProviderSumOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
-    user_id?: keyof typeof SortOrder;
+    userId?: keyof typeof SortOrder;
 }

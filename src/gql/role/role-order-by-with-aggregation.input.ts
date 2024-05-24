@@ -18,10 +18,10 @@ export class RoleOrderByWithAggregationInput {
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    created_at?: keyof typeof SortOrder;
+    createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrderInput, {nullable:true})
-    updated_at?: SortOrderInput;
+    updatedAt?: SortOrderInput;
 
     @Field(() => RoleCountOrderByAggregateInput, {nullable:true})
     _count?: RoleCountOrderByAggregateInput;

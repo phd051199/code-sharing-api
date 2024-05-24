@@ -1,21 +1,21 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { UserCreateWithoutAuth_providersInput } from './user-create-without-auth-providers.input';
+import { UserCreateWithoutAuthProvidersInput } from './user-create-without-auth-providers.input';
 import { Type } from 'class-transformer';
-import { UserCreateOrConnectWithoutAuth_providersInput } from './user-create-or-connect-without-auth-providers.input';
+import { UserCreateOrConnectWithoutAuthProvidersInput } from './user-create-or-connect-without-auth-providers.input';
 import { Prisma } from '@prisma/client';
 import { UserWhereUniqueInput } from './user-where-unique.input';
 
 @InputType()
-export class UserCreateNestedOneWithoutAuth_providersInput {
+export class UserCreateNestedOneWithoutAuthProvidersInput {
 
-    @Field(() => UserCreateWithoutAuth_providersInput, {nullable:true})
-    @Type(() => UserCreateWithoutAuth_providersInput)
-    create?: UserCreateWithoutAuth_providersInput;
+    @Field(() => UserCreateWithoutAuthProvidersInput, {nullable:true})
+    @Type(() => UserCreateWithoutAuthProvidersInput)
+    create?: UserCreateWithoutAuthProvidersInput;
 
-    @Field(() => UserCreateOrConnectWithoutAuth_providersInput, {nullable:true})
-    @Type(() => UserCreateOrConnectWithoutAuth_providersInput)
-    connectOrCreate?: UserCreateOrConnectWithoutAuth_providersInput;
+    @Field(() => UserCreateOrConnectWithoutAuthProvidersInput, {nullable:true})
+    @Type(() => UserCreateOrConnectWithoutAuthProvidersInput)
+    connectOrCreate?: UserCreateOrConnectWithoutAuthProvidersInput;
 
     @Field(() => UserWhereUniqueInput, {nullable:true})
     @Type(() => UserWhereUniqueInput)

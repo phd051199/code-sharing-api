@@ -12,10 +12,10 @@ export class UserCreateManyRoleInput {
     email!: string;
 
     @Field(() => String, {nullable:true})
-    user_name?: string;
+    userName?: string;
 
     @Field(() => String, {nullable:true})
-    display_name?: string;
+    displayName?: string;
 
     @Field(() => String, {nullable:true})
     avatar?: string;
@@ -24,14 +24,14 @@ export class UserCreateManyRoleInput {
     password?: string;
 
     @Field(() => Boolean, {nullable:true})
-    is_verified?: boolean;
+    isVerified?: boolean;
 
     @Field(() => Date, {nullable:true})
-    last_login?: Date | string;
+    lastLogin?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
+    createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 }

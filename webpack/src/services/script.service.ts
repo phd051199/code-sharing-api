@@ -1,10 +1,7 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable } from '@nestjs/common';
-import { PrismaClient, ScriptStatus } from '@prisma/client';
+import { type BuildStatus, PrismaClient } from '@prisma/client';
 import { Queue } from 'bullmq';
-import { mkdtemp } from 'fs/promises';
-import { tmpdir } from 'os';
-import { join } from 'path';
 
 import { WebpackService } from './webpack.service';
 
@@ -30,45 +27,38 @@ export class ScriptService {
     this.prisma = new PrismaClient();
   }
 
-  async compileScript(
-    fileData: string | Buffer | NodeJS.ReadableStream,
-    scriptId: number,
-  ) {
+  async compileScript(tempPath: string, scriptId: number) {
     try {
-      await this.updateScriptStatus(scriptId, ScriptStatus.running);
-      const tempDir = await mkdtemp(join(tmpdir(), 'webpack-'));
-
-      const { hash, bundle, file } = await this.webpack.compile(
-        fileData,
-        tempDir,
-      );
-
-      this.updateScriptStatus(scriptId, ScriptStatus.success);
+      const { hash, bundle } = await this.webpack.compile(tempPath);
 
       await this.uploadScriptQueue.add(UPLOAD_SCRIPT_QUEUE, {
         scriptId,
         fileName: hash,
-        filePath: file,
+        filePath: tempPath,
         bundlePath: bundle,
       });
     } catch (error) {
-      this.updateScriptStatus(scriptId, ScriptStatus.failed, error.message);
+      throw error;
     }
   }
 
-  private async updateScriptStatus(
+  async updateScriptStatus(
     scriptId: number,
-    status: ScriptStatus,
+    status: BuildStatus,
     error?: string,
   ) {
-    await this.prisma.script.update({
-      where: {
-        id: scriptId,
-      },
-      data: {
-        status,
-        failed_reason: error,
-      },
-    });
+    try {
+      await this.prisma.bundleDetail.update({
+        where: {
+          scriptId,
+        },
+        data: {
+          status,
+          failedReason: error,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 }

@@ -19,7 +19,7 @@ export class FindFirstPermissionArgs {
     orderBy?: Array<PermissionOrderByWithRelationInput>;
 
     @Field(() => PermissionWhereUniqueInput, {nullable:true})
-    cursor?: Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'role_id_action_subject'>;
+    cursor?: Prisma.AtLeast<PermissionWhereUniqueInput, 'id' | 'roleId_action_subject'>;
 
     @Field(() => Int, {nullable:true})
     take?: number;

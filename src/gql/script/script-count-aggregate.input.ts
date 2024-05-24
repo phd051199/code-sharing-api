@@ -14,25 +14,22 @@ export class ScriptCountAggregateInput {
     description?: true;
 
     @Field(() => Boolean, {nullable:true})
+    icon?: true;
+
+    @Field(() => Boolean, {nullable:true})
     path?: true;
 
     @Field(() => Boolean, {nullable:true})
-    bundle?: true;
+    authorId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    created_at?: true;
+    categoryId?: true;
 
     @Field(() => Boolean, {nullable:true})
-    updated_at?: true;
+    createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})
-    user_id?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    status?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    failed_reason?: true;
+    updatedAt?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

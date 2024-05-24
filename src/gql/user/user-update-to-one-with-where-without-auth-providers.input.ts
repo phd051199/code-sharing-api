@@ -2,16 +2,16 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { UserWhereInput } from './user-where.input';
 import { Type } from 'class-transformer';
-import { UserUpdateWithoutAuth_providersInput } from './user-update-without-auth-providers.input';
+import { UserUpdateWithoutAuthProvidersInput } from './user-update-without-auth-providers.input';
 
 @InputType()
-export class UserUpdateToOneWithWhereWithoutAuth_providersInput {
+export class UserUpdateToOneWithWhereWithoutAuthProvidersInput {
 
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
     where?: UserWhereInput;
 
-    @Field(() => UserUpdateWithoutAuth_providersInput, {nullable:false})
-    @Type(() => UserUpdateWithoutAuth_providersInput)
-    data!: UserUpdateWithoutAuth_providersInput;
+    @Field(() => UserUpdateWithoutAuthProvidersInput, {nullable:false})
+    @Type(() => UserUpdateWithoutAuthProvidersInput)
+    data!: UserUpdateWithoutAuthProvidersInput;
 }

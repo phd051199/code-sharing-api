@@ -13,7 +13,7 @@ export class Permission {
     id!: number;
 
     @Field(() => Int, {nullable:false})
-    role_id!: number;
+    roleId!: number;
 
     @Field(() => Action, {nullable:false})
     action!: keyof typeof Action;
@@ -31,10 +31,10 @@ export class Permission {
     reason!: string | null;
 
     @Field(() => Date, {nullable:false})
-    created_at!: Date;
+    createdAt!: Date;
 
     @Field(() => Date, {nullable:true})
-    updated_at!: Date | null;
+    updatedAt!: Date | null;
 
     @Field(() => Role, {nullable:false})
     role?: Role;

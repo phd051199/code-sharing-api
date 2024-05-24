@@ -26,29 +26,29 @@ export class UserScalarWhereWithAggregatesInput {
     email?: StringWithAggregatesFilter;
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
-    user_name?: StringNullableWithAggregatesFilter;
+    userName?: StringNullableWithAggregatesFilter;
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
-    display_name?: StringNullableWithAggregatesFilter;
+    displayName?: StringNullableWithAggregatesFilter;
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
     avatar?: StringNullableWithAggregatesFilter;
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
-    role_id?: IntWithAggregatesFilter;
+    roleId?: IntWithAggregatesFilter;
 
     @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
     password?: StringNullableWithAggregatesFilter;
 
     @Field(() => BoolWithAggregatesFilter, {nullable:true})
-    is_verified?: BoolWithAggregatesFilter;
+    isVerified?: BoolWithAggregatesFilter;
 
     @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
-    last_login?: DateTimeNullableWithAggregatesFilter;
+    lastLogin?: DateTimeNullableWithAggregatesFilter;
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
-    created_at?: DateTimeWithAggregatesFilter;
+    createdAt?: DateTimeWithAggregatesFilter;
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
-    updated_at?: DateTimeWithAggregatesFilter;
+    updatedAt?: DateTimeWithAggregatesFilter;
 }

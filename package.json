@@ -3,6 +3,9 @@
   "private": true,
   "license": "MIT",
   "author": "duy.ph",
+  "workspaces": [
+    "webpack"
+  ],
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -65,14 +68,15 @@
     "@prisma/client": "^5.14.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
-    "bullmq": "^5.7.11",
+    "bullmq": "^5.7.12",
     "cache-manager": "^5.5.3",
-    "cache-manager-redis-yet": "^5.0.0",
+    "cache-manager-redis-yet": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.11",
     "fastify-multer": "^2.0.3",
     "graphql": "^16.8.1",
+    "graphql-redis-subscriptions": "^2.6.1",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",
     "mustache": "^4.2.0",
@@ -83,7 +87,9 @@
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "webpack": "^5.91.0"
+    "webpack": "^5.91.0",
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
@@ -119,10 +125,7 @@
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.4.5"
+    "typescript": "5.3.3"
   },
-  "packageManager": "yarn@4.2.1",
-  "workspaces": [
-    "webpack"
-  ]
+  "packageManager": "yarn@4.2.1"
 }

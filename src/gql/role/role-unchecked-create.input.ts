@@ -14,10 +14,10 @@ export class RoleUncheckedCreateInput {
     name!: string;
 
     @Field(() => Date, {nullable:true})
-    created_at?: Date | string;
+    createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
-    updated_at?: Date | string;
+    updatedAt?: Date | string;
 
     @Field(() => PermissionUncheckedCreateNestedManyWithoutRoleInput, {nullable:true})
     permissions?: PermissionUncheckedCreateNestedManyWithoutRoleInput;

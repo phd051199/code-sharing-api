@@ -3,11 +3,11 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthProviders } from '@prisma/client';
 
 import { TokenModule } from '@/token/token.module';
-import { UserService } from '@/user/user.service';
+import { UserService } from '@/user/services';
 
 import { CommandHandlers } from './commands';
 import { OAuthController } from './oauth.controller';
-import { OAuthService } from './oauth.service';
+import { OAuthService } from './services';
 import { OAuthStrategy } from './strategies';
 
 @Module({
