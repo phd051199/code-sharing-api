@@ -6,6 +6,7 @@ import { rm } from 'fs/promises';
 import { join } from 'path';
 
 import { streamToString } from '@/common/utils/string.util';
+import { type ScriptUncheckedCreateInput } from '@/gql/script';
 import { MinioService } from '@/minio/minio.service';
 import { PrismaService } from '@/prisma/prisma.service';
 
@@ -57,6 +58,11 @@ export class ScriptService {
 
     const scripts = await this.prisma.script.findMany({
       include: {
+        user: {
+          select: {
+            userName: true,
+          },
+        },
         bundleDetail: { select: { bundlePath: true } },
       },
       ...findOptions,
@@ -96,9 +102,13 @@ export class ScriptService {
     }
   }
 
-  async createScript(userId: number): Promise<Script> {
+  async createScript(
+    data: ScriptUncheckedCreateInput,
+    userId: number,
+  ): Promise<Script> {
     const result = await this.prisma.script.create({
       data: {
+        ...data,
         authorId: userId,
         bundleDetail: {
           create: {

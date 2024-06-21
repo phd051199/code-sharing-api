@@ -1,5 +1,6 @@
 import { File, FileInterceptor } from '@nest-lab/fastify-multer';
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -23,6 +24,7 @@ import { AuthUser, Public } from '@/auth/decorators';
 import { Authorized, CheckPermissions } from '@/casl/decorators';
 import { can } from '@/casl/utils';
 import { FileExceptionFilter } from '@/common/filters';
+import { ScriptUncheckedCreateInput } from '@/gql/script';
 import { FileExtensionValidator } from '@/validation/custom-validator';
 
 import {
@@ -88,6 +90,7 @@ export class ScriptController {
   @UseFilters(FileExceptionFilter)
   async upload(
     @AuthUser('id') userId: number,
+    @Body() body: ScriptUncheckedCreateInput,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -100,7 +103,7 @@ export class ScriptController {
     file: File,
   ): Promise<void> {
     const script = await this.commandBus.execute(
-      new CreateScriptCommand(userId),
+      new CreateScriptCommand(body, userId),
     );
     await this.commandBus.execute(new CompileScriptCommand(file.path, script));
   }

@@ -12,6 +12,6 @@ export class CreateScriptCommandHandler
   constructor(private readonly scriptService: ScriptService) {}
 
   async execute(command: CreateScriptCommand): Promise<Script> {
-    return this.scriptService.createScript(command.userId);
+    return this.scriptService.createScript(command.input, command.userId);
   }
 }
